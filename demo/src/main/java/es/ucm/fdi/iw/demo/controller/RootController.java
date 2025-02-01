@@ -52,17 +52,17 @@ public class RootController {
                     New-Object System.Text.UTF8Encoding
 			 * (ver https://stackoverflow.com/a/49481797/15472)
 			 */
-    		respuesta = "he pensado un número del 0 al 10 - ¿lo intentas adivinar?";
+    		respuesta = "He pensado un número del 0 al 10 - ¿lo intentas adivinar?";
     	} else if (entero == null) {
-			respuesta = "¿vas a intentar adivinarlo, o qué? - llevas " + i + " intentos.";
+			respuesta = "¿Vas a intentar adivinarlo, o qué? - llevas " + i + " intentos.";
     	} else {
     		i ++;
     		if (entero < o) {
-				respuesta = "el mío es más grande - y llevas " + i + " intentos.";
+				respuesta = "El mío es más grande - y llevas " + i + " intentos.";
     		} else if (entero > o) {
-				respuesta =  "el mío es más pequeño - y llevas " + i + " intentos.";
+				respuesta =  "El mío es más pequeño - y llevas " + i + " intentos.";
     		} else {
-    			respuesta = "¡bingo! ¡era el " + o + "! - has necesitado " + i + " intentos... y ya he pensado en otro";
+    			respuesta = "¡Bingo! ¡era el " + o + "! - has necesitado " + i + " intentos... y ya he pensado en otro";
     			i = 0; // resetea intentos
         		o = random.nextInt(11); // entre 0 y 10, ambos inclusive
     		}
