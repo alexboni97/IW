@@ -58,14 +58,11 @@ public class RootController {
     	} else {
     		i ++;
     		if (entero < o) {
-				// respuesta = "el mío es más grande - y llevas " + i + " intentos.";
 				respuesta = "<div class=\"alert alert-danger\">  el mío es más grande - y llevas " + i + " intentos. </div>";
     		} else if (entero > o) {
-				// respuesta =  "el mío es más pequeño - y llevas " + i + " intentos.";
 				respuesta = "<div class=\"alert alert-danger\">  el mío es más pequeño - y llevas " + i + " intentos. </div>";
     		} else {
-    			// respuesta = "¡bingo! ¡era el " + o + "! - has necesitado " + i + " intentos... y ya he pensado en otro";
-				respuesta = "<div class=\"alert alert-success\">  <strong>¡bingo!</strong> ¡era el " + o + "! - has necesitado " + i + " intentos... y ya he pensado en otro </div>";
+				respuesta = "<div class=\"alert alert-success\">  <strong>¡bingo!</strong> <br>¡Era el " + o + "! - has necesitado " + i + " intentos... y ya he pensado en otro </div>";
     			i = 0; // resetea intentos
         		o = random.nextInt(11); // entre 0 y 10, ambos inclusive
     		}
