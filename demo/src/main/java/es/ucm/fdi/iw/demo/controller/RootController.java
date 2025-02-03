@@ -63,6 +63,7 @@ public class RootController {
 				respuesta =  "el mío es más pequeño - y llevas " + i + " intentos.";
     		} else {
     			respuesta = "¡bingo! ¡era el " + o + "! - has necesitado " + i + " intentos... y ya he pensado en otro";
+				respuesta = "<div class=\"alert alert-success\">  <strong>¡bingo!</strong> ¡era el " + o + "! - has necesitado " + i + " intentos... y ya he pensado en otro </div>";
     			i = 0; // resetea intentos
         		o = random.nextInt(11); // entre 0 y 10, ambos inclusive
     		}
