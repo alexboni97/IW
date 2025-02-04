@@ -36,4 +36,10 @@ public class RootController {
     public String index(Model model) {
         return "index";
     }
+
+
+    @GetMapping("/map")
+    public String map(Model model) {
+        return "map";
+    }
 }

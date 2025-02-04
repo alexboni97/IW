@@ -7,12 +7,62 @@
 
 <body>
     <!-- ver https://getbootstrap.com/docs/5.0/examples/sticky-footer-navbar/ -->
-    <footer th:fragment="footer" class="footer mt-auto py-3 bg-light">
-        <div class="container">
-            <span class="text-muted">Aplicación de plantilla de IW 2024-25. Accede a la última versión (y propón mejoras, es
-            <a href="https://www.apache.org/licenses/LICENSE-2.0" />código abierto</a>) en el
-            <a href="https://github.com/manuel-freire/iw/blob/main/plantilla">repositorio oficial</a>.</span>
-        </div>
+    <footer th:fragment="footer" class="footer mt-auto py-3 bg-dark text-white text-center">
+            <ul class="list-group list-group-flush "data-bs-theme="dark">
+                
+                <li class="list-group-item">
+                    <div class="row">
+                        <div class="col col-sm-3">
+                            <br>
+                            <img src="/img/parkit-dark4.webp" alt="Logo" width="100 em" height="100 em" class="d-inline-block align-text-top">
+                        </div>
+                        <div class="col col-sm-3">
+                            <br>
+                            <h4>PARTICULARES</h4>
+                            <a href="#">Reserva tu parking</a>
+                            <br>
+                            <a href="#">Promociones</a>
+                            <br>
+                            <a href="#">Resuelve tus dudas</a>
+                            <br>
+                            <a href="#">Ofertas de empleo</a>
+                            <br>
+                        </div>
+                        <div class="col col-sm-3">
+                            <br>
+                            <h4>EMPRESAS</h4>
+                            <a href="#">Soluciones para empresas</a>
+                            <br>
+                            <a href="#">Area inversores</a>
+                        </div>
+                        <div class="col col-sm-3">
+                            <br>
+                            <h4>SIGUENOS EN</h4>
+                            <a href="#">Facebook</a>
+                            <br>
+                            <a href="#">Instagram</a>
+                            <br>
+                            <a href="#">Tik Tok</a>
+                            <br>
+                            <a href="#">Whatsapp</a>
+                            <br>
+                            <a href="#">X</a>
+                            <br>
+                        </div>
+                        
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <a href="#">Política de privacidad</a>
+                    <a href="#">Política de cookies</a>
+                    <a href="#">Aviso Legal</a>
+                    <a href="#">Centro Legal</a>
+                    <p>
+                        <span class="text-muted">&copy; 2025 ParkIT.</span>
+                    </p>
+                </li>
+            </ul>
+            
         <!-- Bootstrap -->
         <script th:src="@{/js/bootstrap.bundle-5.3.3.js}" src="js/bootstrap.bundle-5.3.3.js"></script>
 

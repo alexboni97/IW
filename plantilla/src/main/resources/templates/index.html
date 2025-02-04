@@ -3,18 +3,18 @@
 
 <head>
     <th:block th:replace="~{fragments/head :: header}" />
-    <title>IW: Welcome</title>
+    <title>ParkIT: Welcome</title>
 </head>
 
 <body class="d-flex flex-column h-100">
     <header th:replace="~{fragments/nav.html :: nav}"></header>
 
     <main class="flex-shrink-0">
-        <div class="container">
-            <h1 class="mt-5">Bienvenid@</h1>
-        </div>
+        <div th:replace="/fragments/findPark"></div>
     </main>
-
+    <div class="container">
+        <img class="img-fluid" src="/img/electric-car-park.webp" alt="car-electric" style="width: 800px;">
+    </div>
     <th:block th:replace="~{fragments/footer.html :: footer}" />
 </body>
 
