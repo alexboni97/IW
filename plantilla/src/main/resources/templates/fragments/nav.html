@@ -12,9 +12,21 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark text-white">
             <div class="container-fluid">
                 <!-- nombre del sitio; es un enlace que lleva a la página principal -->
-                <a class="navbar-brand">
-                    <img th:src="@{/img/logo.png}" src="/img/parkit-dark4.webp" alt="logo IW" width="32" height="32" class="d-inline-block align-text-top"> ParkIt
+                <a class="navbar-brand" th:href="@{/}">
+                    <img th:href="@{/}" src="/img/parkit-dark4.webp" alt="logo IW" width="32" height="32" class="d-inline-block align-text-top"> ParkIt
                 </a>
+
+                <th:block th:unless="${u}">
+
+                <li class="nav-link mx-2">
+                    <a class="nav-link" th:href="@{/}" href="/">Inicio</a>
+                </li>
+
+                <li class="nav-link mx-2">
+                    <a class="nav-link" th:href="@{/templates/info/}" href="/templates/info">Acerca de nosotros</a>
+                </li>
+
+                </th:block>
                        
                 <!-- menu hamburguesa si no cabe todo -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,9 +57,12 @@
                             </li>
                         </th:block>
                         <th:block th:unless="${u}">
-                            <li class="nav-item mx-">
-                                <a class="nav-link" th:href="@{/login}" href="/login">Inicio</a>
+
+                            <li class="nav-item mx-2">
+                                <a class="nav-link" th:href="@{/}" href="/">Ayuda</a>
                             </li>
+
+                        
                             <li class="nav-item mx-2">
                                 <a class="nav-link" th:href="@{/login}" href="/login">Login</a>
                             </li>
