@@ -2,14 +2,19 @@
     <h1 class="mt-5">Encuentra tu plaza de aparcamiento con ParkIT</h1>
     <div class="mb-3">
         <label for="destino" class="form-label">Introduce destino </label>
-        <input
-            type="text"
-            class="form-control"
-            name="destino"
-            id="destino"
-            aria-describedby="destinoId"
-            placeholder=""
-        />
+        <div class="input-group">
+            <input
+                type="text"
+                class="form-control"
+                name="destino"
+                id="destino"
+                aria-describedby="destinoId"
+                placeholder=""
+            />
+            <button class="btn btn-outline-secondary" type="button" id="clearButton">
+                ✖
+            </button>
+        </div>
         <small id="destinoId" class="form-text text-muted">Buscaremos los aparcamientos disponibles mas cercanos al destino introducido</small>
     </div>
     
