@@ -10,42 +10,45 @@
     <header th:replace="~{fragments/nav.html :: nav}"></header>
 
     <main class="flex-shrink-0">
-        
-       
-
+        <div th:replace="/fragments/findPark"></div>
 
         <div class="container">
-            <h1 class="mt-5">mapa</h1>  
-            <img th:src="@{/img/mapa.jpg}" src="/img/parkit-dark4.webp" alt="mapa" class="d-inline-block align-text-top w-75 h-75">
+            <div class="row">
+                <div class="col">
+                    <button type="button" class="btn btn-lg btn-outline-dark mb-3 w-100">Buscar</button>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-lg btn-outline-dark mb-3 w-100">Borrar</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <img class="img-fluid mb-5 h-100 w-100" src="/img/mapa.jpg" alt="map">
+            </div>
         </div>
-        
-        <!-- zona de admin -->
-        <div class="container">
+    </main>
+
+
+    <th:block th:replace="~{fragments/footer.html :: footer}" />
+
+</body>
+
+</html>
+
+<!-- zona de admin -->
+<!--<div class="container">
             <a class="nav-link" th:if="${u.hasRole('ADMIN')}" th:href="@{/admin/}">
                 <button type="button" class="btn btn-outline-primary">
                     boton admin   
                 </button>
 
 
-            </a>
-            <!-- zona de usuario normal -->
-            <a class="nav-link" th:unless="${u.hasRole('ADMIN')}" th:href="@{/admin/}">
+            </a> -->
+<!-- zona de usuario normal -->
+<!--<a class="nav-link" th:unless="${u.hasRole('ADMIN')}" th:href="@{/admin/}">
                 <button type="button" class="btn btn-outline-primary">
                     boton user   
                    </button>
 
-
-
-
-
-
-
             </a>        
-        </div>
-    </main>
-
-
-    <th:block th:replace="~{fragments/footer.html :: footer}" />
-</body>
-
-</html>
+        </div> -->
