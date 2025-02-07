@@ -12,7 +12,7 @@
 
     <!-- barra de navegación bootstrap 5 -->
     <header th:fragment="nav">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark text-white ">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark text-white">
             <div class="container-fluid">
                 <!-- nombre del sitio; es un enlace que lleva a la página principal -->
                 <a class="navbar-brand" th:href="@{/}">
@@ -65,7 +65,7 @@
                         <th:block th:unless="${u}">
 
                             <li class="nav-item ms-center mx-2">
-                                <a class="nav-link btn btn-outline-secondary" th:href="@{/}" href="/">Ayuda</a>
+                                <a class="nav-link btn btn-outline-secondary" th:href="@{/templates/info}" href="/templates/info">Ayuda</a>
                             </li>
 
                         
