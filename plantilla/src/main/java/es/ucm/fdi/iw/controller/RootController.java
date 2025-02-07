@@ -42,4 +42,9 @@ public class RootController {
     public String map(Model model) {
         return "map";
     }
+
+    @GetMapping("/reserve")
+    public String reserve(Model model) {
+        return "reserve";
+    }
 }
