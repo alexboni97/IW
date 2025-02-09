@@ -52,4 +52,14 @@ public class RootController {
     public String enterprise(Model model) {
         return "enterprise";
     }
+
+    @GetMapping("/info")
+    public String info(Model model) {
+        return "info";
+    }
+
+    @GetMapping("/help")
+    public String ayuda(Model model) {
+        return "help";
+    }
 }
