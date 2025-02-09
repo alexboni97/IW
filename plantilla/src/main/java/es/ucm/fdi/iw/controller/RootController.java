@@ -47,4 +47,9 @@ public class RootController {
     public String reserve(Model model) {
         return "reserve";
     }
+
+    @GetMapping("/enterprise")
+    public String enterprise(Model model) {
+        return "enterprise";
+    }
 }

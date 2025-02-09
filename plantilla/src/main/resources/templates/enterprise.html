@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:replace="~{fragments/head::header}"></th:block>
+        <title>Enterprise</title>
+    </head>
+
+    <body class="d-flex flex-column h-100">
+        <header th:replace="~{fragments/nav.html :: nav}"></header>
+        <div class="container mt-3" >
+            <h2>Información de plazas de la empresa: Empresa 1 xd</h2>
+            <p>Aquí encontrarás la información de todas las plazas de la empresa</p>            
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Localización</th>
+                    <th>Solicitada</th>
+                    <th>Ocupación</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Calle Rosalía de Castro</td>
+                    <td style="background-color: lightsalmon;">Muy solicitada(80%)</td>
+                    <td style="background-color: lightgreen;">Libre</td>
+                </tr>
+                <tr>
+                    <td>Gran Vía</td>
+                    <td style="background-color: lightblue;">Poco solicitada(30%)</td>
+                    <td style="background-color: lightcoral;">Ocupada</td>
+                </tr>
+                <tr>
+                    <td>Vía Complutense</td>
+                    <td style="background-color: lightblue;">Poco solicitada(10%)</td>
+                    <td style="background-color: lightgreen;">Libre</td>
+                </tr>
+                <tr>
+                    <td>Avenida de la Constitución</td>
+                    <td style="background-color: lightsalmon;">Muy solicitada(90%)</td>
+                    <td style="background-color: lightcoral;">Ocupada</td>
+                </tr>
+                <tr>
+                    <td>Calle Mayor</td>
+                    <td style="background-color: lightyellow;">Moderadamente solicitada(50%)</td>
+                    <td style="background-color: lightgreen;">Libre</td>
+                </tr>
+                <tr>
+                    <td>Paseo de la Castellana</td>
+                    <td style="background-color: lightsalmon;">Muy solicitada(85%)</td>
+                    <td style="background-color: lightcoral;">Ocupada</td>
+                </tr>
+                <tr>
+                    <td>Calle Serrano</td>
+                    <td style="background-color: lightblue;">Poco solicitada(20%)</td>
+                    <td style="background-color: lightgreen;">Libre</td>
+                </tr>
+                <tr>
+                    <td>Ronda Norte</td>
+                    <td style="background-color: lightyellow;">Moderadamente solicitada(60%)</td>
+                    <td style="background-color: lightcoral;">Ocupada</td>
+                </tr>
+                <tr>
+                    <td>Avenida América</td>
+                    <td style="background-color: lightblue;">Poco solicitada(15%)</td>
+                    <td style="background-color: lightgreen;">Libre</td>
+                </tr>
+                <tr>
+                    <td>Plaza Mayor</td>
+                    <td style="background-color: lightsalmon;">Muy solicitada(75%)</td>
+                    <td style="background-color: lightcoral;">Ocupada</td>
+                </tr>
+                <tr>
+                    <td>Calle Alcalá</td>
+                    <td style="background-color: lightyellow;">Moderadamente solicitada(55%)</td>
+                    <td style="background-color: lightgreen;">Libre</td>
+                </tr>
+                <tr>
+                    <td>Camino de las Eras</td>
+                    <td style="background-color: lightblue;">Poco solicitada(25%)</td>
+                    <td style="background-color: lightgreen;">Libre</td>
+                </tr>
+                <tr>
+                    <td>Paseo del Prado</td>
+                    <td style="background-color: lightsalmon;">Muy solicitada(95%)</td>
+                    <td style="background-color: lightcoral;">Ocupada</td>
+                </tr>
+                <tr>
+                    <td>Calle Velázquez</td>
+                    <td style="background-color: lightblue;">Poco solicitada(35%)</td>
+                    <td style="background-color: lightgreen;">Libre</td>
+                </tr>
+                <tr>
+                    <td>Avenida de los Reyes Católicos</td>
+                    <td style="background-color: lightyellow;">Moderadamente solicitada(65%)</td>
+                    <td style="background-color: lightcoral;">Ocupada</td>
+                </tr>
+                
+                </tbody>
+            </table>
+              
+        </div>
+        <footer th:replace="~{fragments/footer::footer}"></footer>
+    </body>
+</html>
