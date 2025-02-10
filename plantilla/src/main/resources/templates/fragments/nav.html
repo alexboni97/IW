@@ -47,11 +47,11 @@
                         <th:block th:if="${u}">
 
                             <li class="nav-link mx-2">
-                                <a class="nav-link" th:if="${u.hasRole('USER')}" th:href="@{/reserve}" href="/reserve">Reserva</a>
+                                <a class="nav-link" th:if="${u.hasRole('USER')}" th:href="@{/user/reserve}" href="/user/reserve">Reserva</a>
                             </li>
             
                             <li class="nav-link mx-2">
-                                <a class="nav-link" th:if="${u.hasRole('USER')}" th:href="@{/map}" href="/map">Mapa</a>
+                                <a class="nav-link" th:if="${u.hasRole('USER')}" th:href="@{/user/map}" href="/user/map">Mapa</a>
                             </li>
 
                             <li class="nav-link mx-2">
@@ -108,9 +108,9 @@
                             </li>
                             <li class="nav-item debug align-self-center" th:if="${application.debug}">
                                 <form class="d-flex" th:action="@{/login}" method="post">
-                                    <input type="hidden" name="username" value="u">
+                                    <input type="hidden" name="username" value="b">
                                     <input type="hidden" name="password" value="aa">
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">b</button>
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">u</button>
                                 </form>
                             </li>
                             <li class="nav-item debug align-self-center" th:if="${application.debug}">

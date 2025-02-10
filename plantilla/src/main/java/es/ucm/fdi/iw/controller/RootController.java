@@ -47,8 +47,4 @@ public class RootController {
         return "help";
     }
 
-    @GetMapping("/enterprise-info")
-    public String enterprise_info(Model model) {
-        return "enterprise-info";
-    }
 }
