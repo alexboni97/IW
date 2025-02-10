@@ -32,6 +32,11 @@
                     <a class="nav-link" th:href="@{/reserve}" href="/reserve">Reserva</a>
                 </li>
 
+                <li class="nav-link mx-2">
+                    <a class="nav-link" th:href="@{/map}" href="/map">Mapa</a>
+                </li>
+
+
                 </th:block>
                        
                 <!-- menu hamburguesa si no cabe todo -->
@@ -65,7 +70,7 @@
                         <th:block th:unless="${u}">
 
                             <li class="nav-item ms-center mx-2">
-                                <a class="nav-link btn btn-outline-secondary" th:href="@{/help}" href="/help">Ayuda</a>
+                                <a class="nav-link btn btn-outline-secondary" th:href="@{/help}" href="/help"><img src="/img/help.png" alt="help" style="width: 32px;"></a>
                             </li>
 
                         
