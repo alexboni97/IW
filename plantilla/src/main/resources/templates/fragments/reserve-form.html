@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <th:block th:fragment='form'>
+        <div class="col mx-3">
+            <form action="/confirm-reserve" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="ini-f" class="form-label">Hora inicio</label>
+                        <input type="time" class="form-control" id="ini-f" value="" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="ini-f" class="form-label">Hora final</label>
+                        <input type="time" class="form-control" id="ini-f" value="" required />
+                    </div>
+                </div>
+                <div class="row">
+                        <label for="vehiculo">Vehículo</label>
+                        <select
+                            class="form-select form-select-lg "
+                            name=""
+                            id=""
+                        >
+                            <option selected>Selecciona 1</option>
+                            <option value="">Coche 1</option>
+                            <option value="">Coche 2</option>
+                            <option value="">Coche 3</option> 
+                        </select>
+                        <button type="button " class="btn btn-light btn-lg">Nuevo Vehículo</button>
+                </div>
+                <div class="row m-10">
+                    <button class="btn btn-danger m-1 col">Cancelar</button>
+                    <button class="btn btn-primary m-1 col">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </th:block>
+</html>
