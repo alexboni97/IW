@@ -81,7 +81,7 @@
                                     (ver StartupConfig.java para ver cómo se lee de la configuración
                                     y luego se escribe a ${application.debug})
                             */-->
-                            <!--
+                           
                             <li class="nav-item debug align-self-center" th:if="${application.debug}">
                                 <form class="d-flex" th:action="@{/login}" method="post">
                                     <input type="hidden" name="username" value="a">
@@ -89,8 +89,6 @@
                                     <button type="submit" class="btn btn-outline-danger btn-sm">a</button>
                                 </form>
                             </li>
-                            -->
-                            <!--
                             <li class="nav-item debug align-self-center" th:if="${application.debug}">
                                 <form class="d-flex" th:action="@{/login}" method="post">
                                     <input type="hidden" name="username" value="b">
@@ -98,7 +96,6 @@
                                     <button type="submit" class="btn btn-outline-danger btn-sm">b</button>
                                 </form>
                             </li>
-                        -->
                         </th:block>
                     </ul>
                 </div>
