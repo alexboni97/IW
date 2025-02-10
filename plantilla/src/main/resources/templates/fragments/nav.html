@@ -22,7 +22,8 @@
                 <!-- menu hamburguesa si no cabe todo -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
-            </button>
+                </button>
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
 
@@ -48,7 +49,7 @@
                                 <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}" href="/enterprise">mis parkings</a>
                             </li>
 
-                            <li class="nav-item mx-3">
+                            <li class="nav-item mx-2">
                                 <a class="nav-link" th:if="${u.hasRole('ADMIN')}" th:href="@{/admin/}">Administrar</a>
                             </li>
 

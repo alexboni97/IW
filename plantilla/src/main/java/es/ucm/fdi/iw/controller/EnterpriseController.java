@@ -21,9 +21,9 @@ public class EnterpriseController {
 
     private static final Logger log = LogManager.getLogger(EnterpriseController.class);
 
-    @GetMapping("/enterprise")
-    public String enterprise(Model model) {
-        return "enterprise"; 
+	@GetMapping("/")
+    public String index(Model model) {
+        log.info("Empresa acaba de entrar");
+        return "enterprise";
     }
-
 }
