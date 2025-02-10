@@ -58,10 +58,11 @@ public class SecurityConfig {
 				.ignoringRequestMatchers("/api/**")
 			)
             .authorizeHttpRequests(authorize -> authorize
-				.requestMatchers("/css/**", "/js/**", "/img/**", "/", "/error", "/info", "/reserve", "/help", "/map").permitAll()
-				.requestMatchers("/api/**").permitAll()            // <-- public api access
-				.requestMatchers("/admin/**").hasRole("ADMIN")	   // <-- administration
-				.requestMatchers("/user/**").hasRole("USER")	   // <-- logged-in users
+				.requestMatchers("/css/**", "/js/**", "/img/**", "/", "/error", "/help").permitAll()
+				.requestMatchers("/api/**").permitAll()            							// <-- public api access
+				.requestMatchers("/admin/**").hasRole("ADMIN")	   							// <-- administration
+				.requestMatchers("/enterprise/**").hasRole("ENTERPRISE") 					// <-- enterprise
+				.requestMatchers("/user/**", "/reserve", "/help", "/map").hasRole("USER")	// <-- logged-in users
 				.anyRequest().authenticated()
             )
             .formLogin(formLogin -> formLogin

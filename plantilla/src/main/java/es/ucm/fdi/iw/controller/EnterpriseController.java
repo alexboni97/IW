@@ -12,17 +12,18 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class EnterpriseController {
 
-    // @ModelAttribute
-    // public void populateModel(HttpSession session, Model model) {        
-    //     for (String name : new String[] {"u", "url", "ws"}) {
-    //         model.addAttribute(name, session.getAttribute(name));
-    //     }
-    // }
+    @ModelAttribute
+    public void populateModel(HttpSession session, Model model) {        
+        for (String name : new String[] {"u", "url", "ws"}) {
+            model.addAttribute(name, session.getAttribute(name));
+        }
+    }
 
-    // private static final Logger log = LogManager.getLogger(EnterpriseController.class);
+    private static final Logger log = LogManager.getLogger(EnterpriseController.class);
 
-    // @GetMapping("/enterprise")
-    // public String enterprise(Model model) {
-    //     return "enterprise"; 
-    // }
+    @GetMapping("/enterprise")
+    public String enterprise(Model model) {
+        return "enterprise"; 
+    }
+
 }

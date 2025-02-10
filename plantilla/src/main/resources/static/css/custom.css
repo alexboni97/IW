@@ -33,3 +33,7 @@ footer a:hover{
     color: white ;
     text-decoration: underline;
 }
+#fila1{
+    border-style: double;
+    background-color: blue;
+}

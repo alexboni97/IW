@@ -18,26 +18,6 @@
                 <a class="navbar-brand" th:href="@{/}">
                     <img th:href="@{/}" src="/img/parkit-dark4.webp" alt="logo IW" width="32" height="32" class="d-inline-block align-text-top"> ParkIt
                 </a>
-
-                <th:block th:unless="${u}">
-
-                <li class="nav-link mx-2">
-                    <a class="nav-link" th:href="@{/}" href="/">Inicio</a>
-                </li>
-
-                <li class="nav-link mx-2">
-                    <a class="nav-link" th:href="@{/info}" href="/info">Acerca de nosotros</a>
-                </li>
-                <li class="nav-link mx-2">
-                    <a class="nav-link" th:href="@{/reserve}" href="/reserve">Reserva</a>
-                </li>
-
-                <li class="nav-link mx-2">
-                    <a class="nav-link" th:href="@{/map}" href="/map">Mapa</a>
-                </li>
-
-
-                </th:block>
                        
                 <!-- menu hamburguesa si no cabe todo -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,7 +25,29 @@
             </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto">
+
+                        <li class="nav-link mx-2">
+                            <a class="nav-link" th:href="@{/}" href="/">Inicio</a>
+                        </li>
+        
+                        <li class="nav-link mx-2">
+                            <a class="nav-link" th:href="@{/info}" href="/info">Acerca de nosotros</a>
+                        </li>
+
                         <th:block th:if="${u}">
+
+                            <li class="nav-link mx-2">
+                                <a class="nav-link" th:if="${u.hasRole('USER')}" th:href="@{/reserve}" href="/reserve">Reserva</a>
+                            </li>
+            
+                            <li class="nav-link mx-2">
+                                <a class="nav-link" th:if="${u.hasRole('USER')}" th:href="@{/map}" href="/map">Mapa</a>
+                            </li>
+
+                            <li class="nav-link mx-2">
+                                <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}" href="/enterprise">mis parkings</a>
+                            </li>
+
                             <li class="nav-item mx-3">
                                 <a class="nav-link" th:if="${u.hasRole('ADMIN')}" th:href="@{/admin/}">Administrar</a>
                             </li>
@@ -96,9 +98,16 @@
                             </li>
                             <li class="nav-item debug align-self-center" th:if="${application.debug}">
                                 <form class="d-flex" th:action="@{/login}" method="post">
-                                    <input type="hidden" name="username" value="b">
+                                    <input type="hidden" name="username" value="u">
                                     <input type="hidden" name="password" value="aa">
                                     <button type="submit" class="btn btn-outline-danger btn-sm">b</button>
+                                </form>
+                            </li>
+                            <li class="nav-item debug align-self-center" th:if="${application.debug}">
+                                <form class="d-flex" th:action="@{/login}" method="post">
+                                    <input type="hidden" name="username" value="e">
+                                    <input type="hidden" name="password" value="aa">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm">e</button>
                                 </form>
                             </li>
                         </th:block>

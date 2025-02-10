@@ -37,22 +37,6 @@ public class RootController {
         return "index";
     }
 
-
-    @GetMapping("/map")
-    public String map(Model model) {
-        return "map";
-    }
-
-    @GetMapping("/reserve")
-    public String reserve(Model model) {
-        return "reserve";
-    }
-
-    @GetMapping("/enterprise")
-    public String enterprise(Model model) {
-        return "enterprise";
-    }
-
     @GetMapping("/info")
     public String info(Model model) {
         return "info";

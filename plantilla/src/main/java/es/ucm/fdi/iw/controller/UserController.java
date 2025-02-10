@@ -75,6 +75,16 @@ public class UserController {
         }
     }
 
+	@GetMapping("/map")
+    public String map(Model model) {
+        return "map";
+    }
+
+    @GetMapping("/reserve")
+    public String reserve(Model model) {
+        return "reserve";
+    }
+
 	/**
      * Exception to use when denying access to unauthorized users.
      * 
