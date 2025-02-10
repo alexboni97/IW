@@ -16,6 +16,8 @@ import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.User;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("enterprise")
@@ -55,4 +57,10 @@ public class EnterpriseController {
         model.addAttribute("user", target);
         return "enterprise-info";
     }
+    @GetMapping("/enterprise-parkings")
+    public String enterpriseParkings(Model model) {
+        return "enterprise-parkings";
+    }
+    
+    
 }
