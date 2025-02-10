@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <th:block th:fragment='ps-card'>
+        <div class="container-fluid row pt-5">
+            <div class="card mb-3 col" style="max-width: 540px;" >
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        <img
+                        src="/img/mapa.jpg"
+                        class="img-fluid rounded-start"
+                        alt="Plaza de Parking 1"
+                        />
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Plaza de Parking 1</h5>
+                            <p class="card-text">
+                                <h6>Detalles</h6>
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos iste a incidunt, minima voluptatibus ducimus fugiat, illum deleniti, modi aperiam eaque similique delectus perspiciatis possimus necessitatibus. Quibusdam magni sint illo.
+                                <h6>Caracteristicas</h6>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted"
+                                >Puntuacion del parking---</small
+                                >
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="ini-f" class="form-label">Hora inicio</label>
+                        <input type="time" class="form-control" id="ini-f" value="" required />
+                    </div>
+                    <div class="col-md-4">
+                        <label for="ini-f" class="form-label">Hora final</label>
+                        <input type="time" class="form-control" id="ini-f" value="" required />
+                    </div>
+                </div>
+                <div class="row">
+                        <label for="vehiculo">Vehículo</label>
+                        <select
+                            class="form-select form-select-lg"
+                            name=""
+                            id=""
+                        >
+                            <option selected>Selecciona 1</option>
+                            <option value="">Coche 1</option>
+                            <option value="">Coche 2</option>
+                            <option value="">Coche 3</option> 
+                        </select>
+                    
+                </div>
+            </div>
+        </div>
+    </th:block>
+</html>

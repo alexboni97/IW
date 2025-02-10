@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html class="h-100" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <th:block th:replace="~{fragments/head::header}"></th:block>
+        <th:block th:replace="~{fragments/head :: header}" >
         <title>Reservar Plaza</title>
     </head>
 
-    <body>
+    <body class="d-flex flex-column h-100">
+        <header th:replace="~{fragments/nav.html :: nav}"></header>
         <div class="container">
-            
+            <div th:replace="~{fragments/parking-space-card.html :: ps-card}"></div>
         </div>
         <footer th:replace="~{fragments/footer::footer}"></footer>
     </body>
