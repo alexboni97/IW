@@ -37,5 +37,24 @@ footer a:hover{
     border-style: double;
     /* background-color: rgb(130, 139, 149); */
 }
-/* input[type = "radio"]{ display:none;}
-label:hover{color:orange;} */
+
+
+  
+  .punt{
+    font-size: 20px;
+  }
+  
+  input[type="radio"] {
+    display: none;
+  }
+  
+  
+  .clasificacion {
+    direction: rtl;
+    unicode-bidi: bidi-override;
+  }
+  
+  label:hover,
+  label:hover ~ label {
+    color: orange;
+  }
