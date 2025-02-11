@@ -9,15 +9,29 @@
 <body class="d-flex flex-column h-100">
     <header th:replace="~{fragments/nav.html :: nav}"></header>
 
-    <main class="flex-shrink-0">
+    <!--<main class="flex-shrink-0">
         <div th:replace="/fragments/findPark"></div>
 
         <div class="container">
             <button type="button" class="btn btn-lg btn-outline-dark mb-3 w-50">Buscar</button>
             <img class="img-fluid mb-5 h-100 w-100" src="/img/mapa.jpg" alt="map">
         </div>
-    </main>
+    </main>-->
 
+    <div th:replace="/fragments/findPark"></div>
+
+    <div class="container">
+
+        <div class="row">
+            
+        </div>
+
+
+
+
+        <button type="button" class="btn btn-lg btn-outline-dark mb-3 w-50">Buscar</button>
+        <img class="img-fluid mb-5 h-100 w-100" src="/img/mapa.jpg" alt="map">
+    </div>
 
     <th:block th:replace="~{fragments/footer.html :: footer}" />
 
