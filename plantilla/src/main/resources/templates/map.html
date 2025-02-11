@@ -23,14 +23,46 @@
     <div class="container">
 
         <div class="row">
-            
+            <div class="col-4">
+                <label for="dia" class="form-label">Día:</label>
+                <div class="input-group">
+                    <input type="date" class="form-control" name="dia" id="dia" aria-describedby="diaId"
+                        placeholder="" />
+                </div>
+            </div>
+
+            <div class="col-4">
+                <label for="horario-llegada" class="form-label">Horario de llegada:</label>
+                <div class="input-group">
+                    <input type="time" class="form-control" name="horario-llegada" id="horario-llegada"
+                        aria-describedby="horario-aperturaId" placeholder="" />
+                </div>
+            </div>
+
+            <div class="col-4">
+                <label for="hora-salida" class="form-label">Hora de salida:</label>
+                <div class="input-group">
+                    <input type="time" class="form-control" name="hora-salida" id="hora-salida"
+                        aria-describedby="hora-salidaId" placeholder="" />
+                </div>
+            </div>
         </div>
 
+        <div class="row mt-5">
+            <div class="col-6">
+                <button type="button" class="btn btn-lg btn-outline-dark w-100">Buscar</button>
+            </div>
+            <div class="col-6">
+                <button type="button" class="btn btn-lg btn-outline-dark w-100">Borrar datos</button>
+            </div>
+        </div>
 
+        <div class="row mt-5 mb-5">
+            <div class="col">
+                <img class="img-fluid mb-5 h-100 w-100" src="/img/mapa.jpg" alt="map">
+            </div>
+        </div>
 
-
-        <button type="button" class="btn btn-lg btn-outline-dark mb-3 w-50">Buscar</button>
-        <img class="img-fluid mb-5 h-100 w-100" src="/img/mapa.jpg" alt="map">
     </div>
 
     <th:block th:replace="~{fragments/footer.html :: footer}" />
