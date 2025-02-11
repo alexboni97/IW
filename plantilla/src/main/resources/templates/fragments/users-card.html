@@ -4,28 +4,21 @@
     <title>Users Card</title>
 </head>
 <th:block th:fragment='users-card'>    
-    <div class="container px-5 my-5">
-
-        <!--Lo primero que sale arriba es la siguiente información-->
-        <div class="flex-shrink-0">
-            <div class="container d-flex justify-content-center align-self-center">
-                <h1 class="mt-5">Información de la empresa</h1>
+<!-- Card 1-->
+ <!--https://startbootstrap.com/previews/personal-->
+    <div class="card shadow border-0 rounded-4 mb-5 col col-5 m-4">
+        <div class="card-body p-5">
+            <div class="row align-items-center gx-5">
+                <div class="col text-center text-lg-start mb-4 mb-lg-0 text-center">
+                    <img class="img-thumbnail" src="/img/parkit-dark4.webp" alt="Imagen de perfil">
+                </div>
+                <div class="bg-light p-4 rounded-4">
+                    <div class="text-primary fw-bolder mb-2">Empresa/Usario</div>
+                    <div class="small fw-bolder">Correo</div>
+                    <div class="small text-muted">ciudad</div>
+                </div>
             </div>
         </div>
-        <!-- Carta de cualquier usuario-->
-        <div class="card" style="width: 18rem;">
-            <img src="..." class="card-img-top" alt="...">
-            <div class="card-body">
-                <h5 class="card-title">Padalustro </h5>
-                <p class="card-text">Descripción de la empresa padalustro o del perfil Padalustro</p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">An item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-            </ul>
-            <div class="card-body">
-            </div>
-        </div> 
-        </th:block>
+    </div>
+</th:block>
 </html>

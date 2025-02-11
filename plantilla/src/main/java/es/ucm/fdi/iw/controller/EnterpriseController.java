@@ -61,6 +61,14 @@ public class EnterpriseController {
     public String enterpriseParkings(Model model) {
         return "enterprise-parkings";
     }
+
+    @GetMapping("/add-parking")
+    public String addParkings(Model model) {
+        return "add-parking";
+    }
     
-    
+     @GetMapping("/enterprise-plazas")
+    public String enterprisePlazas(Model model) {
+        return "enterprise-plazas";
+    }
 }

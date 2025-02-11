@@ -35,5 +35,7 @@ footer a:hover{
 }
 #fila1{
     border-style: double;
-    background-color: blue;
+    /* background-color: rgb(130, 139, 149); */
 }
+/* input[type = "radio"]{ display:none;}
+label:hover{color:orange;} */

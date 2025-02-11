@@ -6,11 +6,28 @@
 </head>
 <body class="d-flex flex-column h-100">
     <header th:replace="~{fragments/nav.html :: nav}"></header>
+    <main class="container text-center">
+        <h1 class="m-3">Información Empresa</h1>
+    </main>
+    <div class="containers d-flex justify-content-center">
+        <div th:replace="~{fragments/users-card.html :: users-card}">
+        </div>
+        <!--Lo hemos sacado de bootstrap-->
+        <div class="card shadow border-0 rounded-4 mb-5 mt-4 col col-5 ">
+            <div class="card-body p-4">
+                <ul class="list-group mt-3">
+                    <li class="list-group-item active text-center" aria-current="true">Información</li>
+                    <li class="list-group-item">Plazas: 4000</li>
+                    <li class="list-group-item">Ingresos: 1000000000000</li>
+                    <li class="list-group-item">Y otros gráficos</li>
+                </ul>          
+            </div>
+        </div>    
     
-    <div th:replace="~{fragments/users-card.html :: users-card}"></div>
-    
+    </div>
 
-    
+       
+   
 </body>
 <footer th:replace="~{fragments/footer.html ::footer}"></footer>
 </html>

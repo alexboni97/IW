@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <th:block th:replace="~{fragments/head::header}"></th:block>
+    <title>Añadir parking</title>
+  </head>
+  <body class="d-flex flex-column h-100">
+    <header th:replace="~{fragments/nav.html :: nav}"></header>
+
+    <div class="container mt-3">
+      <h1>Añadir parking</h1>
+      <div class="row">
+        <div class="col-5">
+          <label for="calle" class="form-label">Calle</label>
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              name="calle"
+              id="calle"
+              aria-describedby="calleId"
+              placeholder=""
+            />
+          </div>
+        </div>
+        <div class="col-1">
+            <label for="numero" class="form-label">Nº</label>
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                name="numero"
+                id="numero"
+                aria-describedby="numeroId"
+                placeholder=""
+              />
+            </div>
+          </div>
+      </div>
+    </div>
+  </body>
+  <footer th:replace="~{fragments/footer.html ::footer}"></footer>
+</html>
