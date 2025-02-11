@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Users Card</title>
+</head>
+<th:block th:fragment='users-card'>    
+    <div class="container px-5 my-5">
+
+        <!--Lo primero que sale arriba es la siguiente información-->
+        <div class="flex-shrink-0">
+            <div class="container d-flex justify-content-center align-self-center">
+                <h1 class="mt-5">Información de la empresa</h1>
+            </div>
+        </div>
+        <!-- Carta de cualquier usuario-->
+        <div class="card" style="width: 18rem;">
+            <img src="..." class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">Padalustro </h5>
+                <p class="card-text">Descripción de la empresa padalustro o del perfil Padalustro</p>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">An item</li>
+                <li class="list-group-item">A second item</li>
+                <li class="list-group-item">A third item</li>
+            </ul>
+            <div class="card-body">
+            </div>
+        </div> 
+        </th:block>
+</html>
