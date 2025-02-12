@@ -6,62 +6,28 @@
 </head>
 <body class="d-flex flex-column h-100">
     <header th:replace="~{fragments/nav.html :: nav}"></header>
+    <main class="container text-center">
+        <h1 class="m-3">Información Empresa</h1>
+    </main>
+    <div class="containers d-flex justify-content-center">
+        <div th:replace="~{fragments/users-card.html :: users-card}">
+        </div>
+        <!--Lo hemos sacado de bootstrap-->
+        <div class="card shadow border-0 rounded-4 mb-5 mt-4 col col-5 ">
+            <div class="card-body p-4">
+                <ul class="list-group mt-3">
+                    <li class="list-group-item active text-center" aria-current="true">Información</li>
+                    <li class="list-group-item">Plazas: 4000</li>
+                    <li class="list-group-item">Ingresos: 1000000000000</li>
+                    <li class="list-group-item">Y otros gráficos</li>
+                </ul>          
+            </div>
+        </div>    
     
-    <div class="container px-5 my-5">
-
-        <!--Lo primero que sale arriba es la siguiente información-->
-        <div class="flex-shrink-0">
-            <div class="container d-flex justify-content-center align-self-center">
-                <h1 class="mt-5">Información de la empresa</h1>
-            </div>
-        </div>
-        <!-- Carta 1-->
-        <div class="card shadow border-3 rounded-4 mb-4">
-            <div class="card-body p-5">
-                <div class="row align-items-center gx-5">
-                    <div class="col text-center text-lg-start mb-4 mb-lg-0">
-                        <div class="bg-light p-4 rounded-4">
-                            <div class="fw-bolder mb-2">Padalustro</div>
-                            <div class="small fw-bolder">Centro comercial</div>
-                            <div class="small text-muted">España</div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8">
-                        <div>
-                            <p>
-                                Padalustro es una empresa que cuenta con 400000 plazas alrededor de toda España distribuídas en 2000 parkings que subyacen bajo nuestros centros.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Carta 2-->
-        <div class="card shadow border-3 rounded-4 mb-4">
-            <div class="card-body p-5 bg-dark border-3 rounded-4 ">
-                <div class="row align-items-center gx-5">
-                    <div class="col-lg-8">
-                        <div>
-                            <p class="text-white text-lg-start">
-                                Paquito Paco es un hotel que cuenta con 500 plazas alrededor de toda España distribuídas en 2 parkings que se encuentran arriba (como España) de nuestros hoteles. 
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col text-center text-lg-start mb-4 mb-lg-0">
-                        <div class="bg-light p-4 rounded-4">
-                            <div class="fw-bolder mb-2">Paquito Paco</div>
-                            <div class="small fw-bolder">Hotel</div>
-                            <div class="small text-muted">España</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 
-    
-
-    <!-- Usando thimeleaf para que el footer lo copie del que hay en fragments -->
-    <footer th:replace="~{fragments/footer.html ::footer}"></footer>
+       
+   
 </body>
+<footer th:replace="~{fragments/footer.html ::footer}"></footer>
 </html>

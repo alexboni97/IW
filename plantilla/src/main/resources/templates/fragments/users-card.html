@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Users Card</title>
+</head>
+<th:block th:fragment='users-card'>    
+<!-- Card 1-->
+ <!--https://startbootstrap.com/previews/personal-->
+    <div class="card shadow border-0 rounded-4 mb-5 col col-5 m-4">
+        <div class="card-body p-5">
+            <div class="row align-items-center gx-5">
+                <div class="col text-center text-lg-start mb-4 mb-lg-0 text-center">
+                    <img class="img-thumbnail" src="/img/parkit-dark4.webp" alt="Imagen de perfil">
+                </div>
+                <div class="bg-light p-4 rounded-4">
+                    <div class="text-primary fw-bolder mb-2">Empresa/Usario</div>
+                    <div class="small fw-bolder">Correo</div>
+                    <div class="small text-muted">ciudad</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+</html>

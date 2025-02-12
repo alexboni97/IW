@@ -5,14 +5,26 @@
             <form action="/confirm-reserve" method="post">
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="ini-f" class="form-label">Hora inicio</label>
-                        <input type="time" class="form-control" id="ini-f" value="" required />
+                        <label for="ini-f" class="form-label">Fecha inicio</label>
+                        <input type="date" class="form-control" id="ini-f" value="" required />
                     </div>
                     <div class="col-md-6">
-                        <label for="ini-f" class="form-label">Hora final</label>
-                        <input type="time" class="form-control" id="ini-f" value="" required />
+                        <label for="fin-f" class="form-label">Fecha final</label>
+                        <input type="date" class="form-control" id="fecha-f" value="" required />
                     </div>
                 </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="ini-h" class="form-label">Hora inicio</label>
+                        <input type="time" class="form-control" id="ini-h" value="" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fin-h" class="form-label">Hora final</label>
+                        <input type="time" class="form-control" id="fin-h" value="" required />
+                    </div>
+                </div>
+                <br>
                 <div class="row">
                         <label for="vehiculo">Vehículo</label>
                         <select
@@ -25,11 +37,12 @@
                             <option value="">Coche 2</option>
                             <option value="">Coche 3</option> 
                         </select>
-                        <button type="button " class="btn btn-light btn-lg">Nuevo Vehículo</button>
+                        <button type="button " class="btn btn-light btn-lg ">Nuevo Vehículo</button>
                 </div>
-                <div class="row m-10">
-                    <button class="btn btn-danger m-1 col">Cancelar</button>
-                    <button class="btn btn-primary m-1 col">Confirmar</button>
+                
+                <div class="row justify-content-center pt-5">
+                    <button class="btn btn-danger m-1 col col-lg-3">Cancelar</button>
+                    <button class="btn btn-primary m-1 col col-lg-3">Confirmar</button>
                 </div>
             </form>
         </div>

@@ -51,16 +51,31 @@ public class EnterpriseController {
         /**
      * Landing page for a user profile
      */
+
 	@GetMapping("{id}")
     public String index(@PathVariable long id, Model model, HttpSession session) {
         User target = entityManager.find(User.class, id);
         model.addAttribute("user", target);
         return "enterprise-info";
     }
+
     @GetMapping("/enterprise-parkings")
     public String enterpriseParkings(Model model) {
         return "enterprise-parkings";
     }
+
+    @GetMapping("/add-parking")
+    public String addParkings(Model model) {
+        return "add-parking";
+    }
     
-    
+     @GetMapping("/enterprise-plazas")
+    public String enterprisePlazas(Model model) {
+        return "enterprise-plazas";
+    }
+
+    @GetMapping("/add-plaza")
+    public String addPlaza(Model model) {
+        return "add-plaza";
+    }
 }
