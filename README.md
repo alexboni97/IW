@@ -52,24 +52,17 @@ La aplicación cuenta con varias pestañas para mejorar la navegación y organiz
 
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/usuario/repo.git
+   git clone https://github.com/alexboni97/IW.git
    ```
 2. Acceder al directorio:
    ```bash
-   cd repo
+   cd IW/ParkIT
    ```
 3. Instalar dependencias:
-   ```bash
-   npm install  # Si es una aplicación con Node.js
-   ```
-   o
    ```bash
    mvn install  # Si es una aplicación con Spring Boot
    ```
 4. Ejecutar la aplicación:
-   ```bash
-   npm start  # Para frontend
-   ```
    ```bash
    mvn spring-boot:run  # Para backend
    ```
