@@ -82,11 +82,11 @@ Explica aquí cómo utilizar la aplicación, con capturas de pantalla si es nece
 
 ## 🛠 Tecnologías Utilizadas
 
--Frontend: HTML, CSS, Bootstrap
--Backend: Java (Spring Boot)
--Base de Datos: H2
--Notificaciones: Websockets
--Mapas Interactivos: API de Google Maps
+- Frontend: HTML, CSS, Bootstrap
+- Backend: Java (Spring Boot)
+- Base de Datos: H2
+- Notificaciones: Websockets
+- Mapas Interactivos: API de Google Maps
 
 ## 🤝 Contribución
 
