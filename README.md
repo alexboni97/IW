@@ -1,6 +1,9 @@
 # 📌 ParkIT
 
 Breve descripción de la aplicación, su objetivo y funcionalidades principales.
+Ahorra tiempo y dinero cuando viajas en coche... Olvida las tediosas vueltas y vueltas a la manzana para encontrar un parking... Relájate, con ParkIT tendrás una plaza libre en tu destino esperándote.
+
+ParkIT es una aplicación web (principalmente para dispositivos móviles) que ayuda a los usuarios a encontrar plazas de aparcamiento libres en tiempo real, mostrándolas por zonas en un mapa interactivo y guiándolos hasta ellas.
 
 ## 📂 Contenidos
 - [Pestañas de la Aplicación](#pestañas-de-la-aplicación)
@@ -71,11 +74,19 @@ La aplicación cuenta con varias pestañas para mejorar la navegación y organiz
 
 Explica aquí cómo utilizar la aplicación, con capturas de pantalla si es necesario.
 
+1. Registrarse o iniciar sesión.
+2. Buscar una plaza de aparcamiento disponible en el mapa interactivo.
+3. Reservar la plaza y dirigirse a la ubicación guiado por la aplicación.
+4. Ver el historial de reservas y gestionar el saldo disponible.
+5. Empresas pueden agregar y gestionar plazas de aparcamiento.
+
 ## 🛠 Tecnologías Utilizadas
 
-- HTML, CSS, Bootstrap
-- Java (Spring Boot)
-- Base de datos: H2
+-Frontend: HTML, CSS, Bootstrap
+-Backend: Java (Spring Boot)
+-Base de Datos: H2
+-Notificaciones: Websockets
+-Mapas Interactivos: API de Google Maps
 
 ## 🤝 Contribución
 
@@ -87,9 +98,12 @@ Explica aquí cómo utilizar la aplicación, con capturas de pantalla si es nece
 ## 👥 Contribuidores
 
 Agradecemos a todas las personas que han contribuido a este proyecto:
+- [JAVIER ACEITUNO MONJA](https://github.com/jaceituno16)
 - [ALEX GUILLERMO BONILLA TACO](https://github.com/alexboni97)
-- [Nombre del Contribuidor 2](https://github.com/usuario2)
-- [Nombre del Contribuidor 3](https://github.com/usuario3)
+- [JUAN PABLO FERNÁNDEZ DE LA TORRE](https://github.com/juanpf04)
+- [PAULA LÓPEZ SOLLA](https://github.com/Paula211)
+- [ADRIÁN RODRÍGUEZ MARGALLO](https://github.com/adrizz8)
+- [SERGIO SÁNCHEZ CARRASCO](https://github.com/WalterDeRacagua) 
 
 ## 📜 Licencia
 
