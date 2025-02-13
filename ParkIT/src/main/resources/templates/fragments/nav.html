@@ -33,7 +33,7 @@
                         <li class="nav-link dropdown">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">Acerca de </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" th:href="@{/info}" href="/info">Nosotros</a></li>
+                                <li><a class="dropdown-item" href="/#">Nosotros</a></li>
                                 <li><a class="dropdown-item" href="#">Nuestro Modelo</a></li>
                                 <li><a class="dropdown-item" href="#">Compromiso</a></li>
                                 <li><a class="dropdown-item" href="#">Redes Sociales</a></li>
@@ -44,11 +44,11 @@
                         <th:block th:if="${u}">
 
                             <li class="nav-link ">
-                                <a class="nav-link" th:if="${u.hasRole('USER')}" th:href="@{/user/reserve}" href="/user/reserve">Reserva</a>
+                                <a class="nav-link" th:if="${u.hasRole('USER')}"  href="/user/my-reserves">Reservas</a>
                             </li>
             
                             <li class="nav-link ">
-                                <a class="nav-link" th:if="${u.hasRole('USER')}" th:href="@{/user/map}" href="/user/map">Mapa</a>
+                                <a class="nav-link" th:if="${u.hasRole('USER')}" th:href="@{/user/map}" href="/user/map">Buscar</a>
                             </li>
 
                             <li class="nav-link dropdown">

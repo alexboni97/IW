@@ -37,11 +37,15 @@
                             <option value="">Coche 2</option>
                             <option value="">Coche 3</option> 
                         </select>
-                        <button type="button " class="btn btn-light btn-lg ">Nuevo Vehículo</button>
+                        <div class="container text-center">
+                            <div th:replace="/fragments/new-car-modal" ></div>
+                        </div>
+                        
                 </div>
                 
                 <div class="row justify-content-center pt-5">
-                    <button class="btn btn-danger m-1 col col-lg-3">Cancelar</button>
+                    <!-- <button class="btn btn-danger m-1 col col-lg-3">Cancelar</button> -->
+                    <a href="/user/map"class="btn btn-danger m-1 col col-lg-3">Cancelar</a>
                     <button class="btn btn-primary m-1 col col-lg-3">Confirmar</button>
                 </div>
             </form>

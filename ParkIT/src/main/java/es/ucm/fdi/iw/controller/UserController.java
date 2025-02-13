@@ -41,6 +41,7 @@ import java.io.*;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -84,7 +85,18 @@ public class UserController {
     public String reserve(Model model) {
         return "reserve";
     }
-
+    @GetMapping("/my-reserves")
+    public String myReserves(Model model) {
+		HashMap<String,Integer>reservas=new HashMap<>();
+		reservas.put("Calle Rosalía de Castro", 10);
+		reservas.put("Gran Vía", 10);
+		reservas.put("Vía Complutense", 10);
+		reservas.put("Avenida de la Constitución 1515", 10);
+		reservas.put("Avenida de la Constitución 122", 10);
+		reservas.put("Avenida de la Constitución 15", 10);
+		model.addAttribute("reservas", reservas);
+        return "my-reserves";
+    }
 	/**
      * Exception to use when denying access to unauthorized users.
      * 
