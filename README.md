@@ -9,9 +9,10 @@ ParkIT es una aplicación web (principalmente para dispositivos móviles) que ay
 - [Instalación](#item2)
 - [Uso](#item3)
 - [Tecnologías Utilizadas](#item4)
-- [Contribución](#item5)
-- [Contribuidores](#item6)
-- [Licencia](#item7)
+- [Material externo](#item5)
+- [Contribución](#item6)
+- [Contribuidores](#item7)
+- [Licencia](#item8)
 
 <a name="item1"></a>
 ## 🖥️ Diseño de la Aplicación
@@ -105,13 +106,21 @@ Explica aquí cómo utilizar la aplicación, con capturas de pantalla si es nece
 - API de Google Maps
 
 <a name="item5"></a>
+## 🔎 Material externo
+
+En esta sección hemos incluído enlaces a material externo sobre el que nos hemos apoyado para realizar algunas partes de la web ParkIT 🚘:
+
+1. Users-card: hemos utilizado una [plantilla de Bootstrap](https://startbootstrap.com/theme/personal). Dicha plantilla se puede utilizar y modificar por presentar una licencia MIT.
+2. Navbar: Hemos utilizado la documentación que ofrece [Bootstrap](https://getbootstrap.com/docs/5.3/components/navbar/)
+
+<a name="item6"></a>
 ## 🤝 Contribución
 
 1. Haz un fork del repositorio.
 2. Crea una rama nueva (`git checkout -b feature-nueva`).
 3. Realiza tus cambios y haz un commit (`git commit -m 'Agrega nueva funcionalidad'`).
 4. Envía un pull request.
-<a name="item6"></a>
+<a name="item7"></a>
 ## 👥 Contribuidores
 
 Agradecemos a todas las personas que han contribuido a este proyecto:
@@ -122,7 +131,7 @@ Agradecemos a todas las personas que han contribuido a este proyecto:
 - [Adrián Rodríguez Margallo](https://github.com/adrizz8)
 - [Sergio Sánchez Carrasco](https://github.com/WalterDeRacagua) 
 
-<a name="item7"></a>
+<a name="item8"></a>
 ## 📜 Licencia
 
 Este proyecto está bajo la licencia [MIT](LICENSE).
