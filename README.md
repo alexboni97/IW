@@ -111,7 +111,7 @@ Explica aquí cómo utilizar la aplicación, con capturas de pantalla si es nece
 En esta sección hemos incluído enlaces a material externo sobre el que nos hemos apoyado para realizar algunas partes de la web ParkIT 🚘:
 
 1. Users-card: hemos utilizado una [plantilla de Bootstrap](https://startbootstrap.com/theme/personal). Dicha plantilla se puede utilizar y modificar por presentar una licencia MIT.
-2. Navbar: Hemos utilizado la documentación que ofrece [Bootstrap](https://getbootstrap.com/docs/5.3/components/navbar/)
+2. Navbar: Hemos utilizado la documentación que ofrece [Bootstrap](https://getbootstrap.com/docs/5.3/components/navbar/).
 
 <a name="item6"></a>
 ## 🤝 Contribución
