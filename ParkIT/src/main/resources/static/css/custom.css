@@ -58,3 +58,17 @@ footer a:hover{
   label:hover ~ label {
     color: orange;
   }
+
+  #card-ingresos {
+    border-left: 5px solid #007bff;
+    border-radius: 10px;
+  }
+
+  #card-plazas {
+    border-left: 5px solid #28a745;
+    border-radius: 10px;
+  }
+
+  .text-gray-800 {
+    color: #6F7283 !important;
+  }

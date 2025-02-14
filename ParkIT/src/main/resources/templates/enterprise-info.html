@@ -9,25 +9,43 @@
     <main class="container text-center">
         <h1 class="m-3">Información Empresa</h1>
     </main>
-    <div class="containers d-flex justify-content-center">
+    <div class="containers d-flex justify-content-center m-auto">
         <div th:replace="~{fragments/users-card.html :: users-card}">
         </div>
         <!--Lo hemos sacado de bootstrap-->
-        <div class="card shadow border-0 rounded-4 mb-5 mt-4 col col-5 ">
-            <div class="card-body p-4">
-                <ul class="list-group mt-3">
-                    <li class="list-group-item active text-center" aria-current="true">Información</li>
-                    <li class="list-group-item">Plazas: 4000</li>
-                    <li class="list-group-item">Ingresos: 1000000000000</li>
-                    <li class="list-group-item">Y otros gráficos</li>
-                </ul>          
+            <!-- Contenedor con la información -->
+            <div class="container justify-content-center">
+                <!-- Carta con los ingresos-->
+                    <div class="col-xl-10 col-sm-10 col-md-8 mb-4 m-auto mt-4" id="card-ingresos">
+                        <div class="card border-left-primary h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                            Ingresos </div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$15,000</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                    <!-- Carta con el número de plazas -->
+                    <div class="col-xl-10 col-sm-10 col-md-8 mb-4 m-auto mt-4" id="card-plazas">
+                        <div class="card border-left-success shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                            Plazas</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">4.000</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>    
-    
     </div>
-
-       
-   
 </body>
 <footer th:replace="~{fragments/footer.html ::footer}"></footer>
 </html>
