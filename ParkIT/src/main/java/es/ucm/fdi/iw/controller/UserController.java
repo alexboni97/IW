@@ -39,12 +39,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
 import java.security.SecureRandom;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  *  User management.
@@ -85,15 +89,48 @@ public class UserController {
     public String reserve(Model model) {
         return "reserve";
     }
+
+    @GetMapping("/modify-reserve")
+    public String modifyReserve(Model model) {
+        return "modify-reserve";
+    }
+	class Reservas{
+		private String direccion;
+		private LocalDate fechaIni;
+		private LocalDate fechaFin;
+		private LocalTime horaIni;
+		private LocalTime horaFin;
+		public Reservas(String direccion, LocalDate fechaInicio, LocalDate fechaFin, LocalTime horaInicio, LocalTime horaFin) {
+			this.direccion = direccion;
+			this.fechaIni = fechaInicio;
+			this.fechaFin = fechaFin;
+			this.horaIni = horaInicio;
+			this.horaFin = horaFin;
+		}
+		public String getDireccion() { return direccion; }
+		public void setDireccion(String direccion) { this.direccion = direccion; }
+	
+		public LocalDate getFechaIni() { return fechaIni; }
+		public void setFechaIni(LocalDate fechaIni) { this.fechaIni = fechaIni; }
+	
+		public LocalDate getFechaFin() { return fechaFin; }
+		public void setFechaFin(LocalDate fechaFin) { this.fechaFin = fechaFin; }
+	
+		public LocalTime getHoraIni() { return horaIni; }
+		public void setHoraIni(LocalTime horaIni) { this.horaIni = horaIni; }
+	
+		public LocalTime getHoraFin() { return horaFin; }
+		public void setHoraFin(LocalTime horaFin) { this.horaFin = horaFin; }
+	}
     @GetMapping("/my-reserves")
     public String myReserves(Model model) {
-		HashMap<String,Integer>reservas=new HashMap<>();
-		reservas.put("Calle Rosalía de Castro", 10);
-		reservas.put("Gran Vía", 10);
-		reservas.put("Vía Complutense", 10);
-		reservas.put("Avenida de la Constitución 1515", 10);
-		reservas.put("Avenida de la Constitución 122", 10);
-		reservas.put("Avenida de la Constitución 15", 10);
+		List<Reservas> reservas=new ArrayList<Reservas>();
+		reservas.add(new Reservas("Calle Rosalía de Castro", LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 1), LocalTime.of(10, 0), LocalTime.of(11, 0)));
+		reservas.add(new Reservas("Gran Vía", LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 1), LocalTime.of(10, 0), LocalTime.of(11, 0)));
+		reservas.add(new Reservas("Vía Complutense", LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 1), LocalTime.of(10, 0), LocalTime.of(11, 0)));
+		reservas.add(new Reservas("Avenida de la Constitución 1515", LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 1), LocalTime.of(10, 0), LocalTime.of(11, 0)));
+		reservas.add(new Reservas("Avenida de la Constitución 122", LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 1), LocalTime.of(10, 0), LocalTime.of(11, 0)));
+		reservas.add(new Reservas("Avenida de la Constitución 15", LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 1), LocalTime.of(10, 0), LocalTime.of(11, 0)));
 		model.addAttribute("reservas", reservas);
         return "my-reserves";
     }
