@@ -18,45 +18,62 @@ ParkIT es una aplicación web (principalmente para dispositivos móviles) que ay
 ## 🖥️ Diseño de la Aplicación
 La aplicación cuenta con varias vistas que dependiendo de si el usuario es particular o empresa tiene diferentes permisos y funcionalidades (El usuario administrador puede acceder a todas las vistas) para mejorar la navegación y organización. A continuación se detallan las distintas vistas dependiendo del usuario identificado.
 
-### 1. Vistas globales
+### 1. Vistas implementadas
 #### 🔹 Inicio
 > **Descripción:** Esta es la pantalla principal donde se muestra una introducción a la aplicación, noticias destacadas y accesos rápidos.
-> **URL:** [`/index.html`](./index.html)
-
-#### 🔹 Acerca de
-> **Descripción:** Información sobre la aplicacion y su propósito.
+> **URL:** [`/`](http://localhost:8080/)
 
 #### 🔹 Iniciar Sesion
 > **Descripción:** Formulario para que usuarios, empresas o administradores inicien sesión.
-
-#### 🔹 Registrarse
-> **Descripción:** Formulario para crear una cuenta de usuario, empresa o administrador.
+> **URL:** [`/login`](http://localhost:8080/login)
 
 #### 🔹 Ayuda
 > **Descripción:** Documentación de uso, preguntas frecuentes y contacto para soporte.
+> **URL:** [`/help`](http://localhost:8080/help)
 
 ### 2. Vistas de usuario particular
 #### 🔹 Perfil
 > **Descripción:** Sección donde el usuario puede ver y editar su información personal, cambiar su contraseña y gestionar sus preferencias.
+> **URL:** [`/user/{id}`](http://localhost:8080/user/2)
 
-#### 🔹 Mapa
+#### 🔹 Buscar
 > **Descripción:** Visualización de plazas de aparcamiento disponibles en tiempo real.
+> **URL:** [`/user/map`](http://localhost:8080/user/map)
+> > **Vista Accesible desde esta:** Formulario de reserva de plaza de aparcamiento
+> > **URL:** [`/user/reserve`](http://localhost:8080/user/reserve)
 
 #### 🔹 Reservas
-> **Descripción:** El usuario puede gestionar sus reservas activas.
-
-#### 🔹 Historial 
-> **Descripción:** Historial de estacionamiento con detalles de tiempo y gasto.
+> **Descripción:** El usuario puede visualizar sus reservas activas.
+> **URL:** [`/user/my-reserves`](http://localhost:8080/user/my-reserves)
+> > **Vista Accesible desde esta:** Formulario de modificar reserva de plaza de aparcamiento
+> > **URL:** [`/user/modify-reserve`](http://localhost:8080/user/modify-reserve)
 
 ### 3. Vistas de empresa
 #### 🔹 Perfil 
 > **Descripción:** Administración de la cuenta de empresa, incluyendo estadísticas de uso.
+> **URL:** [`/entrerprise/{id}`](http://localhost:8080/enterprise/3)
 
-#### 🔹 Parkings
-> **Descripción:** Gestión de las plazas de aparcamiento que la empresa tiene registradas.
+#### 🔹 Ver Parkings
+> **Descripción:** Visualizar las plazas de aparcamiento que la empresa tiene registradas.
+> **URL:** [`/enterprise/enterprise-parkings`](http://localhost:8080/enterprise/enterprise-parkings)
 
-#### 🔹 Historial
+#### 🔹 Añadir Parking
+> **Descripción:** Añadir una zona nueva de aparcamiento en la empresa.
+> **URL:** [`/enterprise/add-parking`](http://localhost:8080/enterprise/add-parking)
+
+### 2. Proximamente en Vistas...
+#### 🔹 Acerca de
+> **Descripción:** Dropdown con las vistas de información sobre la aplicacion y su propósito.
+
+#### 🔹 Registrarse
+> **Descripción:** Formulario para crear una cuenta de usuario, empresa o administrador.
+
+#### 🔹 Historial de Usuario
+> **Descripción:** Historial de estacionamiento con detalles de tiempo y gasto.
+
+#### 🔹 Historial de empresa
 > **Descripción:** Estadísticas y datos de ocupación de los parkings de la empresa.
+
 
 <a name="item2"></a>
 ## 🚀 Instalación
@@ -71,7 +88,7 @@ La aplicación cuenta con varias vistas que dependiendo de si el usuario es part
    ```
 3. Instalar dependencias:
    ```bash
-   mvn install  # Si es una aplicación con Spring Boot
+   mvn install
    ```
 4. Ejecutar la aplicación:
    ```bash
@@ -112,6 +129,7 @@ En esta sección hemos incluído enlaces a material externo sobre el que nos hem
 
 1. Users-card: hemos utilizado una [plantilla de Bootstrap](https://startbootstrap.com/theme/personal). Dicha plantilla se puede utilizar y modificar por presentar una licencia MIT.
 2. Navbar: Hemos utilizado la documentación que ofrece [Bootstrap](https://getbootstrap.com/docs/5.3/components/navbar/).
+3. Extension en VSCode: para el uso de Bootstrap y elementos preconstruidos, [Bootstrap 5 Quick Snippets](https://github.com/anburocky3/bootstrap5-snippets/tree/master)
 
 <a name="item6"></a>
 ## 🤝 Contribución
@@ -134,7 +152,7 @@ Agradecemos a todas las personas que han contribuido a este proyecto:
 <a name="item8"></a>
 ## 📜 Licencia
 
-Este proyecto está bajo la licencia [MIT](LICENSE).
+Este proyecto está bajo la licencia [Apache License](LICENSE).
 
 
 
