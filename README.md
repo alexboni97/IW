@@ -44,7 +44,9 @@ La aplicación cuenta con varias vistas que dependiendo de si el usuario es part
 
 #### 🔹 Reservas
 > **Descripción:** El usuario puede visualizar sus reservas activas.
-> **URL:** [`/my-reserves`](http://localhost:8080/my-reserves)
+> **URL:** [`/user/my-reserves`](http://localhost:8080/user/my-reserves)
+> > **Vista Accesible desde esta:** Formulario de modificar reserva de plaza de aparcamiento
+> > **URL:** [`/user/modify-reserve`](http://localhost:8080/user/modify-reserve)
 
 ### 3. Vistas de empresa
 #### 🔹 Perfil 
