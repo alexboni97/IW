@@ -150,7 +150,7 @@ Agradecemos a todas las personas que han contribuido a este proyecto:
 <a name="item8"></a>
 ## 📜 Licencia
 
-Este proyecto está bajo la licencia [MIT](LICENSE).
+Este proyecto está bajo la licencia [Apache License](LICENSE).
 
 
 
