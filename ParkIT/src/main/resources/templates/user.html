@@ -63,16 +63,8 @@
           </div>
         </form>
 
-        <div id="profile" class="mb-3">
-          <div class="mb-3">
-            <input type="file" id="f_avatar" class="form-control" accept="image/jpeg,image/png">
-          </div>
-          <div class="mb-3">
-            <img class="preview w-100 h-100" id="avatar" />
-          </div>
-          <form th:action="@{/user/__${user.id}__/pic}">
-            <button id="postAvatar" class="perfilable btn btn-outline-dark w-100">Usar como foto de perfil</button>
-          </form>
+        <div class="row mb-3">
+          <button class="btn btn-outline-dark w-100" type="submit">Cargar Saldo</button>
         </div>
 
       </div>
