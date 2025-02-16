@@ -64,6 +64,10 @@
                                 <a class="nav-link" th:if="${u.hasRole('ADMIN')}" th:href="@{/admin/}">Administrar</a>
                             </li>
 
+                            <li class="nav-link align-self-center">
+                                <button type="button" th:href="@{/user/{id}(id=${u.id})}" class="btn btn-outline-secondary btn-sm">Saldo: 88,40€</button>
+                            </li>
+
                             <li class="nav-link mx-2">
                                 <a class="nav-link"th:if="${u.hasRole('ENTERPRISE')}" th:href="@{/enterprise/{id}(id=${u.id})}">
                                     <img class="iwthumb rounded" th:src="@{/user/{id}/pic(id=${u.id})}">
