@@ -12,11 +12,11 @@
 
     <!-- barra de navegación bootstrap 5 -->
     <header th:fragment="nav">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark text-white">
+        <nav class="navbar navbar-expand-md text-white">
             <div class="container-fluid">
                 <!-- nombre del sitio; es un enlace que lleva a la página principal -->
                 <a class="navbar-item" th:href="@{/}">
-                    <img th:href="@{/}" src="/img/parkit-dark4.webp" alt="logo IW" width="64" height="64" class="d-inline-block align-text-top">
+                    <img th:href="@{/}" src="/img/ParkIT.png" alt="logo IW" width="64" height="64" class="d-inline-block align-text-top">
                 </a>
                        
                 <!-- menu hamburguesa si no cabe todo -->
@@ -86,7 +86,7 @@
                             </li>
                         </th:block>
                         <li class="nav-link align-self-center">
-                            <a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/help}" href="/help"><img src="/img/help.png" alt="help" style="width: 32px;"></a>
+                            <a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/help}" href="/Interrogante_color_ParkIT"><img src="/img/Interrogante_color_ParkIT.png" alt="help" style="width: 32px;"></a>
                         </li>
                         <th:block th:unless="${u}">
 

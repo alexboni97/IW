@@ -72,3 +72,7 @@ footer a:hover{
   .text-gray-800 {
     color: #6F7283 !important;
   }
+
+  .navbar {
+    background-color: #3d3c3c;
+  }
