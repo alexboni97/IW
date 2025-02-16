@@ -101,8 +101,6 @@ La aplicación cuenta con varias vistas que dependiendo de si el usuario es part
 <a name="item3"></a>
 ## 📌 Uso
 
-Explica aquí cómo utilizar la aplicación, con capturas de pantalla si es necesario.
-
 1. Registrarse o iniciar sesión.
 2. Buscar una plaza de aparcamiento disponible en el mapa interactivo.
 3. Reservar la plaza y dirigirse a la ubicación guiado por la aplicación.
