@@ -54,8 +54,12 @@ La aplicación cuenta con varias vistas que dependiendo de si el usuario es part
 > **URL:** [`/entrerprise/{id}`](http://localhost:8080/enterprise/3)
 
 #### 🔹 Ver Parkings
-> **Descripción:** Visualizar las plazas de aparcamiento que la empresa tiene registradas.
+> **Descripción:** Visualizar los parkings que la empresa tiene registrados.
 > **URL:** [`/enterprise/enterprise-parkings`](http://localhost:8080/enterprise/enterprise-parkings)
+
+#### 🔹 Ver Plazas
+> **Descripción:** Visualizar las plazas de aparcamiento que la empresa tiene registradas.
+> **URL:** [`/enterprise/enterprise-plazas`](http://localhost:8080/enterprise/enterprise-plazas)
 
 #### 🔹 Añadir Parking
 > **Descripción:** Añadir una zona nueva de aparcamiento en la empresa.
