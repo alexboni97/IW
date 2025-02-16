@@ -11,8 +11,15 @@
             <h2>Plazas del Parking</h2>
             <p>Aquí encontrarás la información de todas las plazas de la empresa</p>        
             
-            <!-- AÑADIR FORMULARIO PARA VER EL ESTADO DE LAS PLAZAS EN UHN MOMENTO DADO
-            YA SEA EN UN DIA -->
+            <!--tendría una acción que le mostraría solo las de esa fecha -->
+             <form class="mb-3" method="GET" action="/enterprise/enterprise-plazas"> 
+                <label for="fecha" class="form-label">Selecciona una fecha:</label>
+                <div class="input-group w-25">
+                  <input type="date" class="form-control" name="fecha" id="fecha" required />
+                  <button type="submit" class="btn btn-outline-dark">Consultar</button>
+                </div>
+            </form>
+              
 
             <table class="table table-hover">
                 <thead>
@@ -26,8 +33,7 @@
                 <tr>
                     <td>2</td>
                     <td id="fila1">Libre</td>
-                    <td><!-- poner que la col ocupe mucho menos -->
-                        <a class="nav-link" th:href="@{/enterprise/add-parking}" href="/enterprise/add-parking">
+                    <td>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
                             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
                             <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
@@ -38,7 +44,7 @@
                 <tr>
                     <td>6</td>
                     <td id="fila1">Ocupada</td>
-                    <td><!-- poner que la col ocupe mucho menos -->
+                    <td>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
                             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
                             <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
@@ -48,7 +54,7 @@
                 <tr>
                     <td>9</td>
                     <td id="fila1">Libre</td>
-                    <td><!-- poner que la col ocupe mucho menos -->
+                    <td>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
                             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
                             <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
@@ -58,7 +64,7 @@
                 <tr>
                     <td>21</td>
                     <td id="fila1">Ocupada</td>
-                    <td><!-- poner que la col ocupe mucho menos -->
+                    <td>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
                             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
                             <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
@@ -68,7 +74,7 @@
                 <tr>
                     <td>24</td>
                     <td id="fila1">Ocupada</td>
-                    <td><!-- poner que la col ocupe mucho menos -->
+                    <td>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
                             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
                             <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
@@ -78,7 +84,7 @@
                 <tr>
                     <td>32</td>
                     <td id="fila1">Libre</td>
-                    <td><!-- poner que la col ocupe mucho menos -->
+                    <td>
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-dash-square" viewBox="0 0 16 16">
                             <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
                             <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8"/>
@@ -87,8 +93,6 @@
                 </tr>                
                 </tbody>
             </table>
-            <!-- <td style="background-color: lightgreen;">Libre</td> 
-             <td style="background-color: lightcoral;">Ocupada</td>-->
         </div>
         <footer th:replace="~{fragments/footer::footer}"></footer>
     </body>
