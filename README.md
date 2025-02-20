@@ -118,11 +118,16 @@ La aplicación cuenta con varias vistas que dependiendo de si el usuario es part
 ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
 
 ### Base de Datos
-- H2
+![H2](https://img.shields.io/badge/h2-%230092CC.svg?style=for-the-badge&logo=h2&logoColor=white)
+
+A continuación, se muestra la estructura de la base de datos utilizada en el proyecto:
+
+<img src="bd.png" alt="Estructura de la Base de Datos" width="800"/>
+
 ### Notificaciones
-- Websockets
+![WebSockets](https://img.shields.io/badge/websockets-%23009688.svg?style=for-the-badge&logo=websocket&logoColor=white)
 ### Mapas Interactivos
-- API de Google Maps
+![Google Maps](https://img.shields.io/badge/Google%20Maps-%234285F4.svg?style=for-the-badge&logo=googlemaps&logoColor=white)
 
 <a name="item5"></a>
 ## 🔎 Material externo
