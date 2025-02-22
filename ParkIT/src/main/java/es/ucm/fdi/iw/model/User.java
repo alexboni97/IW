@@ -22,6 +22,7 @@ import java.util.List;
     @NamedQuery(name="User.hasUsername", query="SELECT COUNT(u) FROM User u WHERE u.username = :username")
 })
 @Table(name="IWUser")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements Transferable<User.Transfer> {
 
     @Id
@@ -36,8 +37,8 @@ public class User implements Transferable<User.Transfer> {
     @Column(nullable = false)
     private String password;
 
-    private String firstName; //TODO: eliminar en algun momento
-    private String lastName; 
+    // private String firstName; //TODO: eliminar en algun momento
+    // private String lastName; 
 
     public enum Role {
         USER,			// normal users 
