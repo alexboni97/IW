@@ -18,16 +18,27 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @NamedQueries({
-        @NamedQuery(name="User.byUsername",
-                query="SELECT u FROM User u "
-                        + "WHERE u.username = :username AND u.enabled = TRUE"),
-        @NamedQuery(name="User.hasUsername",
-                query="SELECT COUNT(u) "
-                        + "FROM User u "
-                        + "WHERE u.username = :username")
+    @NamedQuery(name="User.byUsername", query="SELECT u FROM User u WHERE u.username = :username AND u.enabled = TRUE"),
+    @NamedQuery(name="User.hasUsername", query="SELECT COUNT(u) FROM User u WHERE u.username = :username")
 })
 @Table(name="IWUser")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User implements Transferable<User.Transfer> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
+    @SequenceGenerator(name = "gen", sequenceName = "gen")
+	private long id;
+
+    private boolean enabled;
+
+    @Column(nullable = false, unique = true)
+    private String username;
+    @Column(nullable = false)
+    private String password;
+
+    // private String firstName; //TODO: eliminar en algun momento
+    // private String lastName; 
 
     public enum Role {
         USER,			// normal users 
@@ -35,20 +46,6 @@ public class User implements Transferable<User.Transfer> {
         ENTERPRISE,     // enterprise users
     }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "gen")
-    @SequenceGenerator(name = "gen", sequenceName = "gen")
-	private long id;
-
-    @Column(nullable = false, unique = true)
-    private String username;
-    @Column(nullable = false)
-    private String password;
-
-    private String firstName;
-    private String lastName;
-
-    private boolean enabled;
     private String roles; // split by ',' to separate roles
 
 	@OneToMany
