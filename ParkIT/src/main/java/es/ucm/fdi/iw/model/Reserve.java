@@ -32,6 +32,10 @@ public class Reserve implements Transferable<Reserve.Transfer> {
     @SequenceGenerator(name = "gen", sequenceName = "gen")
     private long id;
 	
+    public enum State {
+        PENDING, CONFIRMED, CANCELLED, COMPLETED
+    }
+
     @Enumerated(EnumType.STRING)
     private State state;
 
@@ -51,10 +55,6 @@ public class Reserve implements Transferable<Reserve.Transfer> {
     @JoinColumn(name = "spot_id")
     private Spot spot;
 
-    public enum State {
-        PENDING, CONFIRMED, CANCELLED, COMPLETED
-    }
-
     @Getter
     @AllArgsConstructor
     public static class Transfer {
@@ -70,7 +70,7 @@ public class Reserve implements Transferable<Reserve.Transfer> {
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, state.name(), startDate, endDate, price, comments, parker.getId(), spot.getId());
+        return new Transfer(this.id, this.state.name(), this.startDate, this.endDate, this.price, this.comments, this.parker.getId(), this.spot.getId());
     }
 
     @Override

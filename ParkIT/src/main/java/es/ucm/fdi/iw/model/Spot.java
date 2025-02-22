@@ -33,6 +33,10 @@ public class Spot implements Transferable<Spot.Transfer> {
     private long id;
 
     private boolean enabled;
+    
+    public enum Type {
+        COMPACT, LARGE, HANDICAPPED, ELECTRIC
+    }
 
     @Enumerated(EnumType.STRING)
     private Type type;
@@ -48,10 +52,6 @@ public class Spot implements Transferable<Spot.Transfer> {
     @OneToMany(mappedBy = "spot")
     private List<Reserve> reserves = new ArrayList<>();
 
-    public enum Type {
-        COMPACT, LARGE, HANDICAPPED, ELECTRIC
-    }
-
     @Getter
     @AllArgsConstructor
     public static class Transfer {
@@ -66,7 +66,7 @@ public class Spot implements Transferable<Spot.Transfer> {
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(id, enabled, type.name(), size, coords, parking.getId(), reserves.size());
+        return new Transfer(this.id, this.enabled, this.type.name(), this.size, this.coords, this.parking.getId(), this.reserves.size());
     }
 
     @Override

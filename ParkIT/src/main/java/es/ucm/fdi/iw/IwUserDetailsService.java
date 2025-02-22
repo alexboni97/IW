@@ -35,7 +35,7 @@ public class IwUserDetailsService implements UserDetailsService {
                     .getSingleResult();
 	        // build UserDetails object
 	        ArrayList<SimpleGrantedAuthority> roles = new ArrayList<>();
-	        for (String r : u.getRoles().split("[,]")) {
+	        for (String r : u.getRole().toString().split("[,]")) {//u.getRoles().split("[,]")) {  TODO: invento JP, si no va cambiar como estaba
 	        	roles.add(new SimpleGrantedAuthority("ROLE_" + r));
 		        log.info("Roles for " + username + " include " + roles.get(roles.size()-1));
 	        }

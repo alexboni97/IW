@@ -1,6 +1,5 @@
 package es.ucm.fdi.iw.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +7,6 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,6 +26,7 @@ public class Enterprise extends User {
 
 	private String name;
 
+	@Column(nullable = false, unique = true)
 	private String CIF;
 
 	private String accountNumber;
@@ -35,10 +34,9 @@ public class Enterprise extends User {
 	private int telephone;
 
 	@OneToMany(mappedBy = "enterprise")
-	private List<Parking> parkings;
+	private List<Parking> parkings  = new ArrayList<>();
 
 	@Getter
-	//TODO: preguntar si se puede hacer con @AllArgsConstructor de alguna manera
     public static class Transfer extends User.Transfer { 
 		private String name;
 		private String CIF;
@@ -46,8 +44,9 @@ public class Enterprise extends User {
 		private int telephone;
 		private int totalParkings;
 
-		public Transfer(long id, boolean enabled, String username, String password , String name, String CIF, String accountNumber, int telephone, int totalParkings,int totalReceived,int totalSent) {
-			super(id, username,totalReceived, totalSent);
+		public Transfer(long id, boolean enabled, String username, String password , String name, String CIF, 
+		String accountNumber, int telephone, int totalParkings,int totalReceived,int totalSent) {
+			super(id, enabled, username,totalReceived, totalSent);
 			this.name = name;
 			this.CIF = CIF;
 			this.accountNumber = accountNumber;
@@ -59,7 +58,8 @@ public class Enterprise extends User {
 
 	@Override
     public Transfer toTransfer() { 
-		return new Transfer(getId(), isEnabled(), getUsername(), getPassword(),name, CIF, accountNumber, telephone, parkings.size(), getReceived().size(), getSent().size());
+		return new Transfer(this.getId(), this.isEnabled(), this.getUsername(), this.getPassword(),name, this.CIF, 
+		this.accountNumber, this.telephone, this.parkings.size(), this.getReceived().size(), this.getSent().size());
 	}
 	
 	@Override

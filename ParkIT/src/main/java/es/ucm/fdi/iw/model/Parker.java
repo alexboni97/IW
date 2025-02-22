@@ -1,6 +1,5 @@
 package es.ucm.fdi.iw.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,9 +26,10 @@ import java.util.List;
 public class Parker extends User {
 	
 	private String firstName;
-	
+
 	private String secondName;
-	
+
+	@Column(nullable = false, unique = true)
 	private String DNI;
 
 	private int telephone;
@@ -43,19 +43,8 @@ public class Parker extends User {
 	private List<Reserve> reserves = new ArrayList<>();
 
 	@Getter
-	//TODO: preguntar si se puede hacer con @AllArgsConstructor de alguna manera
     public static class Transfer extends User.Transfer { 
-		public Transfer(long id, boolean enabled, String username, String password , String firstName, String secondName, String DNI, int telephone, String email, int totalVehicles, int totalReserves) {
-			super(totalReserves, email, totalReserves, totalReserves); //TODO: sustituir cunado esté por super(id, enabled, username, password);
-			this.firstName = firstName;
-			this.secondName = secondName;
-			this.DNI = DNI;
-			this.telephone = telephone;
-			this.email = email;
-			this.totalVehicles = totalVehicles;
-			this.totalReserves = totalReserves;
-		}
-		
+
 		private String firstName;
 		private String secondName;
 		private String DNI;
@@ -63,11 +52,24 @@ public class Parker extends User {
 		private String email;
 		private int totalVehicles;
 		private int totalReserves;
+
+		public Transfer(long id, boolean enabled, String username, String password, int totalReceived, int totalSent,  
+		String firstName, String secondName, String DNI, int telephone, String email, int totalVehicles, int totalReserves) {
+            super(id, enabled, username, totalReceived, totalSent);
+            this.firstName = firstName;
+			this.secondName = secondName;
+			this.DNI = DNI;
+			this.telephone = telephone;
+			this.email = email;
+			this.totalVehicles = totalVehicles;
+			this.totalReserves = totalReserves;
+        }
     }
 
 	@Override
-    public User.Transfer toTransfer() { //FIXME: cuando se arregle user
-		return null; //new Transfer(getId(), isEnabled(), getUsername(), getPassword(), firstName, secondName, DNI, telephone, email, vehicles.size(), reserves.size());
+    public Transfer toTransfer() {
+		return new Transfer(this.getId(), this.isEnabled(), this.getUsername(), this.getPassword(), this.getReceived().size(), this.getSent().size(), 
+		this.firstName, this.secondName, this.DNI, this.telephone, this.email, this.vehicles.size(), this.reserves.size());
 	}
 	
 	@Override

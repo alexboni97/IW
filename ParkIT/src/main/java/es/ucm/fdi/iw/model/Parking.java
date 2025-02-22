@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,7 +52,7 @@ public class Parking implements Transferable<Parking.Transfer> {
     private LocalTime openingTime;
 
     private LocalTime closingTime;
-
+    
     private String coords;
 
     @ManyToOne
@@ -59,7 +60,7 @@ public class Parking implements Transferable<Parking.Transfer> {
     private Enterprise enterprise;
 
     @OneToMany(mappedBy = "parking", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Spot> spots;
+    private List<Spot> spots  = new ArrayList<>();
 
 	@Getter
     @AllArgsConstructor
@@ -80,7 +81,8 @@ public class Parking implements Transferable<Parking.Transfer> {
 
 	@Override
     public Transfer toTransfer() {
-		return new Transfer(id, enabled, name, address, telephone, email, feePerHour, openingTime, closingTime, coords, enterprise.getId(), spots.size());
+		return new Transfer(this.id, this.enabled, this.name, this.address, this.telephone, this.email, 
+        this.feePerHour, this.openingTime, this.closingTime, this.coords, this.enterprise.getId(), this.spots.size());
 	}
 	
 	@Override

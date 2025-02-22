@@ -14,26 +14,28 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @PrimaryKeyJoinColumn(name = "id")
 @NamedQueries({
-    @NamedQuery(name = "Admin.findByCodigoAdmin", query = "select obj from Admin obj where :codigoAdmin = obj.codigoAdmin")
+    @NamedQuery(name = "Admin.findByCodigoAdmin", query = "select a from Admin a where :codigoAdmin = a.codigoAdmin")
 })
 @Table(name = "IWAdmin")
 public class Admin extends User {
+
+    @Column(nullable = false, unique = true)
     private String codigoAdmin;
 
     @Getter
     public static class Transfer extends User.Transfer {
+        
         private String codigoAdmin;
 
         public Transfer(long id, boolean enabled, String username, String password, String codigoAdmin, int totalReceived, int totalSent) {
-            super(id, username, totalReceived, totalSent);
+            super(id, enabled, username, totalReceived, totalSent);
             this.codigoAdmin = codigoAdmin;
         }
-
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(getId(), isEnabled(), getUsername(), getPassword(), codigoAdmin, getReceived().size(), getSent().size());
+        return new Transfer(this.getId(), this.isEnabled(), this.getUsername(), this.getPassword(), this.codigoAdmin, this.getReceived().size(), this.getSent().size());
     }
 
     @Override

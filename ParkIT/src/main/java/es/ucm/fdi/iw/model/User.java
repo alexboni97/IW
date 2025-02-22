@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+//import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -34,6 +34,7 @@ public class User implements Transferable<User.Transfer> {
 
     @Column(nullable = false, unique = true)
     private String username;
+
     @Column(nullable = false)
     private String password;
 
@@ -46,7 +47,8 @@ public class User implements Transferable<User.Transfer> {
         ENTERPRISE,     // enterprise users
     }
 
-    private String roles; // split by ',' to separate roles
+    @Enumerated(EnumType.STRING) // TODO: invento JP, si no va quitar
+    private Role role; // split by ',' to separate roles
 
 	@OneToMany
 	@JoinColumn(name = "sender_id")
@@ -59,16 +61,21 @@ public class User implements Transferable<User.Transfer> {
      * Checks whether this user has a given role.
      * @param role to check
      * @return true iff this user has that role.
-     */
-    public boolean hasRole(Role role) {
+     public boolean hasRole(Role role) {
         String roleName = role.name();
         return Arrays.asList(roles.split(",")).contains(roleName);
     }
+    */
+    public boolean hasRole(Role role) { // TODO: invento JP, si no va cambiar como estaba
+        return this.role == role;
+    }
+
 
     @Getter
     @AllArgsConstructor
     public static class Transfer {
 		private long id;
+        private boolean enabled;
         private String username;
 		private int totalReceived;
 		private int totalSent;
@@ -76,7 +83,7 @@ public class User implements Transferable<User.Transfer> {
 
 	@Override
     public Transfer toTransfer() {
-		return new Transfer(id,	username, received.size(), sent.size());
+		return new Transfer(this.id, this.enabled, this.username, this.received.size(), this.sent.size());
 	}
 	
 	@Override

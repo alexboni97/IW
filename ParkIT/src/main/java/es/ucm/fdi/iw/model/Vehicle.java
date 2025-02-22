@@ -34,12 +34,10 @@ public class Vehicle  implements Transferable<Vehicle.Transfer> {
 	@Column(nullable = false, unique = true)
 	private String plate;
 
-	@Column(nullable = false)
 	private String brand;
 
-	@Column(nullable = false)
 	private String model;
-
+	
 	private String size;
 
 	@ManyToOne
@@ -59,7 +57,7 @@ public class Vehicle  implements Transferable<Vehicle.Transfer> {
 
 	@Override
     public Transfer toTransfer() {
-		return new Transfer(id, plate, brand, model, size, enabled);
+		return new Transfer(this.id, this.plate, this.brand, this.model, this.size, this.enabled);
 	}
 
 	@Override
