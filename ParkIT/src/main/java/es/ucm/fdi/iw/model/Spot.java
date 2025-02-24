@@ -49,7 +49,8 @@ public class Spot implements Transferable<Spot.Transfer> {
     @JoinColumn(name = "parking_id")
     private Parking parking;
 
-    @OneToMany(mappedBy = "spot")
+    @OneToMany
+    @JoinColumn(name = "spot_id")
     private List<Reserve> reserves = new ArrayList<>();
 
     @Getter

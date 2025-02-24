@@ -33,7 +33,8 @@ public class Enterprise extends User {
 
 	private int telephone;
 
-	@OneToMany(mappedBy = "enterprise")
+	@OneToMany
+	@JoinColumn(name = "enterprise_id")
 	private List<Parking> parkings  = new ArrayList<>();
 
 	@Getter

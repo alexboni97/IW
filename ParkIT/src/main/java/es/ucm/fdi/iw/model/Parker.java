@@ -36,10 +36,12 @@ public class Parker extends User {
 
 	private String email;
 
-	@OneToMany(mappedBy = "parker")
+	@OneToMany
+	@JoinColumn(name = "parker_id")
 	private List<Vehicle> vehicles = new ArrayList<>();
 
-	@OneToMany(mappedBy = "parker")
+	@OneToMany
+	@JoinColumn(name = "parker_id")
 	private List<Reserve> reserves = new ArrayList<>();
 
 	@Getter

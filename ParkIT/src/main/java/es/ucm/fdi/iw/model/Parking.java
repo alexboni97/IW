@@ -59,7 +59,9 @@ public class Parking implements Transferable<Parking.Transfer> {
     @JoinColumn(name = "enterprise_id")
     private Enterprise enterprise;
 
-    @OneToMany(mappedBy = "parking", cascade = CascadeType.ALL, orphanRemoval = true)
+    // @OneToMany(mappedBy = "parking", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany
+    @JoinColumn(name = "parking_id")
     private List<Spot> spots  = new ArrayList<>();
 
 	@Getter

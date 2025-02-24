@@ -4,6 +4,7 @@
 <head>
     <th:block th:replace="~{fragments/head :: header}" />
     <title>ParkIT: Inicio</title>
+    <th:block th:replace="~{fragments/leaflet :: head}" />
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -14,6 +15,8 @@
             
             <div th:replace="/fragments/findPark"></div>
             <div th:replace="/fragments/findParkForm"></div>
+            <!-- mapa leaflef -->
+            <div id="map" class="mt-1"></div>
         </div>
     </main>
     <div class="container-fluid ">
@@ -53,6 +56,8 @@
 
     </div>
     <th:block th:replace="~{fragments/footer.html :: footer}" />
+    <th:block th:replace="~{fragments/leaflet.html :: footer}" />
+        
 </body>
 
 </html>
