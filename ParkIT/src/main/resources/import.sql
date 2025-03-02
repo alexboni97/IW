@@ -13,7 +13,7 @@ VALUES (3, TRUE, 'ENTERPRISE', 'e',
 INSERT INTO IWAdmin (id, codigo_admin)
 VALUES (1, 'ratatatatat');
 
-INSERT INTO PARKER (id, fisrtName, secondName, DNI, telephone, email)
+INSERT INTO PARKER (id, first_Name, second_Name, DNI, telephone, email)
 VALUES (2, 'Sergio', 'Sanchopanza', '12345678a', '123456789', 'elmejor@ucm.es');
 
 INSERT INTO Enterprise (id, name, CIF, account_number, telephone)

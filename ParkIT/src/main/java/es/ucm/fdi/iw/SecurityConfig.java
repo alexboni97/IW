@@ -64,6 +64,7 @@ public class SecurityConfig {
 				.requestMatchers("/admin/**").hasRole("ADMIN")	   							// <-- administration
 				.requestMatchers("/enterprise/**").hasRole("ENTERPRISE") 					// <-- enterprise
 				.requestMatchers("/user/**").hasRole("USER")	// <-- logged-in users
+				.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() // <-- swagger
 				.anyRequest().authenticated()
             )
             .formLogin(formLogin -> formLogin
