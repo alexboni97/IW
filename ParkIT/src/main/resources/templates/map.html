@@ -22,8 +22,8 @@
     
 
     <div class="container">
-        <div th:replace="/fragments/findPark"></div>
-        <div th:replace="/fragments/findParkForm"></div>
+        <div th:replace="~{/fragments/findPark}"></div>
+        <div th:replace="~{/fragments/findParkForm}"></div>
 
         <div class="row mt-5 mb-5">
                 <div class="card mb-3 p-3 col col-lg-4 col-md-12 col-sm-12" style="max-width: 940px; min-width: 400px" >
@@ -32,7 +32,7 @@
             <div id="map"></div>
                 </div>
                 <div class="col">
-                    <div th:replace="/fragments/parkings-table"></div>
+                    <div th:replace="~{/fragments/parkings-table}"></div>
                 </div>
                 <!-- <img class="img-fluid mb-5 h-100 w-100" src="/img/mapa2.jpg" alt="map"> -->
         </div>
