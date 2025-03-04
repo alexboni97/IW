@@ -18,6 +18,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @NamedQueries({
+        @NamedQuery(name = "Parking.findAll", query = "SELECT p FROM Parking p"),
         @NamedQuery(name = "Parking.findById", query = "SELECT p FROM Parking p WHERE p.id = :id"),
         @NamedQuery(name = "Parking.findByEnabled", query = "SELECT p FROM Parking p WHERE p.enabled = :enabled"),
         @NamedQuery(name = "Parking.findByName", query = "SELECT p FROM Parking p WHERE p.name = :name"),

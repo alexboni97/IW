@@ -2,13 +2,18 @@ package es.ucm.fdi.iw.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+
+import es.ucm.fdi.iw.model.Parking;
+import java.util.List;
 
 /**
  *  Non-authenticated requests only.
@@ -17,6 +22,9 @@ import jakarta.servlet.http.HttpSession;
 public class RootController {
 
     private static final Logger log = LogManager.getLogger(RootController.class);
+
+    @Autowired
+	private EntityManager entityManager;
 
     @ModelAttribute
     public void populateModel(HttpSession session, Model model) {        
@@ -34,6 +42,9 @@ public class RootController {
 
 	@GetMapping("/")
     public String index(Model model) {
+        List<Parking> parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
+        model.addAttribute("parkings", parkings);
+
         return "index";
     }
 
