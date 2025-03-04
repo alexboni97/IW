@@ -90,6 +90,15 @@ public class UserController {
         return "reserve";
     }
 
+	@PostMapping("/reserve")
+	public String postReserve(@RequestParam String direccion, @RequestParam LocalDate fechaIni, @RequestParam LocalDate fechaFin, @RequestParam LocalTime horaIni, @RequestParam LocalTime horaFin, Model model) {
+		
+		Reservas reserva = new Reservas(direccion, fechaIni, fechaFin, horaIni, horaFin);
+		model.addAttribute("reserva", reserva);
+		
+		return "reserve";
+	}
+
     @GetMapping("/modify-reserve")
     public String modifyReserve(Model model) {
         return "modify-reserve";
