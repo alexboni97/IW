@@ -68,10 +68,10 @@
         // Evento para añadir los parkings al mapa
         // parkings es un array de objetos que contiene la información de los parkings
         // como los guardo en una variable de thymeleaf, puedo acceder a ellos desde aquí
-        /*<![CDATA[*/
+        
         var parkings = /*[[${misParkings}]]*/ [];
         console.log(parkings); // Para verificar que los datos se están pasando correctamente
-         /*]]>*/
+        
 
         parkings.forEach(parking => {
             const marker = L.marker([parking.latitude, parking.longitude]).addTo(map);
