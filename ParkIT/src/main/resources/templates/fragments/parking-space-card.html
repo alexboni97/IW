@@ -1,35 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <th:block th:fragment='ps-card'>
-            <div class="card mb-3 col col-12" style="max-width: 940px;" >
-                <div class="row g-0">
-                    <div class="col-md-4">
-                        <img 
-                        src="/img/mapa2.jpg"
-                        class="img-fluid rounded-start pt-3"
-                        alt="Plaza de Parking 1"
-                        />
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Plaza de Parking 1</h5>
-                            <p class="card-text">
-                                <h6>Detalles</h6>
-                                <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellendus dolor nesciunt eos molestiae dicta ducimus maiores nisi iusto nulla unde ipsa tempora quasi consectetur, pariatur veniam quam voluptatibus sapiente fugiat.</span>
-                                <br>
-                                <br>
-                                <h6>Caracteristicas</h6>
-                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates recusandae temporibus inventore explicabo delectus nulla, nesciunt dicta. Aperiam omnis ab quisquam at sed quia, nisi eius dolorem! Distinctio, cum provident.</span>
-                                
-                                <br>
-                                <br>
-                                <th:block th:replace="~{fragments/puntuaciones.html :: punt-form}"></th:block>
-                            </p>
+    <th:block th:fragment='ps-card(parking)'>
+        <!-- Leaflet-->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
-                        </div>
+        <div class="card mb-3 col col-12" style="max-width: 940px;">
+            <div class="row g-0">
+                <div class="col-md-4 mapa-reserva">
+                    <div id="mapa"></div>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${parking.name}">Plaza de Parking </h5>
+                        <p class="card-text">
+                            <h6>Ubicacion</h6>
+                            <span>Reserva tu parking ahora, ubicada en <span class="text-decoration-underline" th:text="${parking.address}"></span> en la ciudad de Madrid</span>
+                            <br><br>
+                            <h6>Detalles</h6>
+                            <p>Hora de apertura: <span th:text="${parking.openingTime}"></span></p>
+                            <p>Hora de cierre: <span th:text="${parking.closingTime}"></span></p>
+                            <p>Precio Hora: <span th:text="${parking.feePerHour}"></span>€</p>
+                            <p>Telefono de contacto: <label type="phone" th:text="${parking.telephone}"></label></p>
+                            <p>Correo de contacto: <label type="email" th:text="${parking.email}"></label></p>
+                            <th:block th:replace="~{fragments/puntuaciones.html :: punt-form}"></th:block>
+                        </p>
                     </div>
                 </div>
             </div>
-            
+        </div>
+
+        <script type="application/json" id="selected-parking" th:text="${parking}"></script>
+        <script src="/js/mapa.js"></script>
     </th:block>
 </html>

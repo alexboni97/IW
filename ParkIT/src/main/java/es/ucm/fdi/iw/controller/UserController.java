@@ -118,8 +118,9 @@ public class UserController {
     @GetMapping("/reserve")
     public String reserve(Model model) {
 		Parking parking= entityManager.find(Parking.class, 1);
-		System.out.println(parking.toString());
+		System.out.println("Parking: " + parking);
 		model.addAttribute("parkingReserva", parking);
+		System.out.println(parking.getAddress());
         return "reserve";
     }
 
