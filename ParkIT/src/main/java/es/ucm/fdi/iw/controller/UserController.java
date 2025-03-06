@@ -2,6 +2,7 @@ package es.ucm.fdi.iw.controller;
 
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.Message;
+import es.ucm.fdi.iw.model.Parking;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.User.Role;
@@ -87,12 +88,15 @@ public class UserController {
 
     @GetMapping("/reserve")
     public String reserve(Model model) {
+		Parking parking= entityManager.find(Parking.class, 1);
+		System.out.println(parking.toString());
+		model.addAttribute("parkingReserva", parking);
         return "reserve";
     }
 
 	@PostMapping("/reserve")
 	public String postReserve(@RequestParam String direccion, @RequestParam LocalDate fechaIni, @RequestParam LocalDate fechaFin, @RequestParam LocalTime horaIni, @RequestParam LocalTime horaFin, Model model) {
-		
+
 		Reservas reserva = new Reservas(direccion, fechaIni, fechaFin, horaIni, horaFin);
 		model.addAttribute("reserva", reserva);
 		
