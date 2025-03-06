@@ -94,7 +94,7 @@ public class UserController {
 		List<Parking> parkings;
 		List<Transfer> transferParkings= new ArrayList<>();
 		
-		if (address == null) {
+		if (address == null || address.isEmpty()) {
 			parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
 			
 			for (Parking p : parkings) {
