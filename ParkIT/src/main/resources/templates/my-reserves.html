@@ -15,6 +15,7 @@
                     <th>Fecha Final</th>
                     <th>Hora Inicio</th>
                     <th>Hora Final</th>
+                    <th>Precio</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -25,6 +26,7 @@
                     <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" th:text="${reservas.endDate}">Fecha Final</a></td>
                     <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" th:text="${reservas.startTime}">Hora Inicio</a></td>
                     <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" th:text="${reservas.endTime}">Hora Final</a></td>
+                    <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" th:text="${reservas.price}">Precio</a></td>
                     <td id="fila1"><a class="btn btn-primary m-1" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" >Modificar</a><a class="btn btn-danger m-1" th:href="@{/user/my-reserves}" href="/user/my-reserves" >Eliminar</a></td>
                 </tr> 
             </table>

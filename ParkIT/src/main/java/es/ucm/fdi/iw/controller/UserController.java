@@ -77,7 +77,8 @@ public class UserController {
 
     @ModelAttribute
     public void populateModel(HttpSession session, Model model) {        
-        for (String name : new String[] {"u", "url", "ws"}) {
+		
+		for (String name : new String[] {"u", "url", "ws"}) {
             model.addAttribute(name, session.getAttribute(name));
         }
     }
@@ -122,6 +123,7 @@ public class UserController {
 		model.addAttribute("reservas", reservas);
         return "my-reserves";
     }
+	
 	/**
      * Exception to use when denying access to unauthorized users.
      * 

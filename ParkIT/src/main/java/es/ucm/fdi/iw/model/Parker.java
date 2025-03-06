@@ -82,4 +82,6 @@ public class Parker extends User {
 	public String toString() {
 		return toTransfer().toString();
 	}
+
+	public double getWallet(){ return this.wallet;}
 }
