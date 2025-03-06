@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * A parking reservation in the system.
@@ -39,9 +41,13 @@ public class Reserve implements Transferable<Reserve.Transfer> {
     @Enumerated(EnumType.STRING)
     private State state;
 
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
-    private LocalDateTime endDate;
+    private LocalDate endDate;
+
+    private LocalTime startTime;
+
+    private LocalTime endTime;
 
     private double price;
 
@@ -54,23 +60,27 @@ public class Reserve implements Transferable<Reserve.Transfer> {
     @ManyToOne
     @JoinColumn(name = "spot_id")
     private Spot spot;
-
+    
+    
     @Getter
     @AllArgsConstructor
     public static class Transfer {
         private long id;
         private String state;
-        private LocalDateTime startDate;
-        private LocalDateTime endDate;
+        private LocalDate startDate;
+        private LocalDate endDate;
+        private LocalTime startTime;
+        private LocalTime endTime;
         private double price;
         private String comments;
         private long parkerId;
         private long spotId;
+        private String spotAddress;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(this.id, this.state.name(), this.startDate, this.endDate, this.price, this.comments, this.parker.getId(), this.spot.getId());
+        return new Transfer(this.id, this.state.name(), this.startDate, this.endDate, this.startTime, this.endTime, this.price, this.comments, this.parker.getId(), this.spot.getId(), this.spot.getAddress());
     }
 
     @Override

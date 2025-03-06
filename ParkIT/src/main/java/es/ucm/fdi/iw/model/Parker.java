@@ -36,6 +36,8 @@ public class Parker extends User {
 
 	private String email;
 
+	private double wallet;
+
 	@OneToMany
 	@JoinColumn(name = "parker_id")
 	private List<Vehicle> vehicles = new ArrayList<>();
@@ -54,9 +56,10 @@ public class Parker extends User {
 		private String email;
 		private int totalVehicles;
 		private int totalReserves;
+		private double wallet;
 
 		public Transfer(long id, boolean enabled, String username, String password, int totalReceived, int totalSent,  
-		String firstName, String secondName, String DNI, int telephone, String email, int totalVehicles, int totalReserves) {
+		String firstName, String secondName, String DNI, int telephone, String email, int totalVehicles, int totalReserves, double wallet) {
             super(id, enabled, username, totalReceived, totalSent);
             this.firstName = firstName;
 			this.secondName = secondName;
@@ -65,17 +68,20 @@ public class Parker extends User {
 			this.email = email;
 			this.totalVehicles = totalVehicles;
 			this.totalReserves = totalReserves;
+			this.wallet = wallet;
         }
     }
 
 	@Override
     public Transfer toTransfer() {
 		return new Transfer(this.getId(), this.isEnabled(), this.getUsername(), this.getPassword(), this.getReceived().size(), this.getSent().size(), 
-		this.firstName, this.secondName, this.DNI, this.telephone, this.email, this.vehicles.size(), this.reserves.size());
+		this.firstName, this.secondName, this.DNI, this.telephone, this.email, this.vehicles.size(), this.reserves.size(), this.wallet);
 	}
 	
 	@Override
 	public String toString() {
 		return toTransfer().toString();
 	}
+
+	public double getWallet(){ return this.wallet;}
 }

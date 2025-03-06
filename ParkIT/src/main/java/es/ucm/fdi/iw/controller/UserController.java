@@ -4,6 +4,8 @@ import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Parking;
 import es.ucm.fdi.iw.model.Parking.Transfer;
+import es.ucm.fdi.iw.model.Parker;
+import es.ucm.fdi.iw.model.Reserve;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.User.Role;
@@ -31,7 +33,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.TypedQuery;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -43,16 +44,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
 import java.security.SecureRandom;
-import java.sql.Time;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Base64;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
-import java.time.LocalDate;
-import java.time.LocalTime;
+//Importame el transfer
+
 
 /**
  *  User management.
@@ -79,7 +80,8 @@ public class UserController {
 
     @ModelAttribute
     public void populateModel(HttpSession session, Model model) {        
-        for (String name : new String[] {"u", "url", "ws"}) {
+		
+		for (String name : new String[] {"u", "url", "ws"}) {
             model.addAttribute(name, session.getAttribute(name));
         }
     }
@@ -115,14 +117,19 @@ public class UserController {
 
     @GetMapping("/reserve")
     public String reserve(Model model) {
+		Parking parking= entityManager.find(Parking.class, 1);
+		System.out.println(parking.toString());
+		model.addAttribute("parkingReserva", parking);
         return "reserve";
     }
 
 	@PostMapping("/reserve")
 	public String postReserve(@RequestParam String direccion, @RequestParam LocalDate fechaIni, @RequestParam LocalDate fechaFin, @RequestParam LocalTime horaIni, @RequestParam LocalTime horaFin, Model model) {
+
+		//Reservas reserva = new Reservas(direccion, fechaIni, fechaFin, horaIni, horaFin);
+
 		
-		Reservas reserva = new Reservas(direccion, fechaIni, fechaFin, horaIni, horaFin);
-		model.addAttribute("reserva", reserva);
+		//model.addAttribute("reserva", reserva);
 		
 		return "reserve";
 	}
@@ -131,46 +138,19 @@ public class UserController {
     public String modifyReserve(Model model) {
         return "modify-reserve";
     }
-	class Reservas{
-		private String direccion;
-		private LocalDate fechaIni;
-		private LocalDate fechaFin;
-		private LocalTime horaIni;
-		private LocalTime horaFin;
-		public Reservas(String direccion, LocalDate fechaInicio, LocalDate fechaFin, LocalTime horaInicio, LocalTime horaFin) {
-			this.direccion = direccion;
-			this.fechaIni = fechaInicio;
-			this.fechaFin = fechaFin;
-			this.horaIni = horaInicio;
-			this.horaFin = horaFin;
-		}
-		public String getDireccion() { return direccion; }
-		public void setDireccion(String direccion) { this.direccion = direccion; }
 	
-		public LocalDate getFechaIni() { return fechaIni; }
-		public void setFechaIni(LocalDate fechaIni) { this.fechaIni = fechaIni; }
-	
-		public LocalDate getFechaFin() { return fechaFin; }
-		public void setFechaFin(LocalDate fechaFin) { this.fechaFin = fechaFin; }
-	
-		public LocalTime getHoraIni() { return horaIni; }
-		public void setHoraIni(LocalTime horaIni) { this.horaIni = horaIni; }
-	
-		public LocalTime getHoraFin() { return horaFin; }
-		public void setHoraFin(LocalTime horaFin) { this.horaFin = horaFin; }
-	}
     @GetMapping("/my-reserves")
-    public String myReserves(Model model) {
-		List<Reservas> reservas=new ArrayList<Reservas>();
-		reservas.add(new Reservas("Calle Rosalía de Castro", LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 1), LocalTime.of(10, 0), LocalTime.of(11, 0)));
-		reservas.add(new Reservas("Gran Vía", LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 1), LocalTime.of(10, 0), LocalTime.of(11, 0)));
-		reservas.add(new Reservas("Vía Complutense", LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 1), LocalTime.of(10, 0), LocalTime.of(11, 0)));
-		reservas.add(new Reservas("Avenida de la Constitución 1515", LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 1), LocalTime.of(10, 0), LocalTime.of(11, 0)));
-		reservas.add(new Reservas("Avenida de la Constitución 122", LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 1), LocalTime.of(10, 0), LocalTime.of(11, 0)));
-		reservas.add(new Reservas("Avenida de la Constitución 15", LocalDate.of(2021, 5, 1), LocalDate.of(2021, 5, 1), LocalTime.of(10, 0), LocalTime.of(11, 0)));
+    public String myReserves(Model model, HttpSession session) {
+		
+		User user = (User) session.getAttribute("u");
+		Parker parker = (Parker) user;
+		
+		List<Reserve> reservas = entityManager.createQuery("SELECT r FROM Reserve r WHERE r.parker = :parker", Reserve.class).setParameter("parker", parker).getResultList();
+
 		model.addAttribute("reservas", reservas);
         return "my-reserves";
     }
+	
 	/**
      * Exception to use when denying access to unauthorized users.
      * 

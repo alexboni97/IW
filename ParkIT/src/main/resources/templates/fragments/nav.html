@@ -70,7 +70,8 @@
 
                             <li class="nav-link align-self-center">
                                 <a class="nav-link" th:if="${u.hasRole('USER')}" th:href="@{/user/{id}(id=${u.id})}">
-                                    <button type="button" class="btn btn-outline-secondary btn-sm">Saldo: 88,40€</button>
+                                    <span>Saldo: <span th:text="${wallet}"></span> €</span>
+                                    <!-- <button type="button" class="btn btn-outline-secondary btn-sm">Saldo: 88,40€</button> -->
                                 </a>
                             </li>
 
@@ -167,7 +168,8 @@
                         <li ><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ADMIN')}" th:href="@{/admin/}">Administrar</a></li>
                         <li class="nav-link align-self-center">
                             <a class="nav-link btn pt-1" th:if="${u.hasRole('USER')}" th:href="@{/user/{id}(id=${u.id})}">
-                                <button type="button" class="btn btn-outline-secondary btn-sm">Saldo: 88,40€</button>
+                                <span>Saldo: <span th:text="${wallet}"></span> €</span>
+                                <!-- <button type="button" class="btn btn-outline-secondary btn-sm">Saldo: 88,40€</button> -->
                             </a>
                         </li>
                         <li class="nav-link btn pt-1">
