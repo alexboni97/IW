@@ -2,9 +2,12 @@ package es.ucm.fdi.iw.controller;
 
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.Message;
+import es.ucm.fdi.iw.model.Parking;
+import es.ucm.fdi.iw.model.Parking.Transfer;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.User.Role;
+import io.micrometer.common.lang.Nullable;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -80,10 +84,34 @@ public class UserController {
         }
     }
 
+	//El return es por la vista que devuelve.
 	@GetMapping("/map")
-    public String map(Model model) {
-        return "map";
-    }
+	public String map(@RequestParam @Nullable String address ,Model model) {
+
+		System.out.println("Address: " + address);
+		List<Parking> parkings;
+		List<Transfer> transferParkings= new ArrayList<>();
+		
+		if (address == null) {
+			parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
+			
+			for (Parking p : parkings) {
+				transferParkings.add(p.toTransfer());
+			}
+
+		} else {
+			parkings = entityManager.createNamedQuery("Parking.findByAddress", Parking.class).setParameter("address", address).getResultList();
+
+			for (Parking p : parkings) {
+				transferParkings.add(p.toTransfer());
+			}
+		}
+		
+		model.addAttribute("parkings", transferParkings);
+	
+		return "map";
+	}
+
 
     @GetMapping("/reserve")
     public String reserve(Model model) {

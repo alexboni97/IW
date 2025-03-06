@@ -1,4 +1,4 @@
-<div th:fragment="findParkForm">
+<div th:fragment="findParkForm(misParking)">
     
     <table class="table table-hover">
         <thead>
@@ -11,10 +11,10 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="parking : ${parkings}">
+        <tr th:each="parking : ${misParking}">
             <th th:text="${parking.name}">Nombre</th>
             <th th:text ="${parking.address}">Calle</th>
-            <th th:text="${parking.pricePerHour}">Precio/Hora</th>
+            <th th:text="${parking.feePerHour}">Precio/Hora</th>
             <th> 0 </th>
         </tr>
 

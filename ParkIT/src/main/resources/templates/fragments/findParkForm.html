@@ -1,6 +1,17 @@
 
 <div th:fragment="findParkForm">
-        <form th:action="@{/reserve}" method = "post">   
+    <form th:action="@{/user/map}" method = "GET"> 
+        
+        <div class="row">
+            <div class="col">
+                <label for="dia" class="form-label">Introduce tu destino</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" name="address" id="address" aria-describedby="destinoId"
+                        placeholder="Busca aquí..." />
+                </div>
+            </div>
+
+        <!-- </div>
         <div class="row">
             <div class="col-4">
                 <label for="dia" class="form-label">Día:</label>
@@ -25,7 +36,7 @@
                         aria-describedby="hora-salidaId" placeholder="" />
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <div class="row mt-5">
             <div class="col-6">
