@@ -20,11 +20,11 @@
                 </thead>
                 <tbody>
                 <tr th:each="reservas : ${reservas}">
-                    <td><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" th:text="${reservas.direccion}">Ubicacion</a></td>
-                    <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" th:text="${reservas.fechaIni}">Fecha Inicio</a></td>
-                    <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" th:text="${reservas.fechaFin}">Fecha Final</a></td>
-                    <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" th:text="${reservas.horaIni}">Hora Inicio</a></td>
-                    <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" th:text="${reservas.horaFin}">Hora Final</a></td>
+                    <td><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" th:text="${reservas.spot.address}">Ubicacion</a></td>
+                    <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" th:text="${reservas.startDate}">Fecha Inicio</a></td>
+                    <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" th:text="${reservas.endDate}">Fecha Final</a></td>
+                    <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" th:text="${reservas.startTime}">Hora Inicio</a></td>
+                    <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" th:text="${reservas.endTime}">Hora Final</a></td>
                     <td id="fila1"><a class="btn btn-primary m-1" th:href="@{/user/modify-reserve}" href="/user/modify-reserve" >Modificar</a><a class="btn btn-danger m-1" th:href="@{/user/my-reserves}" href="/user/my-reserves" >Eliminar</a></td>
                 </tr> 
             </table>

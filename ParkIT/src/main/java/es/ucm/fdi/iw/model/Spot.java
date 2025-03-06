@@ -74,4 +74,8 @@ public class Spot implements Transferable<Spot.Transfer> {
     public String toString() {
         return toTransfer().toString();
     }
+
+    public String getAddress(){
+        return this.parking.getAddress();
+    }
 }
