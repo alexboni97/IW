@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,8 @@ import java.util.List;
         @NamedQuery(name = "Parking.findByOpeningTime", query = "SELECT p FROM Parking p WHERE p.openingTime = :openingTime"),
         @NamedQuery(name = "Parking.findByClosingTime", query = "SELECT p FROM Parking p WHERE p.closingTime = :closingTime"),
         @NamedQuery(name = "Parking.findByEnterprise", query = "SELECT p FROM Parking p WHERE p.enterprise = :enterprise"),
-        @NamedQuery(name = "Parking.findByCoords", query = "SELECT p FROM Parking p WHERE p.coords = :coords")
+        @NamedQuery(name = "Parking.findByLongitude", query = "SELECT p FROM Parking p WHERE p.longitude = :longitude"),
+        @NamedQuery(name = "Parking.findByLatitude", query = "SELECT p FROM Parking p WHERE p.latitude = :latitude")
 })
 public class Parking implements Transferable<Parking.Transfer> {
 
@@ -53,8 +55,10 @@ public class Parking implements Transferable<Parking.Transfer> {
     private LocalTime openingTime;
 
     private LocalTime closingTime;
-    
-    private String coords;
+
+    private double longitude;
+
+    private double latitude;
 
     @ManyToOne
     @JoinColumn(name = "enterprise_id")
@@ -75,17 +79,33 @@ public class Parking implements Transferable<Parking.Transfer> {
 		private int telephone;
 		private String email;
 		private double feePerHour;
-		private LocalTime openingTime;
-		private LocalTime closingTime;
-		private String coords;
+		private String openingTime;
+		private String closingTime;
+		private double longitude;
+        private double latitude;
 		private long enterpriseId;
 		private int totalSpots;
+
+        public Transfer(Parking p) {
+            this.id = p.getId();
+            this.enabled = p.isEnabled();
+            this.name = p.getName();
+            this.address = p.getAddress();
+            this.telephone = p.getTelephone();
+            this.email = p.getEmail();
+            this.feePerHour = p.getFeePerHour();
+            this.openingTime = p.getOpeningTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+            this.closingTime = p.getClosingTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+            this.longitude = p.getLongitude();
+            this.latitude = p.getLatitude();
+            this.enterpriseId = p.getEnterprise().getId();
+            this.totalSpots = p.getSpots().size();
+        }
     }
 
 	@Override
     public Transfer toTransfer() {
-		return new Transfer(this.id, this.enabled, this.name, this.address, this.telephone, this.email, 
-        this.feePerHour, this.openingTime, this.closingTime, this.coords, this.enterprise.getId(), this.spots.size());
+		return new Transfer(this);
 	}
 	
 	@Override

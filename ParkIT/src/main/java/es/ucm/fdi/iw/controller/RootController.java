@@ -13,6 +13,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import es.ucm.fdi.iw.model.Parking;
+import es.ucm.fdi.iw.model.Parking.Transfer;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -43,7 +46,16 @@ public class RootController {
 	@GetMapping("/")
     public String index(Model model) {
         List<Parking> parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
-        model.addAttribute("parkings", parkings);
+        List<Transfer> transferParkings = new ArrayList<>();
+        for (Parking p : parkings) {
+            transferParkings.add(p.toTransfer());
+        }
+        model.addAttribute("parkings", transferParkings);
+
+        System.out.println("Found " + parkings.size() + " parkings");
+        for (Parking p : parkings) {
+            System.out.println("Parking: " + p.getName());
+        }
 
         return "index";
     }

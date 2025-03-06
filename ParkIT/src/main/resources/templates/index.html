@@ -17,6 +17,10 @@
             <div th:replace="~{fragments/findParkForm :: findParkForm}"></div>
             <!-- mapa leaflef -->
             <div id="map" class="mt-1"></div>
+
+
+
+
         </div>
     </main>
     <div class="container-fluid ">
@@ -56,7 +60,9 @@
 
     </div>
     <th:block th:replace="~{fragments/footer.html :: footer}" />
-    <th:block th:replace="~{fragments/leaflet.html :: footer}" />
+    <!-- fragmento footer con parametro parkins-->
+    <th:block th:replace="~{fragments/leaflet :: mapa(misParkings=${parkings})}" />
+    <!--<th:block th:replace="~{fragments/leaflet :: map(misParkings)}"/> -->
         
 </body>
 

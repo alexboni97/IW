@@ -14,13 +14,30 @@
         }
         </style>
     
-</th:block>
-<th:block th:fragment="footer">
+</th:block> 
+<!-- fragmento footer con parametro parkins-->
+<th:block th:fragment="mapa(misParkings)">
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <!-- Leaflet Control Geocoder JS -->
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Localización</th>
+            <th>Fecha Inicio</th>
+            <th>Fecha Final</th>
+            <th>Hora Inicio</th>
+            <th>Hora Final</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="parking : ${misParkings}">
+            <td><a class="nav-link" th:text="${parking.name}">Ubicacion</a></td>
+        </tr> 
+    </table>
     <script>
         const map = L.map('map').setView([40.416775, -3.703790], 13);
 
@@ -47,6 +64,20 @@
             const marker = L.marker(e.latlng).addTo(map);
             markers.push(marker);
         });
+
+        // Evento para añadir los parkings al mapa
+        // parkings es un array de objetos que contiene la información de los parkings
+        // como los guardo en una variable de thymeleaf, puedo acceder a ellos desde aquí
+        const parkings = /*[[${misParkings}]]*/ [];
+        //alert(/*[[${misParkings}]]*/);
+        parkings.forEach(parking => {
+            console.log(parking);
+            alert('Hola');
+            const marker = L.marker([parking.latitude, parking.longitude]).addTo(map);
+            marker.bindPopup(`<b>${parking.name}</b><br>${parking.address}`);
+            markers.push(marker);
+        });
+
 
         // Función personalizada para buscar marcadores por nombre
         function buscarMarcador(nombre) {
