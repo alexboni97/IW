@@ -1,4 +1,4 @@
-<div th:fragment="findParkForm(address, latitude, longitude)">
+<div th:fragment="findParkForm(address, latitude, longitude, startDate, startTime, endDate, endTime)">
     <form th:action="@{/user/map}" method="GET">
         <h1 class="mt-5">Encuentra tu plaza de aparcamiento con ParkIT</h1>
         <div class="mb-3">
@@ -43,7 +43,7 @@
                 <label for="startDate" class="form-label">Fecha de entrada</label>
                 <div class="input-group">
                     <input type="date" class="form-control" name="startDate" id="startDate"
-                        aria-describedby="startDateId" placeholder="" />
+                        aria-describedby="startDateId" th:value="${startDate}" />
                 </div>
             </div>
 
@@ -51,7 +51,7 @@
                 <label for="startTime" class="form-label">Hora de entrada</label>
                 <div class="input-group">
                     <input type="time" class="form-control" name="startTime" id="startTime"
-                        aria-describedby="startTimeId" placeholder="" />
+                        aria-describedby="startTimeId" th:value="${startTime}" />
                 </div>
             </div>
         </div>
@@ -61,14 +61,14 @@
                 <label for="endDate" class="form-label">Fecha de salida</label>
                 <div class="input-group">
                     <input type="date" class="form-control" name="endDate" id="endDate" aria-describedby="endDateId"
-                        placeholder="" />
+                        th:value="${endDate}" />
                 </div>
             </div>
             <div class="col">
                 <label for="endTime" class="form-label">Hora de salida</label>
                 <div class="input-group">
                     <input type="time" class="form-control" name="endTime" id="endTime" aria-describedby="endTimeId"
-                        placeholder="" />
+                        th:value="${endTime}" />
                 </div>
             </div>
         </div>

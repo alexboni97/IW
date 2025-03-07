@@ -115,6 +115,10 @@ public class UserController {
 		model.addAttribute("address", address);
 		model.addAttribute("latitude", latitude);
 		model.addAttribute("longitude", longitude);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("startTime", startTime);
+		model.addAttribute("endTime", endTime);
 	
 		return "map";
 	}
