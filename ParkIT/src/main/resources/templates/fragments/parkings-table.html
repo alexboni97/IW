@@ -11,14 +11,15 @@
         </tr>
         </thead>
         <tbody>
+        
         <tr th:each="parking : ${misParking}">
             <th th:text="${parking.name}">Nombre</th>
             <th th:text ="${parking.address}">Calle</th>
             <th th:text="${parking.feePerHour}">Precio/Hora</th>
             <th> 0 </th>
-        </tr>
-
-
+            <th>
+                <a th:href="@{/user/reserve/{id}(id=${parking.id})}" class="btn btn-primary">Reservar</a>
+            </th>
         
         </tbody>
     </table>

@@ -115,11 +115,11 @@ public class UserController {
 	}
 
 
-    @GetMapping("/reserve")
-    public String reserve(Model model) {
-		Parking parking= entityManager.find(Parking.class, 1);
+    @GetMapping("/reserve/{id}")
+    public String reserve(Model model, @PathVariable long id) {
+		Parking parking= entityManager.find(Parking.class, id);
 		System.out.println("Parking: " + parking);
-		model.addAttribute("parkingReserva", parking);
+		model.addAttribute("parkingReserva", parking.toTransfer());
 		System.out.println(parking.getAddress());
         return "reserve";
     }
