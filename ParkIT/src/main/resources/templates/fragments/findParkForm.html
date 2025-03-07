@@ -1,23 +1,13 @@
 
-<div th:fragment="findParkForm">
+<div th:fragment="findParkForm(address)">
     <form th:action="@{/user/map}" method = "GET"> 
         <h1 class="mt-5">Encuentra tu plaza de aparcamiento con ParkIT</h1>
         <div class="mb-3">
             <label for="destino" class="form-label">Introduce destino </label>
             <div class="input-group">
-                <!--<input
-                    type="text"
-                    class="form-control"
-                    name="destino"
-                    id="destino"
-                    aria-describedby="destinoId"
-                    placeholder=""
-                />-->
-                <button class="btn btn-outline-secondary w-100" type="button" id="">
-                    <!-- ✖ -->
-                    <!-- <img src="/img/lupa.png" alt="lupa.png" > -->
-                    <!-- Buscador fuera del mapa -->
-                    <div class="w-100" id="geocoder-container"></div>
+
+                <button class="btn btn-outline-secondary" type="button" id="geocoder-container">
+                    
                 </button>
             </div>
             <small id="destinoId" class="form-text text-muted">Buscaremos los aparcamientos disponibles mas cercanos al destino introducido</small>
@@ -27,7 +17,7 @@
                 <label for="dia" class="form-label">Introduce tu destino</label>
                 <div class="input-group">
                     <input type="text" class="form-control" name="address" id="address" aria-describedby="destinoId"
-                        placeholder="Busca aquí..." />
+                        placeholder="Busca aquí..." th:value="${address}" />
                 </div>
             </div>
 

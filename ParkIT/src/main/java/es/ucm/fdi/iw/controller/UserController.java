@@ -88,7 +88,7 @@ public class UserController {
 
 	//El return es por la vista que devuelve.
 	@GetMapping("/map")
-	public String map(@RequestParam @Nullable String address ,Model model) {
+	public String map(@RequestParam @Nullable String address, Model model) {
 
 		System.out.println("Address: " + address);
 		List<Parking> parkings;
@@ -110,6 +110,7 @@ public class UserController {
 		}
 		
 		model.addAttribute("parkings", transferParkings);
+		model.addAttribute("address", address);
 	
 		return "map";
 	}

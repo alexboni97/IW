@@ -22,11 +22,9 @@
     
 
     <div class="container">
-        <!-- <div th:replace="~{fragments/findPark :: findPark}"></div> -->
-        <div th:replace="~{fragments/findParkForm :: findParkForm}"></div>
+        <div th:replace="~{fragments/findParkForm :: findParkForm(address=${address})}"></div>
         <div class="row mt-5 mb-5">
-                <div class="card mb-3 p-3 col col-lg-4 col-md-12 col-sm-12" style="max-width: 940px; min-width: 400px" >
-                <!-- <img src="/img/mapa2.jpg"class="img-fluid rounded-start pt-3"alt="mapa"/> -->
+            <div class="card mb-3 p-3 col col-lg-4 col-md-12 col-sm-12" style="max-width: 940px; min-width: 400px" >
             <!-- mapa leaflef -->
             <div id="map"></div>
                 </div>
@@ -36,6 +34,7 @@
                 <!-- <img class="img-fluid mb-5 h-100 w-100" src="/img/mapa2.jpg" alt="map"> -->
         </div>
     </div>
+
     <th:block th:replace="~{fragments/leaflet.html :: mapa(misParkings=${parkings})}" />
     </div>
 </body>
