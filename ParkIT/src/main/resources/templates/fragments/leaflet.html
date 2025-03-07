@@ -54,8 +54,12 @@
             collapsed: false
         }).on('markgeocode', function (e) {
             const address = e.geocode.name;
+            const latitude = e.geocode.center.lat;
+            const longitude = e.geocode.center.lng;
             map.setView(e.geocode.center, 16);
             document.getElementById('address').value = address;
+            document.getElementById('latitude').value = latitude;
+            document.getElementById('longitude').value = longitude;
         }).addTo(map);
 
         const geocoderContainer = geocoder.getContainer();
