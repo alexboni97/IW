@@ -30,7 +30,8 @@
             <div id="map"></div>
                 </div>
                 <div class="col">
-                    <div th:replace="~{fragments/parkings-table :: findParkForm(misParking=${parkings})}"></div>
+                    <div th:replace="~{fragments/parkings-table :: parkings-table(misParking=${parkings}, startDate=${startDate},
+                    startTime=${startTime}, endDate=${endDate}, endTime=${endTime})}"></div>
                 </div>
                 <!-- <img class="img-fluid mb-5 h-100 w-100" src="/img/mapa2.jpg" alt="map"> -->
         </div>

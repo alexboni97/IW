@@ -125,10 +125,15 @@ public class UserController {
 
 
     @GetMapping("/reserve/{id}")
-    public String reserve(Model model, @PathVariable long id) {
+    public String reserve(Model model, @PathVariable long id, @RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate,
+		@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime) {
 		Parking parking= entityManager.find(Parking.class, id);
 		System.out.println("Parking: " + parking);
 		model.addAttribute("parkingReserva", parking.toTransfer());
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("startTime", startTime);
+		model.addAttribute("endTime", endTime);
 		System.out.println(parking.getAddress());
         return "reserve";
     }

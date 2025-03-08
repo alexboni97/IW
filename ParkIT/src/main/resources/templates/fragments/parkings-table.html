@@ -1,4 +1,4 @@
-<div th:fragment="findParkForm(misParking)">
+<div th:fragment="parkings-table(misParking, startDate, startTime, endDate, endTime)">
     
     <table class="table table-hover">
         <thead>
@@ -18,7 +18,7 @@
             <th th:text="${parking.feePerHour}">Precio/Hora</th>
             <th> 0 </th>
             <th>
-                <a th:href="@{/user/reserve/{id}(id=${parking.id})}" class="btn btn-primary">Reservar</a>
+                <a th:href="@{/user/reserve/{id}(id=${parking.id}, startDate=${startDate}, startTime=${startTime}, endDate=${endDate}, endTime=${endTime})}" class="btn btn-primary">Reservar</a>
             </th>
         
         </tbody>
