@@ -90,7 +90,7 @@ public class UserController {
 	@GetMapping("/map")
 	public String map(@RequestParam @Nullable String address, @RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate, 
 		@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime, @RequestParam @Nullable String latitude,
-		@RequestParam @Nullable String longitude, Model model) {
+		@RequestParam @Nullable String longitude, @RequestParam @Nullable Double range, Model model) {
 
 		System.out.println("Address: " + address);
 		List<Parking> parkings;
@@ -119,6 +119,7 @@ public class UserController {
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("startTime", startTime);
 		model.addAttribute("endTime", endTime);
+		model.addAttribute("range", range);
 	
 		return "map";
 	}
@@ -134,6 +135,7 @@ public class UserController {
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("startTime", startTime);
 		model.addAttribute("endTime", endTime);
+
 		System.out.println(parking.getAddress());
         return "reserve";
     }

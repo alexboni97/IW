@@ -20,7 +20,7 @@
 
 </th:block>
 <!-- fragmento footer con parametro parkins-->
-<th:block th:fragment="mapa(misParkings)">
+<th:block th:fragment="mapa(misParkings, lat, lon, radius)">
     <!-- Leaflet JS -->
     <!-- <script th:src="@{/js/leaflet.js}"></script> -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -29,76 +29,13 @@
     <!-- <script th:src="@{/js/Control.Geocoder.js}"></script> -->
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
+    <!-- pasamos los parkings a la variable parkings para que jp.js pueda acceder a ellos -->
     <script th:inline="javascript">
-        const map = L.map('map').setView([40.416775, -3.703790], 13);
-
-        // Añadir un marcador personalizado
-        /*var greenIcon = L.icon({
-            iconUrl: '/img/ParkIT_logo.png',
-            //shadowUrl: 'leaf-shadow.png',
-
-            iconSize: [38, 95], // size of the icon
-            shadowSize: [50, 64], // size of the shadow
-            iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-            shadowAnchor: [4, 62],  // the same for the shadow
-            popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
-        });*/
-
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        const geocoder = L.Control.geocoder({
-            placeholder: 'Buscar calle o marcador...',
-            defaultMarkGeocode: false,
-            collapsed: false
-        }).on('markgeocode', function (e) {
-            const address = e.geocode.name;
-            const latitude = e.geocode.center.lat;
-            const longitude = e.geocode.center.lng;
-            map.setView(e.geocode.center, 16);
-            document.getElementById('address').value = address;
-            document.getElementById('latitude').value = latitude;
-            document.getElementById('longitude').value = longitude;
-        }).addTo(map);
-
-        const geocoderContainer = geocoder.getContainer();
-        document.getElementById('geocoder-container').appendChild(geocoderContainer);
-
-        // Array para almacenar marcadores personalizados
-        const markers = [];
-
-        // Evento para añadir marcadores al hacer click
-        /*map.on('click', function(e) {
-            const marker = L.marker(e.latlng).addTo(map);
-            markers.push(marker);
-        });*/
-
-        // Evento para añadir los parkings al mapa
-        // parkings es un array de objetos que contiene la información de los parkings
-        // como los guardo en una variable de thymeleaf, puedo acceder a ellos desde aquí
-
         var parkings = /*[[${misParkings}]]*/[];
-        console.log(parkings); // Para verificar que los datos se están pasando correctamente
-
-
-        parkings.forEach(parking => {
-            const marker = L.marker([parking.latitude, parking.longitude]).addTo(map);
-            const id = parking.id;
-            const url = `/user/reserve/${id}`;
-            marker.bindPopup(`<b>${parking.name}</b><br>${parking.address}</br><a href="${url}" class="btn btn-outline-secondary">Reservar</a>`);
-            markers.push(marker);
-        });
-
-
-        // Función personalizada para buscar marcadores por nombre
-        function buscarMarcador(nombre) {
-            markers.forEach(marker => {
-                if (marker.getPopup() && marker.getPopup().getContent().includes(nombre)) {
-                    map.setView(marker.getLatLng(), 16);
-                    marker.openPopup();
-                }
-            });
-        }
+        var lat = /*[[${lat}]]*/ null;
+        var lon = /*[[${lon}]]*/ null;
+        var rad = /*[[${radius}]]*/ null;    
     </script>
+    <!-- despues de cargar los parkings, cargamos el js -->
+    <script th:src="@{/js/jp.js}"></script>
 </th:block>

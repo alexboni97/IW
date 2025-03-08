@@ -23,7 +23,7 @@
 
     <div class="container">
         <div th:replace="~{fragments/findParkForm :: findParkForm(address=${address},latitude=${latitude},longitude=${longitude}, startDate=${startDate},
-            startTime=${startTime}, endDate=${endDate}, endTime=${endTime})}"></div>
+            startTime=${startTime}, endDate=${endDate}, endTime=${endTime}, range=${range})}"></div>
         <div class="row mt-5 mb-5">
             <div class="card mb-3 p-3 col col-lg-4 col-md-12 col-sm-12" style="max-width: 940px; min-width: 400px" >
             <!-- mapa leaflef -->
@@ -37,7 +37,7 @@
         </div>
     </div>
 
-    <th:block th:replace="~{fragments/leaflet.html :: mapa(misParkings=${parkings})}" />
+    <th:block th:replace="~{fragments/leaflet.html :: mapa(misParkings=${parkings}, lat=${latitude}, lon=${longitude}, radius=${range})}" />
     </div>
 </body>
     <th:block th:replace="~{fragments/footer.html :: footer}" />
