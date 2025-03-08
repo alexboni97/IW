@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <th:block th:fragment='reserve-form(startDate, startTime, endDate, endTime)'>
+    <th:block th:fragment='reserve-form(startDate, startTime, endDate, endTime,feePerHour)'>
         <div class="col mx-3">
             <form action="/confirm-reserve" method="post">
                 <div class="row">
@@ -10,7 +10,7 @@
                     </div>
                     <div class="col-md-6">
                         <label for="fin-f" class="form-label">Fecha final</label>
-                        <input type="date" class="form-control" id="fecha-f" th:value="${endDate}" required />
+                        <input type="date" class="form-control" id="fin-f" th:value="${endDate}" required />
                     </div>
                 </div>
                 <br>
@@ -43,9 +43,10 @@
                         
                 </div>
                 <div class="row pt-1 m-1">
-                    
+                    <p id="errorMsg"></p>
                     <h4>Precio total:</h4>
-                    <p>0.00€</p>
+                    <p><span id="totalPrecio">0.00</span>€</p>
+                    
                 </div>
                 <div class="row justify-content-center pt-5">
                     <!-- <button class="btn btn-danger m-1 col col-lg-3">Cancelar</button> -->
@@ -55,5 +56,9 @@
                 </div>
             </form>
         </div>
+        <script th:inline="javascript">
+            let precioPorHora = /*[[${feePerHour}]]*/{};
+        </script>
+        <script th:src="@{/js/mapa-reserva.js}"></script>
     </th:block>
 </html>

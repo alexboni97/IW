@@ -30,8 +30,10 @@
                 </div>
             </div>
         </div>
-
-        <script type="application/json" id="selected-parking" th:text="${parking}"></script>
-        <script src="/js/mapa.js"></script>
+        <script th:inline="javascript">
+            var parking = /*[[${parking}]]*/{};
+        </script>
+        <script th:src="@{/js/mapa-reserva.js}"></script>
+        
     </th:block>
 </html>

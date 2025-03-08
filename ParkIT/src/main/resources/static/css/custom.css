@@ -71,3 +71,9 @@ footer a:hover{
     height: 500px; 
     border-radius: 10px;
   }
+  #errorMsg {
+    color: red;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: 5px;
+}

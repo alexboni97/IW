@@ -8,9 +8,9 @@
         <header th:replace="~{fragments/nav.html :: nav}"></header>
         <div class="container-fluid row p-5">
             <div th:replace="~{fragments/parking-space-card.html :: ps-card(${parkingReserva})}"></div>
-            <div th:replace="~{fragments/reserve-form.html :: reserve-form(startDate=${startDate},
-            startTime=${startTime}, endDate=${endDate}, endTime=${endTime})}"></div>
+            <div th:replace="~{fragments/reserve-form.html :: reserve-form(${startDate},${startTime},${endDate},${endTime},${parkingReserva.feePerHour})}"></div>
         </div>
+        
         <footer th:replace="~{fragments/footer::footer}"></footer>
     </body>
 </html>
