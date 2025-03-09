@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <th:block th:fragment='reserve-form(startDate, startTime, endDate, endTime,feePerHour)'>
         <div class="col mx-3">
-            <form action="/confirm-reserve" method="post">
+            <form th:action="@{/user/confirm-reserve}" method="post">
                 <div class="row">
                     <div class="col-md-6">
                         <label for="ini-f" class="form-label">Fecha inicio</label>
@@ -36,7 +36,7 @@
                             <!-- <option value="1">Coche 1</option>
                             <option value="2">Coche 2</option>
                             <option value="3">Coche 3</option>  -->
-                            <option th:each="vehicle : ${vehicles}" th:value="${vehicle.id}" th:text="${vehicle.model}"></option>
+                            <option th:each="vehicle : ${vehicles}" th:value="${vehicle.id}" th:text="${vehicle.brand}+' '+${vehicle.model}+' ('+${vehicle.plate}+')'"></option>
                         </select>
                         <div class="container text-center">
                             <div th:replace="~{/fragments/new-car-modal}" ></div>
@@ -53,8 +53,8 @@
                 <div class="row justify-content-center pt-5">
                     <!-- <button class="btn btn-danger m-1 col col-lg-3">Cancelar</button> -->
                     <a href="/user/map"class="btn btn-danger m-1 col col-lg-3">Cancelar</a>
-                    <a href="/user/my-reserves" class="btn btn-primary m-1 col col-lg-3">Reservar</a>
-                    <!-- <button class="btn btn-primary m-1 col col-lg-3">Reservar</button> -->
+                    <!-- <a href="/user/my-reserves" class="btn btn-primary m-1 col col-lg-3">Reservar</a> -->
+                    <button type="submit" class="btn btn-primary m-1 col col-lg-3">Reservar</button>
                 </div>
             </form>
         </div>

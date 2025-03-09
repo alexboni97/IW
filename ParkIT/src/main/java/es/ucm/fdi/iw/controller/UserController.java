@@ -136,8 +136,9 @@ public class UserController {
     public String reserve(Model model, @PathVariable long id, @RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate,
 		@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime) {
 		Parking parking= entityManager.find(Parking.class, id);
-		System.out.println("Parking: " + parking);
+		List<Vehicle>vehicles= entityManager.find(Parker.class, id).getVehicles();
 		model.addAttribute("parkingReserva", parking.toTransfer());
+		model.addAttribute("vehicles", vehicles);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("startTime", startTime);
@@ -147,7 +148,8 @@ public class UserController {
         return "reserve";
     }
 
-	@PostMapping("/reserve")
+	@PostMapping("/confirm-reserve")
+	@Transactional
 	public String postReserve(
 		@RequestParam LocalDate startDate,
 		@RequestParam LocalDate endDate,
@@ -164,7 +166,7 @@ public class UserController {
 		Parker parker = (Parker) user;
 
 		
-		Vehicle vehicle = entityManager.find(Vehicle.class, 1);
+		Vehicle vehicle = entityManager.find(Vehicle.class, vehicleId);
 		if (vehicle == null) {
 			model.addAttribute("error", "Vehículo no válido");
 			return "reserve";
@@ -201,7 +203,7 @@ public class UserController {
 		}
 
 		
-		return "redirect:/user/my-reserves";
+		return "/my-reserves";
 	}
 
     @GetMapping("/modify-reserve")

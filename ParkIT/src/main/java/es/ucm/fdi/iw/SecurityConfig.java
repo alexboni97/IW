@@ -56,7 +56,7 @@ public class SecurityConfig {
 
         http
 			.csrf(csrf -> csrf
-				.ignoringRequestMatchers("/api/**")
+				.ignoringRequestMatchers("/api/**","/user/confirm-reserve")
 			)
             .authorizeHttpRequests(authorize -> authorize
 				.requestMatchers("/css/**", "/js/**", "/img/**", "/", "/error", "/help","/info").permitAll()

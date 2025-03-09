@@ -14,7 +14,7 @@ INSERT INTO IWAdmin (id, codigo_admin)
 VALUES (1, 'ratatatatat');
 
 INSERT INTO PARKER (id, first_Name, second_Name, DNI, telephone, email, wallet)
-VALUES (2, 'Sergio', 'Sanchopanza', '12345678a', '123456789', 'elmejor@ucm.es', 150.00);
+VALUES (1, 'Sergio', 'Sanchopanza', '12345678a', '123456789', 'elmejor@ucm.es', 150.00);
 
 INSERT INTO Enterprise (id, name, CIF, account_number, telephone)
 VALUES (3, 'Enterprise 1', '12345678a', '12345678901234567890', '123456789');
@@ -37,13 +37,13 @@ INSERT INTO SPOT (id, enabled, type, size, coords, parking_id)
 VALUES (2, TRUE, 'COMPACT', '2.5x5', '40.416775,-3.703790', 2);
 
 INSERT INTO Vehicle (id, enabled, plate, brand, model, size, parker_id)
-VALUES (1, true, 'ABC1234', 'Toyota', 'Corolla', 'M', 2);
+VALUES (1, true, 'ABC1234', 'Toyota', 'Corolla', 'M', 1);
 
 INSERT INTO Vehicle (id, enabled, plate, brand, model, size, parker_id)
-VALUES (2, true, 'XYZ5678', 'Honda', 'Civic', 'L', 2);
+VALUES (2, true, 'XYZ5678', 'Honda', 'Civic', 'L', 1);
 
 INSERT INTO Vehicle (id, enabled, plate, brand, model, size, parker_id)
-VALUES (3, true, 'DEF9876', 'BMW', 'X5', 'XL', 2);
+VALUES (3, true, 'DEF9876', 'BMW', 'X5', 'XL', 1);
 
 INSERT INTO RESERVE (id, state, start_date, end_date, start_time, end_time, price, comments, parker_id, spot_id, vehicle_id)
 VALUES (1, 'CONFIRMED', '2025-03-06', '2025-03-07', '10:00', '12:00', 5.0, 'Reserva para evento', 2, 1, 1);
