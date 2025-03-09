@@ -1,6 +1,6 @@
-const map = L.map('map').setView([lat == 0 ? 40.416775 : lat, lon == 0 ? -3.703790 : lon], 12); // TODO probar distintos zoom, 12 es el que mejor se ve para 5000m de radio
+// const map = L.map('map').setView([lat == null ? 40.416775 : lat, lon == null ? -3.703790 : lon], 12); // TODO probar distintos zoom, 12 es el que mejor se ve para 5000m de radio
                                                                         // habra que hacer zoom dinamico segun el radio haciendo regla de 3
-
+const map = L.map('map').setView([40.416775, -3.703790], 12)
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
