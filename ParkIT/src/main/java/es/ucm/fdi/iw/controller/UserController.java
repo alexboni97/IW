@@ -6,8 +6,10 @@ import es.ucm.fdi.iw.model.Parking;
 import es.ucm.fdi.iw.model.Parking.Transfer;
 import es.ucm.fdi.iw.model.Parker;
 import es.ucm.fdi.iw.model.Reserve;
+import es.ucm.fdi.iw.model.Spot;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.Vehicle;
 import es.ucm.fdi.iw.model.User.Role;
 import io.micrometer.common.lang.Nullable;
 
@@ -15,6 +17,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -31,6 +35,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
@@ -48,7 +53,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
@@ -141,14 +148,60 @@ public class UserController {
     }
 
 	@PostMapping("/reserve")
-	public String postReserve(@RequestParam String direccion, @RequestParam LocalDate fechaIni, @RequestParam LocalDate fechaFin, @RequestParam LocalTime horaIni, @RequestParam LocalTime horaFin, Model model) {
-
-		//Reservas reserva = new Reservas(direccion, fechaIni, fechaFin, horaIni, horaFin);
+	public String postReserve(
+		@RequestParam LocalDate startDate,
+		@RequestParam LocalDate endDate,
+		@RequestParam LocalTime startTime,
+		@RequestParam LocalTime endTime,
+		@RequestParam Long vehicleId,
+		@RequestParam Long spotId,
+		@RequestParam Double totalPrice,
+		Model model,
+		HttpSession session,
+		RedirectAttributes redirectAttributes) {
+		
+		User user = (User) session.getAttribute("u");
+		Parker parker = (Parker) user;
 
 		
-		//model.addAttribute("reserva", reserva);
+		Vehicle vehicle = entityManager.find(Vehicle.class, 1);
+		if (vehicle == null) {
+			model.addAttribute("error", "Vehículo no válido");
+			return "reserve";
+		}
+
 		
-		return "reserve";
+		Spot spot = entityManager.find(Spot.class, 1);
+		if (spot == null) {
+			model.addAttribute("error", "Plaza no válida");
+			return "reserve";
+		}
+
+		
+		Reserve reserve = new Reserve();
+		reserve.setStartDate(startDate);
+		reserve.setEndDate(endDate);
+		reserve.setStartTime(startTime);
+		reserve.setEndTime(endTime);
+		reserve.setPrice(totalPrice);
+		reserve.setState(Reserve.State.PENDING);
+		reserve.setParker(parker);
+		reserve.setSpot(spot);
+		reserve.setVehicle(vehicle);
+
+		try {
+			entityManager.persist(reserve);
+			entityManager.flush();
+			entityManager.clear();
+
+			redirectAttributes.addFlashAttribute("success", "Reserva realizada con éxito");
+		} catch (Exception e) {
+			model.addAttribute("error", "Hubo un error al guardar la reserva: " + e.getMessage());
+			return "reserve";
+		}
+
+		
+		return "redirect:/user/my-reserves";
 	}
 
     @GetMapping("/modify-reserve")

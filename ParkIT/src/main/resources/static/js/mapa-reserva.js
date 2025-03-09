@@ -21,6 +21,12 @@ document.addEventListener("DOMContentLoaded", function () {
         let horaInicio=document.getElementById("ini-h").value;
         let horaFin=document.getElementById("fin-h").value;
 
+        // if (!fechaInicio || !fechaFin || !horaInicio || !horaFin) {
+        //     errorMsg.textContent = "⚠️ Todos los campos de fecha y hora son obligatorios.";
+        //     document.getElementById("totalPrecio").textContent = "0.00";
+        //     return;
+        // }
+
         let inicio = new Date(`${fechaInicio}T${horaInicio}:00`);
         let fin = new Date(`${fechaFin}T${horaFin}:00`);
         let diferenciaMilisegundos = fin - inicio;
@@ -45,5 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("fin-f").addEventListener("input",calcularPrecio);
     document.getElementById("ini-h").addEventListener("input",calcularPrecio);
     document.getElementById("fin-h").addEventListener("input",calcularPrecio);
+    
     calcularPrecio();
 });

@@ -61,6 +61,9 @@ public class Reserve implements Transferable<Reserve.Transfer> {
     @JoinColumn(name = "spot_id")
     private Spot spot;
     
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
     
     @Getter
     @AllArgsConstructor
@@ -75,12 +78,13 @@ public class Reserve implements Transferable<Reserve.Transfer> {
         private String comments;
         private long parkerId;
         private long spotId;
+        private long vehicleId;
         private String spotAddress;
-    }
+        }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(this.id, this.state.name(), this.startDate, this.endDate, this.startTime, this.endTime, this.price, this.comments, this.parker.getId(), this.spot.getId(), this.spot.getAddress());
+        return new Transfer(this.id, this.state.name(), this.startDate, this.endDate, this.startTime, this.endTime, this.price, this.comments, this.parker.getId(), this.spot.getId(), this.vehicle.getId(), this.spot.getAddress());
     }
 
     @Override
