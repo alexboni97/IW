@@ -2,9 +2,9 @@
 <html class="h-100" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <th:block th:replace="~{fragments/head :: header}" />
+    <th:block th:replace="~{fragments/head.html :: header}" />
     <title>ParkIT: Inicio</title>
-    <th:block th:replace="~{fragments/leaflet :: head}" />
+    <th:block th:replace="~{fragments/leaflet.html :: head}" />
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -13,7 +13,7 @@
     <main class="flex-shrink-0">
         <div class="container mb-5">
             
-            <div th:replace="~{fragments/findParkForm :: findParkForm(address=${null}, latitude=${null}, longitude=${null}, startDate=${null}, 
+            <div th:replace="~{fragments/find-park-form.html :: find-park-form(address=${null}, latitude=${null}, longitude=${null}, startDate=${null}, 
                 startTime=${null}, endDate=${null}, endTime=${null}, range=${5000})}"></div>
             <!-- mapa leaflef -->
             <div id="map" class="mt-1"></div>
@@ -31,13 +31,13 @@
                 </span>
             </div>
             <div class="col-lg-6 text-lg-start text-center order-lg-2 order-1">
-                <img class="img-fluid" src="/img/city-park.webp" alt="car-electric" style="width: 500px;">
+                <img class="img-fluid" src="/img/ambient1.webp" alt="car-electric" style="width: 500px;">
             </div>
         </section>
         
         <section class="row bg-dark text-white align-items-center p-4" >
             <div class="col-lg-6 text-lg-end text-center">
-                <img class="img-fluid" src="/img/electric-car-park.webp" alt="car-electric" style="width: 500px;">
+                <img class="img-fluid" src="/img/ambient2.webp" alt="car-electric" style="width: 500px;">
             </div>
             <div class="col-lg-6 text-start ">
                 <h3>Aparca donde quieras y cuando quieras...</h3>
@@ -51,14 +51,14 @@
                 <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat quos atque enim officiis, delectus, excepturi, fugiat iure ab rerum voluptas molestias. Magni quos perspiciatis deleniti itaque neque cumque fugit ipsam.</span>
             </div>
             <div class="col-lg-6 text-lg-start text-center order-lg-2 order-1">
-                <img class="img-fluid" src="/img/city-park.webp" alt="car-electric" style="width: 500px;">
+                <img class="img-fluid" src="/img/ambient1.webp" alt="car-electric" style="width: 500px;">
             </div>
         </section>
 
     </div>
     <th:block th:replace="~{fragments/footer.html :: footer}" />
     <!-- fragmento footer con parametro parkins-->
-    <th:block th:replace="~{fragments/leaflet :: mapa}" />
+    <th:block th:replace="~{fragments/leaflet.html :: mapa}" />
     <!--<th:block th:replace="~{fragments/leaflet :: map(misParkings)}"/> -->
         
 </body>

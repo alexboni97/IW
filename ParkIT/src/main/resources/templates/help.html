@@ -2,7 +2,7 @@
 <html class="h-100" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <th:block th:replace="~{fragments/head :: header}" />
+    <th:block th:replace="~{fragments/head.html :: header}" />
     <title>Ayuda</title>
 </head>
 
@@ -10,7 +10,7 @@
     <header th:replace="~{fragments/nav.html :: nav}"></header>
 
     <main class="flex-shrink-0" style="min-height: 70vh;">
-        <div th:replace="~{fragments/helpf :: helpf}"></div>
+        <div th:replace="~{fragments/help.html :: helpf}"></div>
     </main>
 
     <th:block th:replace="~{fragments/footer.html :: footer}" />

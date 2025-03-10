@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="h-100" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <th:block th:replace="~{fragments/head :: header}" />
+    <th:block th:replace="~{fragments/head.html :: header}" />
     <title>Reservar Plaza</title>
 </head>
     <body class="d-flex flex-column h-100">
@@ -11,6 +11,6 @@
             <div th:replace="~{fragments/reserve-form.html :: reserve-form(${startDate},${startTime},${endDate},${endTime},${parkingReserva.feePerHour})}"></div>
         </div>
         
-        <footer th:replace="~{fragments/footer::footer}"></footer>
+        <footer th:replace="~{fragments/footer.html :: footer}"></footer>
     </body>
 </html>
