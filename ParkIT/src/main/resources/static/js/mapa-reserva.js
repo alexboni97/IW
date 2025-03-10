@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let precioTotal = horasTotales * precioPorHora;
 
         document.getElementById("totalPrecio").textContent = precioTotal.toFixed(2);
+        document.getElementById("totalPrice").value = precioTotal.toFixed(2);
         
     }
     document.getElementById("ini-f").addEventListener("input",calcularPrecio);

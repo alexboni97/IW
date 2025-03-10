@@ -164,7 +164,7 @@ public class UserController {
 		@RequestParam LocalTime startTime,
 		@RequestParam LocalTime endTime,
 		@RequestParam Long vehicleId,
-		@RequestParam Long spotId,
+		// @RequestParam Long spotId,
 		@RequestParam Double totalPrice,
 		Model model,
 		HttpSession session,
