@@ -50,10 +50,10 @@ public class User implements Transferable<User.Transfer> {
     @Enumerated(EnumType.STRING) // TODO: invento JP, si no va quitar
     private Role role; // split by ',' to separate roles
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "sender_id")
 	private List<Message> sent = new ArrayList<>();
-	@OneToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "recipient_id")	
 	private List<Message> received = new ArrayList<>();		
 

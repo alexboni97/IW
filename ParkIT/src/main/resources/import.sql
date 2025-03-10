@@ -5,6 +5,10 @@ VALUES (1, TRUE, 'ADMIN', 'a',
 INSERT INTO IWUser (id, enabled, role, username, password)
 VALUES (2, TRUE, 'USER', 'b',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
+
+-- INSERT INTO IWUser (id, enabled, role, username, password)
+-- VALUES (4, TRUE, 'USER', 'c',
+--     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
 -- < metido a mano
 INSERT INTO IWUser (id, enabled, role, username, password)
 VALUES (3, TRUE, 'ENTERPRISE', 'e',
@@ -15,6 +19,9 @@ VALUES (1, 'ratatatatat');
 
 INSERT INTO PARKER (id, first_Name, second_Name, DNI, telephone, email, wallet)
 VALUES (1, 'Sergio', 'Sanchopanza', '12345678a', '123456789', 'elmejor@ucm.es', 150.00);
+
+INSERT INTO PARKER (id, first_Name, second_Name, DNI, telephone, email, wallet)
+VALUES (2, 'Paula', 'ayuda', '12345678b', '123456780', 'lamejor@ucm.es', 200.00);
 
 INSERT INTO Enterprise (id, name, CIF, account_number, telephone)
 VALUES (3, 'Enterprise 1', '12345678a', '12345678901234567890', '123456789');
@@ -45,8 +52,22 @@ VALUES (2, true, 'XYZ5678', 'Honda', 'Civic', 'L', 1);
 INSERT INTO Vehicle (id, enabled, plate, brand, model, size, parker_id)
 VALUES (3, true, 'DEF9876', 'BMW', 'X5', 'XL', 1);
 
+INSERT INTO Vehicle (id, enabled, plate, brand, model, size, parker_id)
+VALUES (4, true, 'PAULA', 'Toyota', 'Corolla', 'M', 2);
+
+INSERT INTO Vehicle (id, enabled, plate, brand, model, size, parker_id)
+VALUES (5, true, 'ARTURO', 'Honda', 'Civic', 'L', 2);
+
+INSERT INTO Vehicle (id, enabled, plate, brand, model, size, parker_id)
+VALUES (6, true, 'DEF9876', 'BMW', 'X5', 'XL', 2);
+
 INSERT INTO RESERVE (id, state, start_date, end_date, start_time, end_time, price, comments, parker_id, spot_id, vehicle_id)
 VALUES (1, 'CONFIRMED', '2025-03-06', '2025-03-07', '10:00', '12:00', 5.0, 'Reserva para evento', 2, 1, 1);
 
 INSERT INTO RESERVE (id, state, start_date, end_date, start_time, end_time, price, comments, parker_id, spot_id, vehicle_id)
 VALUES (2, 'CONFIRMED', '2025-03-06', '2025-03-07', '10:00', '12:00', 8.0, 'Reserva para evento', 2, 2, 2);
+
+
+-- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡TENED EN CUENTA!!!!!!!!!!!!!!!!!!!
+-- CUANDO ENTRAS COMO B EN LA APP, Y LE DAS A BUSCAR, TE APARECEN LOS COCHES VINCULADOS AL PARKER CON ID 1, Q ES SERGIO, PERO CUANDO ENTRAS EN VER MIS RESERVAS DE B, 
+-- APARECEN LAS RESERVAS QUE ESTÁN VINCULADAS AL IWUSER CON IDE 2 (ROLL USER) RARETE

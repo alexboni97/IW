@@ -131,12 +131,20 @@ public class UserController {
 		return "map";
 	}
 
-
     @GetMapping("/reserve/{id}")
     public String reserve(Model model, @PathVariable long id, @RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate,
 		@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime) {
 		Parking parking= entityManager.find(Parking.class, id);
-		List<Vehicle>vehicles= entityManager.find(Parker.class, id).getVehicles();
+		if(parking == null){
+			model.addAttribute("erro", "Parking no válido");
+			return "error";
+		}	
+		Parker parker = entityManager.find(Parker.class, id);
+		if(parker == null){
+			model.addAttribute("erro", "Parker no válido");
+			return "error";
+		}
+		List<Vehicle>vehicles= parker.getVehicles();
 		model.addAttribute("parkingReserva", parking.toTransfer());
 		model.addAttribute("vehicles", vehicles);
 		model.addAttribute("startDate", startDate);
@@ -211,17 +219,37 @@ public class UserController {
         return "modify-reserve";
     }
 	
-    @GetMapping("/my-reserves")
-    public String myReserves(Model model, HttpSession session) {
+    // @GetMapping("/my-reserves")
+    // public String myReserves(Model model, HttpSession session) {
+		
+	// 	User user = (User) session.getAttribute("u");
+	// 	// Parker parker = (Parker) user;
+		
+	// 	List<Reserve> reservas = entityManager.createQuery("SELECT r FROM Reserve r WHERE r.parker = :user", Reserve.class).setParameter("user", user).getResultList();
+
+	// 	model.addAttribute("reservas", reservas);
+    //     return "my-reserves";
+    // }
+
+	@GetMapping("/my-reserves")
+	public String myReserves(Model model, HttpSession session) {
 		
 		User user = (User) session.getAttribute("u");
-		Parker parker = (Parker) user;
-		
-		List<Reserve> reservas = entityManager.createQuery("SELECT r FROM Reserve r WHERE r.parker = :parker", Reserve.class).setParameter("parker", parker).getResultList();
+		if (user instanceof Parker) {
+			Parker parker = (Parker) user;
+			List<Reserve> reservas = entityManager.createQuery("SELECT r FROM Reserve r WHERE r.parker = :parker", Reserve.class)
+												.setParameter("parker", parker)
+												.getResultList();
 
-		model.addAttribute("reservas", reservas);
-        return "my-reserves";
-    }
+			model.addAttribute("reservas", reservas);
+		} else {
+			model.addAttribute("error", "No eres un parker válido.");
+			return "error";
+		}
+
+		return "my-reserves";
+	}
+
 	
 	/**
      * Exception to use when denying access to unauthorized users.
@@ -265,6 +293,7 @@ public class UserController {
 	@GetMapping("{id}")
     public String index(@PathVariable long id, Model model, HttpSession session) {
         User target = entityManager.find(User.class, id);
+		// Parker parker = entityManager.find(Parker.class, id);
         model.addAttribute("user", target);
         return "user";
     }
