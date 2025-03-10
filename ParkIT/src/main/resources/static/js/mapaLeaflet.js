@@ -50,8 +50,8 @@ if (rad != null) { // muestra el rango en el que se ha hecho la busqueda
 
 // Añadir un marcador personalizado
 var marca = L.icon({
-    iconUrl: '/img/ParkIT_marker.png',
-    //shadowUrl: '/img/ParkIT_marker.png',
+    iconUrl: '/img/marker.png',
+    //shadowUrl: '/img/marker_shadow.png',
 
     iconSize: [60, 60], // size of the icon
     //shadowSize: [50, 64], // size of the shadow
