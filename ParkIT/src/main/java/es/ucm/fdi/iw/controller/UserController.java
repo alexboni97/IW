@@ -211,25 +211,13 @@ public class UserController {
 		}
 
 		
-		return "/my-reserves";
+		return myReserves(model, session);
 	}
 
     @GetMapping("/modify-reserve")
     public String modifyReserve(Model model) {
         return "modify-reserve";
     }
-	
-    // @GetMapping("/my-reserves")
-    // public String myReserves(Model model, HttpSession session) {
-		
-	// 	User user = (User) session.getAttribute("u");
-	// 	// Parker parker = (Parker) user;
-		
-	// 	List<Reserve> reservas = entityManager.createQuery("SELECT r FROM Reserve r WHERE r.parker = :user", Reserve.class).setParameter("user", user).getResultList();
-
-	// 	model.addAttribute("reservas", reservas);
-    //     return "my-reserves";
-    // }
 
 	@GetMapping("/my-reserves")
 	public String myReserves(Model model, HttpSession session) {
