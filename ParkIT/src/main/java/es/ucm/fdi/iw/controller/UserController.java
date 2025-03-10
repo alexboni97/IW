@@ -167,10 +167,10 @@ public class UserController {
 		// @RequestParam Long spotId,
 		@RequestParam Double totalPrice,
 		Model model,
-		HttpSession session,
+		// HttpSession session,
 		RedirectAttributes redirectAttributes) {
-		
-		User user = (User) session.getAttribute("u");
+
+		User user = (User) model.getAttribute("u");
 		Parker parker = (Parker) user;
 
 		
@@ -211,7 +211,7 @@ public class UserController {
 		}
 
 		
-		return myReserves(model, session);
+		return myReserves(model);
 	}
 
     @GetMapping("/modify-reserve")
@@ -220,9 +220,9 @@ public class UserController {
     }
 
 	@GetMapping("/my-reserves")
-	public String myReserves(Model model, HttpSession session) {
+	public String myReserves(Model model) {
 		
-		User user = (User) session.getAttribute("u");
+		User user = (User) model.getAttribute("u");
 		if (user instanceof Parker) {
 			Parker parker = (Parker) user;
 			List<Reserve> reservas = entityManager.createQuery("SELECT r FROM Reserve r WHERE r.parker = :parker", Reserve.class)
