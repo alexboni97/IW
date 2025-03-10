@@ -20,7 +20,7 @@
 
 </th:block>
 <!-- fragmento footer con parametro parkins-->
-<th:block th:fragment="mapa(misParkings, lat, lon, radius)">
+<th:block th:fragment="mapa">
     <!-- Leaflet JS -->
     <!-- <script th:src="@{/js/leaflet.js}"></script> -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -31,7 +31,7 @@
 
     <!-- pasamos los parkings a la variable parkings para que jp.js pueda acceder a ellos -->
     <script th:inline="javascript">
-        var parkings = /*[[${misParkings}]]*/[];
+        var parkings = /*[[${parkings}]]*/[];
         var lat = /*[[${lat}]]*/ null;
         var lon = /*[[${lon}]]*/ null;
         var rad = /*[[${radius}]]*/ null;    
