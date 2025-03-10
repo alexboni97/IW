@@ -13,7 +13,7 @@ const geocoder = L.Control.geocoder({
     const address = e.geocode.name;
     const latitude = e.geocode.center.lat;
     const longitude = e.geocode.center.lng;
-    map.setView(e.geocode.center, 16);
+    map.setView(e.geocode.center, rad*12/5000); // TODO probar distintos zoom, 12 es el que mejor se ve para 5000m de radio
     document.getElementById('address').value = address;
     document.getElementById('latitude').value = latitude;
     document.getElementById('longitude').value = longitude;
@@ -51,11 +51,11 @@ var marca = L.icon({
     iconUrl: '/img/ParkIT_marker.png',
     //shadowUrl: '/img/ParkIT_marker.png',
 
-    iconSize: [95, 95], // size of the icon
-    shadowSize: [50, 64], // size of the shadow
-    iconAnchor: [22, 94], // point of the icon which will correspond to marker's location
-    shadowAnchor: [4, 62],  // the same for the shadow
-    popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
+    iconSize: [60, 60], // size of the icon
+    //shadowSize: [50, 64], // size of the shadow
+    iconAnchor: [30, 60], // point of the icon which will correspond to marker's location
+    //shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor: [20, -50] // point from which the popup should open relative to the iconAnchor
 });
 
 parkings.forEach(parking => {
