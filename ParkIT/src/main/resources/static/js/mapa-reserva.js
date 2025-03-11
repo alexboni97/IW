@@ -55,3 +55,14 @@ document.addEventListener("DOMContentLoaded", function () {
     
     calcularPrecio();
 });
+
+document.querySelector("form").addEventListener("submit", function(event) {
+    let vehicleSelect = document.getElementById("vehiculo");
+    let errorDiv = document.getElementById("errorNotification");
+
+    if (vehicleSelect.value === "Selecciona 1" || vehicleSelect.value === "") {
+        event.preventDefault();
+        errorDiv.textContent = "Debes seleccionar un vehículo antes de reservar.";
+        errorDiv.classList.remove("d-none");
+    }
+});

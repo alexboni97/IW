@@ -27,12 +27,8 @@
                 <br>
                 <div class="row">
                         <label for="vehiculo">Vehículo</label>
-                        <select
-                            class="form-select form-select-lg "
-                            name="vehicleId"
-                            id="vehiculo"
-                        >
-                            <option selected disabled>Selecciona 1</option>
+                        <select class="form-select form-select-lg" name="vehicleId" id="vehiculo" required>
+                            <option value="" selected disabled>Selecciona 1</option>
                             <!-- <option value="1">Coche 1</option>
                             <option value="2">Coche 2</option>
                             <option value="3">Coche 3</option>  -->
@@ -41,7 +37,7 @@
                         <div class="container text-center">
                             <!-- <div th:replace="~{/fragments/new-car-modal.html :: new-car-modal}" ></div> -->
                         </div>
-                        
+
                 </div>
                 <div class="row pt-1 m-1">
                     <p id="errorMsg"></p>
@@ -54,6 +50,7 @@
                     <!-- <button class="btn btn-danger m-1 col col-lg-3">Cancelar</button> -->
                     <a href="/user/map"class="btn btn-danger m-1 col col-lg-3">Cancelar</a>
                     <!-- <a href="/user/my-reserves" class="btn btn-primary m-1 col col-lg-3">Reservar</a> -->
+                    <div id="errorNotification" class="alert alert-danger d-none" role="alert"></div>
                     <button  class="btn btn-primary m-1 col col-lg-3" type="submit">Reservar</button>
                 </div>
             </form>

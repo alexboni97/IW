@@ -176,21 +176,46 @@ public class UserController {
 
 		User user = (User) model.getAttribute("u");
 		Parker parker = (Parker) user;
+		if (parker == null) {
+			model.addAttribute("error", "No eres un parker válido.");
+			return reserve(model, 0, null, null, null, null);
+		}
 
+		if(startDate == null || endDate == null || startTime == null || endTime == null || vehicleId == null || totalPrice == null){
+			redirectAttributes.addFlashAttribute("error", "Faltan campos por rellenar");
+    		return "redirect:/reserve"; 
+		}
+
+		if (startDate.isAfter(endDate) || (startDate.isEqual(endDate) && startTime.isAfter(endTime))) {
+			model.addAttribute("error", "La fecha de inicio no puede ser posterior a la de fin");
+			return reserve(model, 1, startDate.toString(), endDate.toString(), startTime.toString(), endTime.toString());
+		}
 		
 		Vehicle vehicle = entityManager.find(Vehicle.class, vehicleId);
 		if (vehicle == null) {
 			model.addAttribute("error", "Vehículo no válido");
-			return "reserve";
-		}
+			return reserve(model, 0, null, null, null, null);
 
+		}
 		
 		Spot spot = entityManager.find(Spot.class, 1);
 		if (spot == null) {
 			model.addAttribute("error", "Plaza no válida");
-			return "reserve";
+			return reserve(model, 0, null, null, null, null);
 		}
 
+		List<Reserve> reservas = entityManager.createQuery("SELECT r FROM Reserve r WHERE r.spot = :spot", Reserve.class)
+												.setParameter("spot", spot)
+												.getResultList();
+		for (Reserve r : reservas) {
+			if ((r.getStartDate().isBefore(endDate) && r.getEndDate().isAfter(startDate)) || 
+    			(r.getStartDate().isEqual(startDate) && r.getStartTime().isBefore(endTime)) || 
+    			(r.getEndDate().isEqual(endDate) && r.getEndTime().isAfter(startTime))) {
+
+    			model.addAttribute("error", "No se puede reservar esta plaza en esas fechas y horas");
+    			return reserve(model, spot.getParking().getId(), startDate.toString(), endDate.toString(), startTime.toString(), endTime.toString());
+			}
+		}
 		
 		Reserve reserve = new Reserve();
 		reserve.setStartDate(startDate);
@@ -207,14 +232,12 @@ public class UserController {
 			entityManager.persist(reserve);
 			entityManager.flush();
 			entityManager.clear();
-
-			redirectAttributes.addFlashAttribute("success", "Reserva realizada con éxito");
+			model.addAttribute("success", "Reserva realizada con éxito");
 		} catch (Exception e) {
 			model.addAttribute("error", "Hubo un error al guardar la reserva: " + e.getMessage());
-			return "reserve";
+			return reserve(model, 0, null, null, null, null);
 		}
 
-		
 		return myReserves(model);
 	}
 
