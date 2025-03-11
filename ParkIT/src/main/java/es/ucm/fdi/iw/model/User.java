@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
-//import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -41,8 +40,9 @@ public class User implements Transferable<User.Transfer> {
 
     private double wallet;
 
-    // private String firstName; //TODO: eliminar en algun momento
-    // private String lastName; 
+    private String email;
+
+    private int telephone;
 
     public enum Role {
         USER,			// normal users 
@@ -50,8 +50,8 @@ public class User implements Transferable<User.Transfer> {
         ENTERPRISE,     // enterprise users
     }
 
-    @Enumerated(EnumType.STRING) // TODO: invento JP, si no va quitar
-    private Role role; // split by ',' to separate roles
+    @Enumerated(EnumType.STRING) 
+    private Role role;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "sender_id")
@@ -60,39 +60,31 @@ public class User implements Transferable<User.Transfer> {
 	@JoinColumn(name = "recipient_id")	
 	private List<Message> received = new ArrayList<>();		
 
-    /**
-     * Checks whether this user has a given role.
-     * @param role to check
-     * @return true iff this user has that role.
-     public boolean hasRole(Role role) {
-        String roleName = role.name();
-        return Arrays.asList(roles.split(",")).contains(roleName);
-    }
-    */
-    public boolean hasRole(Role role) { // TODO: invento JP, si no va cambiar como estaba
+    public boolean hasRole(Role role) { 
         return this.role == role;
-    }
+        }
 
-
-    @Getter
-    @AllArgsConstructor
-    public static class Transfer {
-		private long id;
+        @Getter
+        @AllArgsConstructor
+        public static class Transfer {
+        private long id;
         private boolean enabled;
         private String username;
-		private int totalReceived;
-		private int totalSent;
+        private int totalReceived;
+        private int totalSent;
         private double wallet;
+        private int telephone;
+        private String email;
         private String role;
-    }
+        }
 
-	@Override
-    public Transfer toTransfer() {
-		return new Transfer(this.id, this.enabled, this.username, this.received.size(), this.sent.size(), this.wallet, this.role.name());
-	}
-	
-	@Override
-	public String toString() {
+        @Override
+        public Transfer toTransfer() {
+        return new Transfer(this.id, this.enabled, this.username, this.received.size(), this.sent.size(), this.wallet, this.telephone, this.email, this.role.name());
+        }
+
+        @Override
+        public String toString() {
 		return toTransfer().toString();
 	}
 }

@@ -25,16 +25,12 @@ import java.util.List;
 		@NamedQuery(name = "negocio.Parker.findByreserves", query = "select p from Parker p where :reserves MEMBER OF p.reserves ") })
 public class Parker extends User {
 	
-	private String firstName;
-
-	private String secondName;
-
 	@Column(nullable = false, unique = true)
 	private String DNI;
-
-	private int telephone;
-
-	private String email;
+	
+	private String firstName;
+	
+	private String secondName;
 
 	@OneToMany
 	@JoinColumn(name = "parker_id")
@@ -50,29 +46,25 @@ public class Parker extends User {
 		private String firstName;
 		private String secondName;
 		private String DNI;
-		private int telephone;
-		private String email;
 		private int totalVehicles;
 		private int totalReserves;
 
-		public Transfer(long id, boolean enabled, String username, String password, int totalReceived, int totalSent,  
-		String firstName, String secondName, String DNI, int telephone, String email, int totalVehicles, int totalReserves,
-		double wallet, String role) {
-            super(id, enabled, username, totalReceived, totalSent, wallet, role);
-            this.firstName = firstName;
-			this.secondName = secondName;
+		public Transfer(long id, boolean enabled, String username, int totalReceived, int totalSent, double wallet, int telephone, String email, String role,
+						String DNI, String firstName, String secondName, int totalVehicles, int totalReserves) {
+			super(id, enabled, username, totalReceived, totalSent, wallet, telephone, email, role);
 			this.DNI = DNI;
-			this.telephone = telephone;
-			this.email = email;
+			this.firstName = firstName;
+			this.secondName = secondName;
 			this.totalVehicles = totalVehicles;
 			this.totalReserves = totalReserves;
-        }
-    }
+		}
+	}
 
 	@Override
-    public Transfer toTransfer() {
-		return new Transfer(this.getId(), this.isEnabled(), this.getUsername(), this.getPassword(), this.getReceived().size(), this.getSent().size(), 
-		this.firstName, this.secondName, this.DNI, this.telephone, this.email, this.vehicles.size(), this.reserves.size(), this.getWallet(), this.getRole().name());
+	public Transfer toTransfer() {
+		return new Transfer(this.getId(), this.isEnabled(), this.getUsername(), this.getReceived().size(), this.getSent().size(), 
+		this.getWallet(), this.getTelephone(), this.getEmail(), this.getRole().name(),
+		this.DNI, this.firstName, this.secondName, this.vehicles.size(), this.reserves.size());
 	}
 	
 	@Override

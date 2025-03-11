@@ -20,26 +20,26 @@ import jakarta.persistence.*;
 public class Admin extends User {
 
     @Column(nullable = false, unique = true)
-    private String codigoAdmin;
+    private String codigo;
 
     @Getter
     public static class Transfer extends User.Transfer {
         
-        private String codigoAdmin;
+        private String codigo;
 
-        public Transfer(long id, boolean enabled, String username, String password, String codigoAdmin, int totalReceived, int totalSent, double wallet, String role) {
-            super(id, enabled, username, totalReceived, totalSent, wallet, role);
-            this.codigoAdmin = codigoAdmin;
+        public Transfer(long id, boolean enabled, String username, int totalReceived, int totalSent, double wallet, int telephone, String email, String role, String codigo) {
+            super(id, enabled, username, totalReceived, totalSent, wallet, telephone, email, role);
+            this.codigo = codigo;
         }
-    }
+        }
 
-    @Override
-    public Transfer toTransfer() {
-        return new Transfer(this.getId(), this.isEnabled(), this.getUsername(), this.getPassword(), this.codigoAdmin, this.getReceived().size(), this.getSent().size(), this.getWallet(), this.getRole().toString());
-    }
+        @Override
+        public Transfer toTransfer() {
+        return new Transfer(this.getId(), this.isEnabled(), this.getUsername(), this.getReceived().size(), this.getSent().size(), this.getWallet(), this.getTelephone(), this.getEmail(), this.getRole().name(), this.codigo);
+        }
 
-    @Override
-    public String toString() {
+        @Override
+        public String toString() {
         return toTransfer().toString();
     }
 }

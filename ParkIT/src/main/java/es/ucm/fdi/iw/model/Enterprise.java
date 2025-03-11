@@ -28,32 +28,27 @@ public class Enterprise extends User {
 	@Column(nullable = false, unique = true)
 	private String CIF;
 
-	private int telephone;
-
 	@OneToMany
 	@JoinColumn(name = "enterprise_id")
-	private List<Parking> parkings  = new ArrayList<>();
+	private List<Parking> parkings = new ArrayList<>();
 
 	@Getter
-    public static class Transfer extends User.Transfer { 
+	public static class Transfer extends User.Transfer { 
 		private String name;
 		private String CIF;
-		private int telephone;
 		private int totalParkings;
 
-		public Transfer(long id, boolean enabled, String username, String password , String name, String CIF, int telephone, int totalParkings,int totalReceived,int totalSent, double wallet, String role) {
-			super(id, enabled, username,totalReceived, totalSent, wallet, role);
+		public Transfer(long id, boolean enabled, String username, int totalReceived, int totalSent, double wallet, int telephone, String email, String role, String name, String CIF, int totalParkings) {
+			super(id, enabled, username, totalReceived, totalSent, wallet, telephone, email, role);
 			this.name = name;
 			this.CIF = CIF;
-			this.telephone = telephone;
 			this.totalParkings = totalParkings;
 		}
-		
-    }
+	}
 
 	@Override
-    public Transfer toTransfer() { 
-		return new Transfer(this.getId(), this.isEnabled(), this.getUsername(), this.getPassword(),name, this.CIF, this.telephone, this.parkings.size(), this.getReceived().size(), this.getSent().size(), this.getWallet(), this.getRole().toString());
+	public Transfer toTransfer() { 
+		return new Transfer(this.getId(), this.isEnabled(), this.getUsername(), this.getReceived().size(), this.getSent().size(), this.getWallet(), this.getTelephone(), this.getEmail(), this.getRole().toString(), this.name, this.CIF, this.parkings.size());
 	}
 	
 	@Override
