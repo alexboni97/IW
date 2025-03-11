@@ -7,8 +7,8 @@
     <body class="d-flex flex-column h-100">
         <header th:replace="~{fragments/nav.html :: nav}"></header>
         <div class="container-fluid row p-5">
-            <div th:replace="~{fragments/parking-space-card.html :: ps-card(${parkingReserva})}"></div>
-            <div th:replace="~{fragments/reserve-form.html :: reserve-form(${startDate},${startTime},${endDate},${endTime},${parkingReserva.feePerHour})}"></div>
+            <div th:replace="~{fragments/parking-space-card.html :: ps-card}"></div>
+            <div th:replace="~{fragments/reserve-form.html :: reserve-form}"></div>
         </div>
         
         <footer th:replace="~{fragments/footer.html :: footer}"></footer>

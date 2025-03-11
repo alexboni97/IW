@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <th:block th:fragment='reserve-form(startDate, startTime, endDate, endTime,feePerHour)'>
+    <th:block th:fragment="reserve-form">
         <div class="col mx-3">
             <form method="post" th:action="@{/user/confirm-reserve}" >
                 <div class="row">
@@ -39,7 +39,7 @@
                             <option th:each="vehicle : ${vehicles}" th:value="${vehicle.id}" th:text="${vehicle.brand}+' '+${vehicle.model}+' ('+${vehicle.plate}+')'"></option>
                         </select>
                         <div class="container text-center">
-                            <!-- <div th:replace="~{/fragments/new-car-modal}" ></div> -->
+                            <!-- <div th:replace="~{/fragments/new-car-modal.html :: new-car-modal}" ></div> -->
                         </div>
                         
                 </div>
@@ -47,7 +47,7 @@
                     <p id="errorMsg"></p>
                     <h4>Precio total:</h4>
                     <p><span id="totalPrecio">0.00</span>€</p>
-                    <input type="hidden" name="totalPrice" id="totalPrice" />
+                    <input type="hidden" name="totalPrice" id="totalPrice" value="0.00" />
                     
                 </div>
                 <div class="row justify-content-center pt-5">
@@ -59,7 +59,7 @@
             </form>
         </div>
         <script th:inline="javascript">
-            let precioPorHora = /*[[${feePerHour}]]*/{};
+            let precioPorHora = /*[[${parking.feePerHour}]]*/{};
         </script>
         <script th:src="@{/js/mapa-reserva.js}"></script>
     </th:block>

@@ -145,7 +145,7 @@ public class UserController {
 			return "error";
 		}
 		List<Vehicle>vehicles= parker.getVehicles();
-		model.addAttribute("parkingReserva", parking.toTransfer());
+		model.addAttribute("parking", parking.toTransfer());
 		model.addAttribute("vehicles", vehicles);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
