@@ -19,7 +19,6 @@ import java.util.List;
 @NamedQueries({
 		@NamedQuery(name = "Enterprise.findByname", query = "select obj from Enterprise obj where :name = obj.name "),
 		@NamedQuery(name = "Enterprise.findByCIF", query = "select obj from Enterprise obj where :CIF = obj.CIF "),
-		@NamedQuery(name = "Enterprise.findByaccountNumber", query = "select obj from Enterprise obj where :accountNumber = obj.accountNumber "),
 		@NamedQuery(name = "Enterprise.findBytelephone", query = "select obj from Enterprise obj where :telephone = obj.telephone "),
 		@NamedQuery(name = "Enterprise.findByparkings", query = "select obj from Enterprise obj where :parkings MEMBER OF obj.parkings ") })
 public class Enterprise extends User {
@@ -28,8 +27,6 @@ public class Enterprise extends User {
 
 	@Column(nullable = false, unique = true)
 	private String CIF;
-
-	private String accountNumber;
 
 	private int telephone;
 
@@ -41,16 +38,13 @@ public class Enterprise extends User {
     public static class Transfer extends User.Transfer { 
 		private String name;
 		private String CIF;
-		private String accountNumber;
 		private int telephone;
 		private int totalParkings;
 
-		public Transfer(long id, boolean enabled, String username, String password , String name, String CIF, 
-		String accountNumber, int telephone, int totalParkings,int totalReceived,int totalSent) {
-			super(id, enabled, username,totalReceived, totalSent);
+		public Transfer(long id, boolean enabled, String username, String password , String name, String CIF, int telephone, int totalParkings,int totalReceived,int totalSent, double wallet, String role) {
+			super(id, enabled, username,totalReceived, totalSent, wallet, role);
 			this.name = name;
 			this.CIF = CIF;
-			this.accountNumber = accountNumber;
 			this.telephone = telephone;
 			this.totalParkings = totalParkings;
 		}
@@ -59,8 +53,7 @@ public class Enterprise extends User {
 
 	@Override
     public Transfer toTransfer() { 
-		return new Transfer(this.getId(), this.isEnabled(), this.getUsername(), this.getPassword(),name, this.CIF, 
-		this.accountNumber, this.telephone, this.parkings.size(), this.getReceived().size(), this.getSent().size());
+		return new Transfer(this.getId(), this.isEnabled(), this.getUsername(), this.getPassword(),name, this.CIF, this.telephone, this.parkings.size(), this.getReceived().size(), this.getSent().size(), this.getWallet(), this.getRole().toString());
 	}
 	
 	@Override

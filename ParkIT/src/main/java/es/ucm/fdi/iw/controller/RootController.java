@@ -3,17 +3,24 @@ package es.ucm.fdi.iw.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 
 import es.ucm.fdi.iw.model.Parking;
 import es.ucm.fdi.iw.model.Parking.Transfer;
+import es.ucm.fdi.iw.model.Parker;
+import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.Lorem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +32,9 @@ import java.util.List;
 public class RootController {
 
     private static final Logger log = LogManager.getLogger(RootController.class);
+
+    @Autowired
+ 	private PasswordEncoder passwordEncoder;
 
     @Autowired
 	private EntityManager entityManager;
@@ -56,6 +66,26 @@ public class RootController {
         for (Parking p : parkings) {
             System.out.println("Parking: " + p.getName());
         }
+
+        return "index";
+    }
+
+    @PostMapping("/")
+    @Transactional
+    public String poblarUsuarios() {
+        
+        for (int i=0; i<10; i++) {
+            Parker p = new Parker();
+            p.setUsername("user" + i);
+            p.setPassword(passwordEncoder.encode(UserController.generateRandomBase64Token(9)));
+            p.setDNI(i + "A");
+            p.setEnabled(true);
+            p.setRole(User.Role.USER);
+            p.setFirstName(Lorem.nombreAlAzar());
+            p.setSecondName(Lorem.apellidoAlAzar());
+            p.setWallet(100);
+            entityManager.persist(p);
+         }
 
         return "index";
     }

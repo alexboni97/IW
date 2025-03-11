@@ -19,7 +19,8 @@ import java.util.List;
 @NoArgsConstructor
 @NamedQueries({
     @NamedQuery(name="User.byUsername", query="SELECT u FROM User u WHERE u.username = :username AND u.enabled = TRUE"),
-    @NamedQuery(name="User.hasUsername", query="SELECT COUNT(u) FROM User u WHERE u.username = :username")
+    @NamedQuery(name="User.hasUsername", query="SELECT COUNT(u) FROM User u WHERE u.username = :username"),
+    @NamedQuery(name="User.all", query="SELECT u FROM User u")
 })
 @Table(name="IWUser")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -37,6 +38,8 @@ public class User implements Transferable<User.Transfer> {
 
     @Column(nullable = false)
     private String password;
+
+    private double wallet;
 
     // private String firstName; //TODO: eliminar en algun momento
     // private String lastName; 
@@ -79,11 +82,13 @@ public class User implements Transferable<User.Transfer> {
         private String username;
 		private int totalReceived;
 		private int totalSent;
+        private double wallet;
+        private String role;
     }
 
 	@Override
     public Transfer toTransfer() {
-		return new Transfer(this.id, this.enabled, this.username, this.received.size(), this.sent.size());
+		return new Transfer(this.id, this.enabled, this.username, this.received.size(), this.sent.size(), this.wallet, this.role.name());
 	}
 	
 	@Override

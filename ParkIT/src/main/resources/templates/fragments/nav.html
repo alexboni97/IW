@@ -101,7 +101,11 @@
                         </li>
                         <th:block th:unless="${u}">
 
-
+                            <li class="nav-link ">
+                                <form th:action="@{/}" method="post">
+                                    <button type="submit" class="btn btn-outline-secondary">Poblar Usuarios</button>
+                                </form>
+                            </li>
                         
                             <li class="nav-link align-self-center ">
                                 <a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/login}" href="/login">Iniciar Sesión</a>

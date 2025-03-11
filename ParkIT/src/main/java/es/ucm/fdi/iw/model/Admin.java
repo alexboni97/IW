@@ -27,15 +27,15 @@ public class Admin extends User {
         
         private String codigoAdmin;
 
-        public Transfer(long id, boolean enabled, String username, String password, String codigoAdmin, int totalReceived, int totalSent) {
-            super(id, enabled, username, totalReceived, totalSent);
+        public Transfer(long id, boolean enabled, String username, String password, String codigoAdmin, int totalReceived, int totalSent, double wallet, String role) {
+            super(id, enabled, username, totalReceived, totalSent, wallet, role);
             this.codigoAdmin = codigoAdmin;
         }
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(this.getId(), this.isEnabled(), this.getUsername(), this.getPassword(), this.codigoAdmin, this.getReceived().size(), this.getSent().size());
+        return new Transfer(this.getId(), this.isEnabled(), this.getUsername(), this.getPassword(), this.codigoAdmin, this.getReceived().size(), this.getSent().size(), this.getWallet(), this.getRole().toString());
     }
 
     @Override
