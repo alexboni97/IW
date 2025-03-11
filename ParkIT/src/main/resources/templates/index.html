@@ -13,8 +13,7 @@
     <main class="flex-shrink-0">
         <div class="container mb-5">
             
-            <div th:replace="~{fragments/find-park-form.html :: find-park-form(address=${null}, latitude=${null}, longitude=${null}, startDate=${null}, 
-                startTime=${null}, endDate=${null}, endTime=${null}, range=${5000})}"></div>
+            <div th:replace="~{fragments/find-park-form.html :: find-park-form}"></div>
             <!-- mapa leaflef -->
             <div id="map" class="mt-1"></div>
 

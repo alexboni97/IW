@@ -1,4 +1,4 @@
-<div th:fragment="find-park-form(address, latitude, longitude, startDate, startTime, endDate, endTime, range)">
+<div th:fragment="find-park-form">
     <form th:action="@{/user/map}" method="GET">
         <h1 class="mt-5">Encuentra tu plaza de aparcamiento con ParkIT</h1>
         <div class="mb-3">
@@ -41,7 +41,7 @@
                 <label for="range" class="form-label">Rango</label>
                 <div class="input-group">
                     <input type="text" class="form-control" name="range" id="range" aria-describedby="rangeId"
-                        placeholder="" th:value="${range != null ? range : 5000}"/>
+                        placeholder="" th:value="${range}"/>
                 </div>
             </div>
         </div>
