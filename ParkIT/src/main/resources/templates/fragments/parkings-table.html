@@ -1,4 +1,4 @@
-<div th:fragment="parkings-table(misParking, startDate, startTime, endDate, endTime)">
+<div th:fragment="parkings-table">
     
     <table class="table table-hover">
         <thead>
@@ -12,13 +12,13 @@
         </thead>
         <tbody>
         
-        <tr th:each="parking : ${misParking}">
+        <tr th:each="parking : ${parkings}">
             <th th:text="${parking.name}">Nombre</th>
             <th th:text ="${parking.address}">Calle</th>
             <th th:text="${parking.feePerHour}">Precio/Hora</th>
             <th> 0 </th>
             <th>
-                <a th:href="@{/user/reserve/{id}(id=${parking.id}, startDate=${startDate}, startTime=${startTime}, endDate=${endDate}, endTime=${endTime})}" class="btn btn-primary">Reservar</a>
+                <a th:href="@{/user/reserve/{id}(id=${parking.id}, startDate=${startDate}, endDate=${endDate}, startTime=${startTime}, endTime=${endTime})}" class="btn btn-primary">Reservar</a>
             </th>
         
         </tbody>

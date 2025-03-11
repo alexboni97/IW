@@ -132,8 +132,12 @@ public class UserController {
 	}
 
     @GetMapping("/reserve/{id}")
-    public String reserve(Model model, @PathVariable long id, @RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate,
-		@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime) {
+    public String reserve(Model model, 
+		@PathVariable long id, 
+		@RequestParam @Nullable String startDate, 
+		@RequestParam @Nullable String endDate,
+		@RequestParam @Nullable String startTime, 
+		@RequestParam @Nullable String endTime) {
 		Parking parking= entityManager.find(Parking.class, id);
 		if(parking == null){
 			model.addAttribute("erro", "Parking no válido");
