@@ -48,7 +48,9 @@
 
     document.getElementById('confirmSelection').addEventListener('click', function() {
         if (selectedSlot) {
-            //implementar metodo post de ajax +"/user/confirm-select-parking","POST"
+            // window.location.href = `/user/confirm-select-parking?selectedParkingSpot=${selectedSlot}&startDate=${startDate}&endDate=${endDate}&startTime=${startTime}&endTime=${endTime}`;
+            window.location.href = `/user/confirm-select-parking?&selectedSlot=${selectedSlot}`;
+
         } else {
             alert("Por favor, selecciona una plaza.");
         }

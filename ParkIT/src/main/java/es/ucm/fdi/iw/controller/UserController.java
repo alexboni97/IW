@@ -157,18 +157,19 @@ public class UserController {
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("startTime", startTime);
 		model.addAttribute("endTime", endTime);
+		model.addAttribute("id", id);
 
 		System.out.println(parking.getAddress());
         return "reserve";
     }
-	@PostMapping("/confirm-select-parking")
-	public String confirmSelectParking (@RequestParam String selectedSlot) {
-		
-		return "redirect/.reserve/{id}";
+	@GetMapping("/confirm-select-parking")
+	public String confirmSelectParking (@RequestParam Integer selectedSlot,RedirectAttributes redirectAttributes) {
+		redirectAttributes.addFlashAttribute(selectedSlot);
+		return "redirect:/reserve/{id}";
 	}
 	
     @GetMapping("/select-parking")
-    public String selectParkingView(Model model) {
+    public String selectParkingView( Model model) {
         List<Integer> occupiedSpots = new ArrayList<>();
         model.addAttribute("occupiedSpots", occupiedSpots);
         return "select-parking";
