@@ -157,21 +157,44 @@ public class UserController {
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("startTime", startTime);
 		model.addAttribute("endTime", endTime);
-		model.addAttribute("id", id);
+		// model.addAttribute("id", id);
 
 		System.out.println(parking.getAddress());
         return "reserve";
     }
-	@GetMapping("/confirm-select-parking")
-	public String confirmSelectParking (@RequestParam Integer selectedSlot,RedirectAttributes redirectAttributes) {
-		redirectAttributes.addFlashAttribute(selectedSlot);
-		return "redirect:/reserve/{id}";
+	@GetMapping("/confirm-select-parking/{id}")
+	public String confirmSelectParking (		@PathVariable long id, @RequestParam Integer selectedSlot,
+	@RequestParam @Nullable String startDate, 
+	@RequestParam @Nullable String endDate,
+	// @RequestParam Long spotId,
+	@RequestParam @Nullable String startTime, 
+	@RequestParam @Nullable String endTime,
+	Model model) {
+		model.addAttribute("selectedSlot", selectedSlot);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		model.addAttribute("startTime", startTime);
+		model.addAttribute("endTime", endTime);
+		model.addAttribute("id", id);
+
+		return "reserve";
 	}
 	
-    @GetMapping("/select-parking")
-    public String selectParkingView( Model model) {
+    @GetMapping("/select-parking/{id}")
+    public String selectParkingView(		@PathVariable long id,  
+	@RequestParam @Nullable String startDate, 
+	@RequestParam @Nullable String endDate,
+	// @RequestParam Long spotId,
+	@RequestParam @Nullable String startTime, 
+	@RequestParam @Nullable String endTime,
+	Model model) {
         List<Integer> occupiedSpots = new ArrayList<>();
         model.addAttribute("occupiedSpots", occupiedSpots);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);	
+		model.addAttribute("startTime", startTime);
+		model.addAttribute("endTime", endTime);	
+		model.addAttribute("id", id);
         return "select-parking";
     }
 

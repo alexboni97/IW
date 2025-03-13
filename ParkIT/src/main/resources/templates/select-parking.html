@@ -30,6 +30,12 @@
     </div>
 
     <div class="text-center mt-4">
+        <input type="hidden" id="parkingId" th:value="${id}" />
+        <input type="hidden" id="startDate" th:value="${startDate}" />
+        <input type="hidden" id="endDate" th:value="${endDate}" />
+        <input type="hidden" id="startTime" th:value="${startTime}" />
+        <input type="hidden" id="endTime" th:value="${endTime}" />
+
         <button id="confirmSelection" class="btn btn-primary">Confirmar Selección</button>
     </div>
 </div>
@@ -49,7 +55,12 @@
     document.getElementById('confirmSelection').addEventListener('click', function() {
         if (selectedSlot) {
             // window.location.href = `/user/confirm-select-parking?selectedParkingSpot=${selectedSlot}&startDate=${startDate}&endDate=${endDate}&startTime=${startTime}&endTime=${endTime}`;
-            window.location.href = `/user/confirm-select-parking?&selectedSlot=${selectedSlot}`;
+            let id = document.getElementById("parkingId").value;
+            let startDate = document.getElementById("startDate").value;
+            let endDate = document.getElementById("endDate").value;
+            let startTime = document.getElementById("startTime").value;
+            let endTime = document.getElementById("endTime").value;
+            window.location.href = `/user/confirm-select-parking/${id}?&selectedSlot=${selectedSlot}&startDate=${startDate}&endDate=${endDate}&startTime=${startTime}&endTime=${endTime}`;
 
         } else {
             alert("Por favor, selecciona una plaza.");

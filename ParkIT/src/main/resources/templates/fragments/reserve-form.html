@@ -50,7 +50,7 @@
                     <span th:if="${selectedSlot != null }" th:text="${selectedSlot}" class="fw-bold text-success"></span>
                     <div th:if="${selectedSlot == null }">
                         <div class="row text-center mt-3">
-                            <a th:href="@{/user/select-parking(startDate=${startDate}, endDate=${endDate}, startTime=${startTime}, endTime=${endTime})}" 
+                            <a th:href="@{/user/select-parking/{id}(id=${parking.id},startDate=${startDate}, endDate=${endDate}, startTime=${startTime}, endTime=${endTime})}" 
                                class="btn btn-info">Seleccionar Plaza de Parking</a>
                         </div>
                         <input type="hidden" name="selectedParkingSpot" id="selectedParkingSpot" th:value="${selectedSlot}" />
