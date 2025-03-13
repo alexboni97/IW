@@ -42,20 +42,25 @@
                             <!-- <div th:replace="~{/fragments/new-car-modal.html :: new-car-modal}" ></div> -->
                         </div>
                         
-                </div>
-                <div class="row pt-1 m-1">
-                    <p id="errorMsg"></p>
-                    <h4>Precio total:</h4>
-                    <p><span id="totalPrecio">0.00</span>€</p>
-                    <input type="hidden" name="totalPrice" id="totalPrice" value="0.00" />
-                    
-                </div>
-                <div class="row justify-content-center pt-5">
-                    <!-- <button class="btn btn-danger m-1 col col-lg-3">Cancelar</button> -->
-                    <a href="/user/map"class="btn btn-danger m-1 col col-lg-3">Cancelar</a>
-                    <!-- <a href="/user/my-reserves" class="btn btn-primary m-1 col col-lg-3">Reservar</a> -->
-                    <button  class="btn btn-primary m-1 col col-lg-3" type="submit">Reservar</button>
-                </div>
+                    </div>
+                    <div class="row pt-1 m-1">
+                        <p id="errorMsg"></p>
+                        <h4>Precio total:</h4>
+                        <p><span id="totalPrecio">0.00</span>€</p>
+                        <input type="hidden" name="totalPrice" id="totalPrice" value="0.00" />
+                        
+                    </div>
+                    <!-- Botón para abrir la selección de plaza -->
+                    <div class="row text-center mt-3">
+                        <a th:href="@{/user/select-parking(startDate=${startDate}, endDate=${endDate}, startTime=${startTime}, endTime=${endTime})}" 
+                           class="btn btn-info">Seleccionar Plaza de Parking</a>
+                    </div>
+                    <input type="hidden" name="selectedParkingSpot" id="selectedParkingSpot" th:value="${selectedParkingSpot}" />
+    
+                    <div class="row justify-content-center pt-5">
+                        <a href="/user/map"class="btn btn-danger m-1 col col-lg-3">Cancelar</a>
+                        <button  class="btn btn-primary m-1 col col-lg-3" type="submit">Reservar</button>
+                    </div>
             </form>
         </div>
         <script th:inline="javascript">

@@ -136,6 +136,7 @@ public class UserController {
 		@PathVariable long id, 
 		@RequestParam @Nullable String startDate, 
 		@RequestParam @Nullable String endDate,
+		@RequestParam Long spotId,
 		@RequestParam @Nullable String startTime, 
 		@RequestParam @Nullable String endTime) {
 		Parking parking= entityManager.find(Parking.class, id);
@@ -159,7 +160,13 @@ public class UserController {
 		System.out.println(parking.getAddress());
         return "reserve";
     }
-
+    // Cargar la vista del mapa para seleccionar plaza
+    @GetMapping("/select-parking")
+    public String selectParkingView(Model model) {
+        List<Integer> occupiedSpots = new ArrayList<>();
+        model.addAttribute("occupiedSpots", occupiedSpots);
+        return "select-parking";
+    }
 	@PostMapping("/confirm-reserve")
 	@Transactional
 	public String postReserve(
