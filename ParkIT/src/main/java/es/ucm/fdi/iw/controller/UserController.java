@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -136,7 +137,7 @@ public class UserController {
 		@PathVariable long id, 
 		@RequestParam @Nullable String startDate, 
 		@RequestParam @Nullable String endDate,
-		@RequestParam Long spotId,
+		// @RequestParam Long spotId,
 		@RequestParam @Nullable String startTime, 
 		@RequestParam @Nullable String endTime) {
 		Parking parking= entityManager.find(Parking.class, id);
@@ -160,13 +161,19 @@ public class UserController {
 		System.out.println(parking.getAddress());
         return "reserve";
     }
-    // Cargar la vista del mapa para seleccionar plaza
+	@PostMapping("/confirm-select-parking")
+	public String confirmSelectParking (@RequestParam String selectedSlot) {
+		
+		return "redirect/.reserve/{id}";
+	}
+	
     @GetMapping("/select-parking")
     public String selectParkingView(Model model) {
         List<Integer> occupiedSpots = new ArrayList<>();
         model.addAttribute("occupiedSpots", occupiedSpots);
         return "select-parking";
     }
+
 	@PostMapping("/confirm-reserve")
 	@Transactional
 	public String postReserve(
