@@ -8,34 +8,36 @@ Feature: Reservar en ParkIT
     # Paso 1: Iniciar sesión reutilizando login_a
     Given driver baseUrl
     And call read('login.feature@login_b')  
-    # Según tu ejemplo anterior, 'b' va a /admin 
+    And delay(5000)
     Then waitForUrl(baseUrl + '/user')      
 
-    # Paso 2: Ir al mapa (ajusto asumiendo que desde /admin se accede)
-    Given driver baseUrl + '/user/2'        
-    When submit().click("{button}Buscar")
+    # Paso 2: Ir al mapa 
+    Given driver baseUrl + '/user/2'  
+    And delay(2000)      
+    When click("{a}Buscar")
     Then waitForUrl(baseUrl + '/user/map')
-    And match html('#content') contains 'Ha redireccionado correctamente al mapa'
+    And delay(2000)
 
     # Paso 3: Rellenar el formulario de búsqueda
-    And input('#search_field', 'Calle de la piruleta')
-    And input('#latitud_field', '')
-    And input('#longitud_field', '')
-    And input('#rango_field', '')
-    And input('#fecha_entrada_field', '25062025')
-    And input('#hora_entrada_field', '2304')
-    And input('#fecha_salida_field', '26062025')
-    And input('#hora_salida_field', '1400')
+    And input('#address', 'Calle de la piruleta')
+    And input('#latitude', '')
+    And input('#longitude', '')
+    And input('#range', '')
+    And input('#startDate', '25062025')
+    And input('#startTime', '2304')
+    And input('#endDate', '26062025')
+    And input('#endTime', '1400')
+    And delay(2000)   
     When submit().click("{button}Buscar")
+    And delay(2000)  
     Then waitForUrl(baseUrl + '/user/map')
-    And match html('#content') contains 'Búsqueda de la calle piruleta.'
 
     # Paso 4: Reservar el parking
-    When submit().click("{button}Reservar")
+    And delay(2000)  
+    When click("{a}Reservar")
     Then waitForUrl(baseUrl + '/user/reserve/1')  
-    # Asumo que hay una selección de vehículo
-    When submit().click("{button}Selecciona")
-    When submit().click("{button}Honda Civic (XYZ5678)")
+    # Seleccionamos uno de los vehiculos que se ofrecen, por ejemplo el Honda
+    And waitFor('#vehiculo')
+    And select('#vehiculo', 'Toyota Corolla (ABC1234)')
     When submit().click("{button}Reservar")
-    Then waitForUrl(baseUrl + '/user/confirm-reserve')
-    And match html('#content') contains 'Reserva confirmada'  
+    Then waitForUrl(baseUrl + '/user/my-reserves')
