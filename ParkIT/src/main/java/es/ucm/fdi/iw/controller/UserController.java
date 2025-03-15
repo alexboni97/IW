@@ -1,6 +1,7 @@
 package es.ucm.fdi.iw.controller;
 
 import es.ucm.fdi.iw.LocalData;
+import es.ucm.fdi.iw.model.Enterprise;
 import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Parking;
 import es.ucm.fdi.iw.model.Parking.Transfer;
@@ -135,10 +136,10 @@ public class UserController {
 
     @GetMapping("/reserve/{id}")
     public String reserve(Model model, 
-		@PathVariable long id, 
+	@PathVariable long id, 
+	@RequestParam(required = false) Integer selectedSlot,
 		@RequestParam @Nullable String startDate, 
 		@RequestParam @Nullable String endDate,
-		// @RequestParam Long spotId,
 		@RequestParam @Nullable String startTime, 
 		@RequestParam @Nullable String endTime) {
 
@@ -160,6 +161,7 @@ public class UserController {
 		model.addAttribute("startTime", startTime);
 		model.addAttribute("endTime", endTime);
 		model.addAttribute("id", id);
+		model.addAttribute("selectedSlot", selectedSlot);
 
 		System.out.println(parking.getAddress());
         return "reserve";
@@ -172,32 +174,57 @@ public class UserController {
 	// @RequestParam Long spotId,
 	@RequestParam @Nullable String startTime, 
 	@RequestParam @Nullable String endTime,
-	Model model) {
-		model.addAttribute("selectedSlot", selectedSlot);
-		model.addAttribute("startDate", startDate);
-		model.addAttribute("endDate", endDate);
-		model.addAttribute("startTime", startTime);
-		model.addAttribute("endTime", endTime);
-		model.addAttribute("id", id);
+	RedirectAttributes redirectAttributes
+	) {
+		redirectAttributes.addAttribute("selectedSlot", selectedSlot);
+		redirectAttributes.addAttribute("startDate", startDate);
+		redirectAttributes.addAttribute("endDate", endDate);
+		redirectAttributes.addAttribute("startTime", startTime);
+		redirectAttributes.addAttribute("endTime", endTime);
+		redirectAttributes.addAttribute("id", id);
 
-		return "reserve";
+		return "redirect:/user/reserve/" + id;
 	}
 	
     @GetMapping("/select-parking/{id}")
     public String selectParkingView(		@PathVariable long id,  
+	@RequestParam(required = false) Integer selectedSlot,
+	@RequestParam(required = false) Long vehicleId,
 	@RequestParam @Nullable String startDate, 
 	@RequestParam @Nullable String endDate,
-	// @RequestParam Long spotId,
 	@RequestParam @Nullable String startTime, 
 	@RequestParam @Nullable String endTime,
 	Model model) {
         List<Integer> occupiedSpots = new ArrayList<>();
+		Parking parking= entityManager.find(Parking.class, id);
+		if(parking != null){
+			List<Spot> spots = parking.getSpots();
+			List<Reserve> reserves= new ArrayList<>();
+			for (Spot s : spots) {
+				reserves.addAll(s.getReserves());
+			}
+			LocalDate start = LocalDate.parse(startDate);
+			LocalDate end = LocalDate.parse(endDate);
+			LocalTime startT = LocalTime.parse(startTime);
+			LocalTime endT = LocalTime.parse(endTime);
+			for (Reserve r : reserves) {
+				if ((r.getStartDate().isBefore(end) && r.getEndDate().isAfter(start)) ||
+					(r.getStartDate().isEqual(start) && r.getStartTime().isBefore(endT)) ||
+					(r.getEndDate().isEqual(end) && r.getEndTime().isAfter(startT))) {
+					Integer spotId = Integer.valueOf((int)r.getSpot().getId());
+					occupiedSpots.add(spotId);
+				}
+			}
+		}
+		System.out.println("Ocupadas: " + occupiedSpots);
         model.addAttribute("occupiedSpots", occupiedSpots);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);	
 		model.addAttribute("startTime", startTime);
 		model.addAttribute("endTime", endTime);	
 		model.addAttribute("id", id);
+		model.addAttribute("selectedSlot", selectedSlot);
+		model.addAttribute("vehicleId", vehicleId);
         return "select-parking";
     }
 
@@ -208,10 +235,10 @@ public class UserController {
 		@ModelAttribute("endDate") LocalDate endDate,
 		@ModelAttribute("startTime") LocalTime startTime,
 		@ModelAttribute("endTime") LocalTime endTime,
-		// @RequestParam("spotId") Long spotId,
 		@RequestParam("vehicleId") Long vehicleId,
 		@RequestParam("parkingId") Long parkingId,
-		@ModelAttribute("totalPrice") Double totalPrice,
+		@RequestParam("totalPrice") Double totalPrice,
+		@RequestParam("selectedParkingSpot") Integer selectedParkingSpot,
 		Model model,
 		RedirectAttributes redirectAttributes) {
 
@@ -236,8 +263,8 @@ public class UserController {
     		return "redirect:/user/reserve/" + parkingId; 
 
 		}
-		
-		Spot spot = entityManager.find(Spot.class, 2);
+		Long spotId=selectedParkingSpot.longValue();
+		Spot spot = entityManager.find(Spot.class, spotId);
 		if (spot == null) {
 			redirectAttributes.addFlashAttribute("error", "Plaza no válida");
     		return "redirect:/user/reserve/" + parkingId; 

@@ -12,22 +12,27 @@
     <h2 class="text-center">🅿️ Selecciona tu Plaza de Parking</h2>
 
     <div class="parking-container">
+        <!-- Primera fila de plazas -->
         <div class="parking-row">
-            <div class="slot" data-id="1">1</div>
-            <div class="slot occupied" data-id="2">🚙</div>
-            <div class="slot" data-id="3">3</div>
-            <div class="slot occupied" data-id="4">🚗</div>
-            <div class="slot" data-id="5">5</div>
+            <div th:each="i : ${#numbers.sequence(1, 5)}"
+                 th:classappend="${occupiedSpots.contains(i) ? 'occupied' : ''}"
+                 class="slot" th:attr="data-id=${i}"
+                 th:text="${i}">
+            </div>
         </div>
+    
         <div class="street">⬅️ Calle Central ➡️</div>
+    
+        <!-- Segunda fila de plazas -->
         <div class="parking-row">
-            <div class="slot" data-id="6">6</div>
-            <div class="slot occupied" data-id="7">🚕</div>
-            <div class="slot" data-id="8">8</div>
-            <div class="slot" data-id="9">9</div>
-            <div class="slot" data-id="10">10</div>
+            <div th:each="i : ${#numbers.sequence(6, 10)}"
+                 th:classappend="${occupiedSpots.contains(i) ? 'occupied' : ''}"
+                 class="slot" th:attr="data-id=${i}"
+                 th:text="${i}">
+            </div>
         </div>
     </div>
+    
 
     <div class="text-center mt-4">
         <input type="hidden" id="parkingId" th:value="${id}" />
@@ -35,13 +40,21 @@
         <input type="hidden" id="endDate" th:value="${endDate}" />
         <input type="hidden" id="startTime" th:value="${startTime}" />
         <input type="hidden" id="endTime" th:value="${endTime}" />
-
+        <input type="hidden" id="selectedSlot" th:value="${selectedSlot}" />
         <button id="confirmSelection" class="btn btn-primary">Confirmar Selección</button>
     </div>
 </div>
 
 <script>
-    let selectedSlot = null;
+    
+    let selectedSlot = document.getElementById("selectedSlot").value; 
+        
+        if (selectedSlot) {
+            let previousSelectedSlot = document.querySelector(`.slot[data-id="${selectedSlot}"]`);
+            if (previousSelectedSlot) {
+                previousSelectedSlot.classList.add("selected");
+            }
+        }
     document.querySelectorAll('.slot').forEach(slot => {
         slot.addEventListener('click', function() {
             if (!this.classList.contains('occupied')) {
@@ -54,7 +67,6 @@
 
     document.getElementById('confirmSelection').addEventListener('click', function() {
         if (selectedSlot) {
-            // window.location.href = `/user/confirm-select-parking?selectedParkingSpot=${selectedSlot}&startDate=${startDate}&endDate=${endDate}&startTime=${startTime}&endTime=${endTime}`;
             let id = document.getElementById("parkingId").value;
             let startDate = document.getElementById("startDate").value;
             let endDate = document.getElementById("endDate").value;
