@@ -20,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.access.method.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -201,45 +202,43 @@ public class UserController {
 	@PostMapping("/confirm-reserve")
 	@Transactional
 	public String postReserve(
-		@RequestParam LocalDate startDate,
-		@RequestParam LocalDate endDate,
-		@RequestParam LocalTime startTime,
-		@RequestParam LocalTime endTime,
-		@RequestParam Long vehicleId,
-		// @RequestParam Long spotId,
-		@RequestParam Double totalPrice,
+		@ModelAttribute("startDate") LocalDate startDate,
+		@ModelAttribute("endDate") LocalDate endDate,
+		@ModelAttribute("startTime") LocalTime startTime,
+		@ModelAttribute("endTime") LocalTime endTime,
+		// @RequestParam("spotId") Long spotId,
+		@RequestParam("vehicleId") Long vehicleId,
+		@ModelAttribute("totalPrice") Double totalPrice,
 		Model model,
-		// HttpSession session,
 		RedirectAttributes redirectAttributes) {
 
 		User user = (User) model.getAttribute("u");
-		Parker parker = (Parker) user;
-		if (parker == null) {
-			model.addAttribute("error", "No eres un parker válido.");
-			return reserve(model, 0, null, null, null, null);
+		if (!(user instanceof Parker parker)) {
+			redirectAttributes.addFlashAttribute("error", "No eres un parker válido.");
+			return "redirect:/error";
 		}
 
 		if(startDate == null || endDate == null || startTime == null || endTime == null || vehicleId == null || totalPrice == null){
 			redirectAttributes.addFlashAttribute("error", "Faltan campos por rellenar");
-    		return "redirect:/reserve"; 
+    		return "redirect:/reserve/" + 1; 
 		}
 
 		if (startDate.isAfter(endDate) || (startDate.isEqual(endDate) && startTime.isAfter(endTime))) {
-			model.addAttribute("error", "La fecha de inicio no puede ser posterior a la de fin");
-			return reserve(model, 1, startDate.toString(), endDate.toString(), startTime.toString(), endTime.toString());
+			redirectAttributes.addFlashAttribute("error", "La fecha de inicio no puede ser posterior a la de fin");
+			return "redirect:/reserve/" + parker.getId();
 		}
 		
 		Vehicle vehicle = entityManager.find(Vehicle.class, vehicleId);
 		if (vehicle == null) {
-			model.addAttribute("error", "Vehículo no válido");
-			return reserve(model, 0, null, null, null, null);
+			redirectAttributes.addFlashAttribute("error", "Vehículo no válido");
+    		return "redirect:/reserve/" + 1; 
 
 		}
 		
-		Spot spot = entityManager.find(Spot.class, 1);
+		Spot spot = entityManager.find(Spot.class, 2);
 		if (spot == null) {
-			model.addAttribute("error", "Plaza no válida");
-			return reserve(model, 0, null, null, null, null);
+			redirectAttributes.addFlashAttribute("error", "Plaza no válida");
+    		return "redirect:/reserve/" + 1; 
 		}
 
 		List<Reserve> reservas = entityManager.createQuery("SELECT r FROM Reserve r WHERE r.spot = :spot", Reserve.class)
@@ -250,8 +249,8 @@ public class UserController {
     			(r.getStartDate().isEqual(startDate) && r.getStartTime().isBefore(endTime)) || 
     			(r.getEndDate().isEqual(endDate) && r.getEndTime().isAfter(startTime))) {
 
-    			model.addAttribute("error", "No se puede reservar esta plaza en esas fechas y horas");
-    			return reserve(model, spot.getParking().getId(), startDate.toString(), endDate.toString(), startTime.toString(), endTime.toString());
+				redirectAttributes.addFlashAttribute("error", "No se puede reservar esta plaza en esas fechas y horas");
+    			return "redirect:/reserve/" + 1;
 			}
 		}
 		
@@ -273,7 +272,7 @@ public class UserController {
 			model.addAttribute("success", "Reserva realizada con éxito");
 		} catch (Exception e) {
 			model.addAttribute("error", "Hubo un error al guardar la reserva: " + e.getMessage());
-			return reserve(model, 0, null, null, null, null);
+			return "redirect:/error";
 		}
 
 		return myReserves(model);
