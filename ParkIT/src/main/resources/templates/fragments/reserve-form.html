@@ -46,6 +46,10 @@
                         <input type="hidden" name="totalPrice" id="totalPrice" value="0.00" />
                         
                     </div>
+
+                    <input type="hidden" name="parkingId" th:value="${parking.id}" />
+
+
                     <!-- Botón para abrir la selección de plaza -->
                     <span th:if="${selectedSlot != null }" th:text="${selectedSlot}" class="fw-bold text-success"></span>
                     <div th:if="${selectedSlot == null }">

@@ -141,6 +141,7 @@ public class UserController {
 		// @RequestParam Long spotId,
 		@RequestParam @Nullable String startTime, 
 		@RequestParam @Nullable String endTime) {
+
 		Parking parking= entityManager.find(Parking.class, id);
 		if(parking == null){
 			model.addAttribute("erro", "Parking no válido");
@@ -158,11 +159,12 @@ public class UserController {
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("startTime", startTime);
 		model.addAttribute("endTime", endTime);
-		// model.addAttribute("id", id);
+		model.addAttribute("id", id);
 
 		System.out.println(parking.getAddress());
         return "reserve";
     }
+	
 	@GetMapping("/confirm-select-parking/{id}")
 	public String confirmSelectParking (		@PathVariable long id, @RequestParam Integer selectedSlot,
 	@RequestParam @Nullable String startDate, 
@@ -208,6 +210,7 @@ public class UserController {
 		@ModelAttribute("endTime") LocalTime endTime,
 		// @RequestParam("spotId") Long spotId,
 		@RequestParam("vehicleId") Long vehicleId,
+		@RequestParam("parkingId") Long parkingId,
 		@ModelAttribute("totalPrice") Double totalPrice,
 		Model model,
 		RedirectAttributes redirectAttributes) {
@@ -220,25 +223,24 @@ public class UserController {
 
 		if(startDate == null || endDate == null || startTime == null || endTime == null || vehicleId == null || totalPrice == null){
 			redirectAttributes.addFlashAttribute("error", "Faltan campos por rellenar");
-    		return "redirect:/reserve/" + 1; 
+    		return "redirect:/user/reserve/" + parkingId; 
 		}
-
 		if (startDate.isAfter(endDate) || (startDate.isEqual(endDate) && startTime.isAfter(endTime))) {
 			redirectAttributes.addFlashAttribute("error", "La fecha de inicio no puede ser posterior a la de fin");
-			return "redirect:/reserve/" + parker.getId();
+			return "redirect:/user/reserve/" + parkingId;
 		}
 		
 		Vehicle vehicle = entityManager.find(Vehicle.class, vehicleId);
 		if (vehicle == null) {
 			redirectAttributes.addFlashAttribute("error", "Vehículo no válido");
-    		return "redirect:/reserve/" + 1; 
+    		return "redirect:/user/reserve/" + parkingId; 
 
 		}
 		
 		Spot spot = entityManager.find(Spot.class, 2);
 		if (spot == null) {
 			redirectAttributes.addFlashAttribute("error", "Plaza no válida");
-    		return "redirect:/reserve/" + 1; 
+    		return "redirect:/user/reserve/" + parkingId; 
 		}
 
 		List<Reserve> reservas = entityManager.createQuery("SELECT r FROM Reserve r WHERE r.spot = :spot", Reserve.class)
@@ -250,7 +252,7 @@ public class UserController {
     			(r.getEndDate().isEqual(endDate) && r.getEndTime().isAfter(startTime))) {
 
 				redirectAttributes.addFlashAttribute("error", "No se puede reservar esta plaza en esas fechas y horas");
-    			return "redirect:/reserve/" + 1;
+    			return "redirect:/user/reserve/" + parkingId;
 			}
 		}
 		
