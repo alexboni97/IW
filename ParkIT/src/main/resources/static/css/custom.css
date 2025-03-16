@@ -117,3 +117,58 @@ footer a:hover{
 .selected {
   background-color: #f1c40f !important;
 }
+
+/* estilos para mapa del indice */
+#buscador-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+/* Input de búsqueda */
+.leaflet-control-geocoder {
+  width: 100% !important;
+  display: block !important;
+  font-size: 16px !important;
+  border-color: white !important;
+  border: none !important;
+  outline: none !important;
+  padding: 10px !important;
+  border-radius: 5px !important;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1) !important;
+}
+.leaflet-control-geocoder-form{
+  width: 95% !important;
+}
+.leaflet-control-geocoder-form input {
+  width: 100% !important;
+  display: block !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.leaflet-control-geocoder-icon {
+  background: url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Magnifying_glass_icon.svg') no-repeat center;
+  background-size: contain;
+  width: 5% !important;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+}
+
+.leaflet-control-geocoder-results {
+  width: 100% !important;
+  font-size: 12px;
+  text-align: left;
+  max-height: 100px;
+  overflow-y: auto;
+  background: white;
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  list-style: none;
+}
+.leaflet-control-geocoder-result{
+  width: 100% !important;
+}

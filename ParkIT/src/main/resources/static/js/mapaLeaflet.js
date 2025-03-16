@@ -1,13 +1,21 @@
 // const map = L.map('map').setView([lat == null ? 40.416775 : lat, lon == null ? -3.703790 : lon], 12); // TODO probar distintos zoom, 12 es el que mejor se ve para 5000m de radio
                                                                         // habra que hacer zoom dinamico segun el radio haciendo regla de 3
-const map = L.map('map').setView([40.416775, -3.703790], 12)
+var map = L.map('map').setView([40.416775, -3.703790], 12);
+map.locate({setView: true, maxZoom: 14});
+function onLocationFound(e) {
+    var radius = e.accuracy / 2;
+    L.marker(e.latlng).addTo(map)
+        .bindPopup("Tu Ubicación").openPopup();
+    L.circle(e.latlng, radius).addTo(map);
+}
+map.on('locationfound', onLocationFound);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map);
 
 //rad = 5000; // radio por defecto de 5000m
 
-const geocoder = L.Control.geocoder({
+var geocoder = L.Control.geocoder({
     placeholder: 'Buscar calle o marcador...',
     defaultMarkGeocode: false,
     collapsed: false
@@ -22,7 +30,8 @@ const geocoder = L.Control.geocoder({
 }).addTo(map);
 
 const geocoderContainer = geocoder.getContainer();
-document.getElementById('geocoder-container').appendChild(geocoderContainer);
+// document.getElementById('geocoder-container').appendChild(geocoderContainer);
+document.getElementById('buscador').appendChild(geocoderContainer);
 
 // Array para almacenar marcadores personalizados
 const markers = [];

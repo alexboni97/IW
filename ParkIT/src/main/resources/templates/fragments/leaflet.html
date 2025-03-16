@@ -1,10 +1,10 @@
 <th:block th:fragment="head">
-    <!-- Leaflet CSS -->
-    <!-- <link rel="stylesheet" href="css/leaflet.css" /> -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
-    <!-- Leaflet Control Geocoder CSS -->
-    <!-- <link rel="stylesheet" href="css/Control.Geocoder.css" /> -->
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <style>
         #map {
@@ -21,14 +21,6 @@
 </th:block>
 <!-- fragmento footer con parametro parkins-->
 <th:block th:fragment="mapa">
-    <!-- Leaflet JS -->
-    <!-- <script th:src="@{/js/leaflet.js}"></script> -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-    <!-- Leaflet Control Geocoder JS -->
-    <!-- <script th:src="@{/js/Control.Geocoder.js}"></script> -->
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-
     <!-- pasamos los parkings a la variable parkings para que jp.js pueda acceder a ellos -->
     <script th:inline="javascript">
         var parkings = /*[[${parkings}]]*/[];
