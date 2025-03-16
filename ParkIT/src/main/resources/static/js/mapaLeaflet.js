@@ -37,7 +37,6 @@ var geocoder = L.Control.geocoder({
 }).addTo(map);
 
 const geocoderContainer = geocoder.getContainer();
-// document.getElementById('geocoder-container').appendChild(geocoderContainer);
 document.getElementById('buscador').appendChild(geocoderContainer);
 
 // Array para almacenar marcadores personalizados
