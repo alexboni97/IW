@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/head.html :: header}" />
+    <title>Seleccionar Plaza de Parking</title>
+    <th:block th:replace="~{fragments/leaflet.html :: head}" />
+
+</head>
+<body class="body-select-parking">
+
+<div class="container mt-5">
+    <h2 class="text-center">🅿️ Selecciona tu Plaza de Parking</h2>
+
+    <div class="parking-container">
+        <!-- Primera fila de plazas -->
+        <div class="parking-row">
+            <div th:each="i : ${#numbers.sequence(1, 5)}"
+                 th:classappend="${occupiedSpots.contains(i) ? 'occupied' : ''}"
+                 class="slot" th:attr="data-id=${i}"
+                 th:text="${i}">
+            </div>
+        </div>
+    
+        <div class="street">⬅️ Calle Central ➡️</div>
+    
+        <!-- Segunda fila de plazas -->
+        <div class="parking-row">
+            <div th:each="i : ${#numbers.sequence(6, 10)}"
+                 th:classappend="${occupiedSpots.contains(i) ? 'occupied' : ''}"
+                 class="slot" th:attr="data-id=${i}"
+                 th:text="${i}">
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="text-center mt-4">
+        <input type="hidden" id="parkingId" th:value="${id}" />
+        <input type="hidden" id="startDate" th:value="${startDate}" />
+        <input type="hidden" id="endDate" th:value="${endDate}" />
+        <input type="hidden" id="startTime" th:value="${startTime}" />
+        <input type="hidden" id="endTime" th:value="${endTime}" />
+        <input type="hidden" id="selectedSlot" th:value="${selectedSlot}" />
+        <button id="confirmSelection" class="btn btn-primary">Confirmar Selección</button>
+    </div>
+</div>
+
+<script>
+    
+    let selectedSlot = document.getElementById("selectedSlot").value; 
+        
+        if (selectedSlot) {
+            let previousSelectedSlot = document.querySelector(`.slot[data-id="${selectedSlot}"]`);
+            if (previousSelectedSlot) {
+                previousSelectedSlot.classList.add("selected");
+            }
+        }
+    document.querySelectorAll('.slot').forEach(slot => {
+        slot.addEventListener('click', function() {
+            if (!this.classList.contains('occupied')) {
+                document.querySelectorAll('.slot').forEach(s => s.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedSlot = this.getAttribute('data-id');
+            }
+        });
+    });
+
+    document.getElementById('confirmSelection').addEventListener('click', function() {
+        if (selectedSlot) {
+            let id = document.getElementById("parkingId").value;
+            let startDate = document.getElementById("startDate").value;
+            let endDate = document.getElementById("endDate").value;
+            let startTime = document.getElementById("startTime").value;
+            let endTime = document.getElementById("endTime").value;
+            window.location.href = `/user/confirm-select-parking/${id}?&selectedSlot=${selectedSlot}&startDate=${startDate}&endDate=${endDate}&startTime=${startTime}&endTime=${endTime}`;
+
+        } else {
+            alert("Por favor, selecciona una plaza.");
+        }
+    });
+</script>
+
+</body>
+</html>
