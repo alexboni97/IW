@@ -1,17 +1,11 @@
 <div th:fragment="new-car-modal">
 
     <!-- Modal trigger button -->
-    <button
-        type="button"
-        class="btn btn-light btn-lg "
-        data-bs-toggle="modal"
-        data-bs-target="#modalId"
-    >
+    <button type="button" class="btn btn-light btn-lg " data-bs-toggle="modal" data-bs-target="#modalId">
         Nuevo Vehículo	
     </button>
     
     <!-- Modal Body -->
-    <!-- if you want to close by clicking outside the modal, delete the last endpoint:data-bs-backdrop and data-bs-keyboard -->
     <div
         class="modal fade"
         id="modalId"
@@ -41,31 +35,37 @@
                 </div>
                 <div class="modal-body text-start p-5">
                     <div class="row mb-3">
-                        <label for="">Marca:</label>
-                        <input type="text" name="" id="">
+                        <label for="marca">Marca:</label>
+                        <input type="text" name="brand" id="brand">
                     </div>
                     <div class="row mb-3">
-                        <label for="">Modelo:</label>
-                        <input type="text" name="" id="">
+                        <label for="modelo">Modelo:</label>
+                        <input type="text" name="model" id="model">
                     </div>
                     <div class="row mb-3">
-                        <label for="">Alias:</label>
-                        <input type="text" name="" id="">
+                        <label for="matricula">Matricula:</label>
+                        <input type="text" name="plate" id="plate">
                     </div>
                     <div class="row mb-3">
-                        <label for="ini-f" class="form-label">Fecha Matriculación:</label>
-                        <input type="date" class="form-control" id="ini-f" value="" required />
+                        <label for="tamanyo">Tamaño:</label>
+                        <select class="form-select form-select-lg" name="size" id="size">
+                        <option value="" selected disabled>Selecciona 1</option>
+                        <option th:value="S">S</option>
+                        <option th:value="M">M</option>
+                        <option th:value="XL">XL</option>
+                </select>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button
-                    type="button"
+                        type="button"
                         class="btn btn-secondary"
                         data-bs-dismiss="modal"
                     >
                         Cancelar
                     </button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" onclick="crearVehiculo()" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
         </div>
@@ -73,9 +73,28 @@
     
     <!-- Optional: Place to the bottom of scripts -->
     <script>
-        const myModal = new bootstrap.Modal(
-            document.getElementById("modalId"),
-            options,
-        );
+        function crearVehiculo(){
+            let brand=document.getElementById("brand").value;
+            let model=document.getElementById("model").value;
+            let plate=document.getElementById("plate").value;
+            let size=document.getElementById("size").value;
+            let formData=new URLSearchParams();
+            formData.append("brand",brand);
+            formData.append("model",model);
+            formData.append("plate",plate);
+            formData.append("size",size);
+            fetch('/user/add-vehicle',{
+                method:'POST',
+                body:formData,
+                headers:{
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(response=>response.json())
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error=>console.error("Error al añadir vehiculo",error));
+        }
     </script>
 </div>
