@@ -46,6 +46,12 @@ public class Parking implements Transferable<Parking.Transfer> {
 
     private String address;
 
+    private int cp;
+
+    private String city;
+
+    private String country;
+
     private int telephone;
 
     private String email;
@@ -76,6 +82,9 @@ public class Parking implements Transferable<Parking.Transfer> {
         private boolean enabled;
 		private String name;
 		private String address;
+        private int cp;
+        private String city;
+        private String country;
 		private int telephone;
 		private String email;
 		private double feePerHour;
@@ -100,6 +109,9 @@ public class Parking implements Transferable<Parking.Transfer> {
             this.latitude = p.getLatitude();
             this.enterpriseId = p.getEnterprise().getId();
             this.totalSpots = p.getSpots().size();
+            this.cp = p.getCp();
+            this.city = p.getCity();
+            this.country = p.getCountry();
         }
     }
 

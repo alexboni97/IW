@@ -14,9 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.Enterprise;
+import es.ucm.fdi.iw.model.Request;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Controller
@@ -78,4 +83,45 @@ public class EnterpriseController {
     public String addPlaza(Model model) {
         return "add-plaza";
     }
+
+     //Función para solicitar añadir un parking al administrador.
+     //Ruta con la que llega a este método desde la vista
+    @PostMapping("/request-parking")
+    public String requestParking(@RequestParam String name, @RequestParam String address, @RequestParam int cp, @RequestParam String city, @RequestParam String country, @RequestParam int telephone, @RequestParam String email, @RequestParam double feePerHour, @RequestParam String openingTime, @RequestParam String closingTime, @RequestParam Integer totalSpots, HttpSession session) {
+        
+        //Creamos un objeto de tipo request
+        Request request = new Request();
+
+        //Metemos los datos al request
+        request.setName(name);
+        request.setAddress(address);
+        request.setEnabled(true);
+        request.setCp(cp);
+        request.setCity(city);
+        request.setCountry(country);
+        request.setTelephone(telephone);
+        request.setEmail(email);
+        request.setFeePerHour(feePerHour);
+        request.setOpeningTime(LocalTime.parse(openingTime));
+        request.setClosingTime(LocalTime.parse(closingTime));
+        request.setState("AÑADIR");
+        request.setTotalSpots(totalSpots);
+        request.setLatitude(null);
+        request.setLongitude(null);
+        request.setEnterprise((Enterprise) session.getAttribute("u"));
+
+        try {
+			entityManager.persist(request);
+			entityManager.flush();
+			entityManager.clear();
+			model.addAttribute("success", "Solcitud realizada con éxito. Esperando respuesta del administrador.");
+		} catch (Exception e) {
+			model.addAttribute("error", "Hubo un error al guardar la solicitud: " + e.getMessage());
+			return "redirect:/error";
+		}
+        
+        //Nombre de la vista a la que quiero redirigir.
+        return "enterprise-parkings";
+    }
+
 }

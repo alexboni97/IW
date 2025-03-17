@@ -22,6 +22,9 @@ import jakarta.servlet.http.HttpSession;
 @RequestMapping("admin")
 public class AdminController {
 
+    @Autowired
+	private EntityManager entityManager;
+
     @ModelAttribute
     public void populateModel(HttpSession session, Model model) {        
         for (String name : new String[] {"u", "url", "ws"}) {
@@ -35,5 +38,18 @@ public class AdminController {
     public String index(Model model) {
         log.info("Admin acaba de entrar");
         return "admin";
+    }
+
+    @GetMapping("/add-parking")
+    public String adminRequest(Model model){
+        List<Request> requests = entityManager
+            .createNamedQuery("findByEnabledAndState", Request.class)
+            .setParameter("enabled", true)
+            .setParameter("state", "AÑADIR")
+            .getResultList();
+        
+        model.addAttribute("requests", requests);
+
+        return "request-add"
     }
 }

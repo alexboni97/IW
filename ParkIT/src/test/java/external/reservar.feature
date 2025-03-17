@@ -38,6 +38,6 @@ Feature: Reservar en ParkIT
     Then waitForUrl(baseUrl + '/user/reserve/1')  
     # Seleccionamos uno de los vehiculos que se ofrecen, por ejemplo el Honda
     And waitFor('#vehiculo')
-    And select('#vehiculo', 'Toyota Corolla (ABC1234)')
+    And select('#vehiculo', '1')
     When submit().click("{button}Reservar")
     Then waitForUrl(baseUrl + '/user/my-reserves')
