@@ -12,7 +12,7 @@
 
     <main class="flex-shrink-0">
         <div class="container mb-5">
-            
+
             <div th:replace="~{fragments/find-park-form.html :: find-park-form}"></div>
             <!-- mapa leaflef -->
             <div id="map" class="mt-1"></div>
@@ -20,11 +20,12 @@
         </div>
     </main>
     <div class="container-fluid ">
-        <section class="row bg-light align-items-center p-4" >
+        <section class="row bg-light align-items-center p-4">
             <div class="col-lg-6 text-lg-end order-lg-1 order-2">
                 <span>
                     <h3 class="pt-md-1">Aparca donde quieras y cuando quieras...</h3>
-                    <p>Con ParkIT puedes encontrar aparcamiento en cualquier lugar de la ciudad, sin importar la hora o el día.</p>
+                    <p>Con ParkIT puedes encontrar aparcamiento en cualquier lugar de la ciudad, sin importar la hora o
+                        el día.</p>
                     <a class="btn btn-dark btn-lg" href="/help">Primeros pasos</a>
                     <a class="btn btn-light btn-lg" href="/login">¿Tienes Cuenta? Inicia Sesión</a>
                 </span>
@@ -33,21 +34,25 @@
                 <img class="img-fluid" src="/img/ambient1.webp" alt="car-electric" style="width: 500px;">
             </div>
         </section>
-        
-        <section class="row bg-dark text-white align-items-center p-4" >
+
+        <section class="row bg-dark text-white align-items-center p-4">
             <div class="col-lg-6 text-lg-end text-center">
                 <img class="img-fluid" src="/img/ambient2.webp" alt="car-electric" style="width: 500px;">
             </div>
             <div class="col-lg-6 text-start ">
                 <h3>Aparca donde quieras y cuando quieras...</h3>
-                <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat quos atque enim officiis, delectus, excepturi, fugiat iure ab rerum voluptas molestias. Magni quos perspiciatis deleniti itaque neque cumque fugit ipsam.</span>
+                <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat quos atque enim officiis,
+                    delectus, excepturi, fugiat iure ab rerum voluptas molestias. Magni quos perspiciatis deleniti
+                    itaque neque cumque fugit ipsam.</span>
             </div>
         </section>
-        
-        <section class="row bg-light align-items-center p-4" >
+
+        <section class="row bg-light align-items-center p-4">
             <div class="col-lg-6 text-lg-end order-lg-1 order-2">
                 <h3>Aparca donde quieras y cuando quieras...</h3>
-                <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat quos atque enim officiis, delectus, excepturi, fugiat iure ab rerum voluptas molestias. Magni quos perspiciatis deleniti itaque neque cumque fugit ipsam.</span>
+                <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat quos atque enim officiis,
+                    delectus, excepturi, fugiat iure ab rerum voluptas molestias. Magni quos perspiciatis deleniti
+                    itaque neque cumque fugit ipsam.</span>
             </div>
             <div class="col-lg-6 text-lg-start text-center order-lg-2 order-1">
                 <img class="img-fluid" src="/img/ambient1.webp" alt="car-electric" style="width: 500px;">
@@ -56,10 +61,7 @@
 
     </div>
     <th:block th:replace="~{fragments/footer.html :: footer}" />
-    <!-- fragmento footer con parametro parkins-->
     <th:block th:replace="~{fragments/leaflet.html :: mapa}" />
-    <!--<th:block th:replace="~{fragments/leaflet :: map(misParkings)}"/> -->
-        
 </body>
 
 </html>

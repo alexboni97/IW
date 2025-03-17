@@ -23,17 +23,35 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //rad = 5000; // radio por defecto de 5000m
 
 var geocoder = L.Control.geocoder({
-    placeholder: 'Buscar calle....',
+    placeholder: 'Buscar calle...',
     defaultMarkGeocode: false,
     collapsed: false
 }).on('markgeocode', function (e) {
-    const address = e.geocode.name;
+    const fullAddress = e.geocode.name; // Dirección completa
     const latitude = e.geocode.center.lat;
     const longitude = e.geocode.center.lng;
-    map.setView(e.geocode.center, 16); // TODO probar distintos zoom, 12 es el que mejor se ve para 5000m de radio
-    document.getElementById('address').value = address;
+
+    // Extraer componentes de la dirección
+    const addressComponents = fullAddress.split(",").map(item => item.trim()); 
+
+    let calle = addressComponents.length ==3 ? '' : addressComponents[0]; // Primera parte (nombre de la calle)
+    let ciudad = addressComponents.length ==3 ? addressComponents[addressComponents.length - 3] : ''; // Penúltimo elemento (ciudad)
+    ciudad = addressComponents.length > 4 ? addressComponents[addressComponents.length - 4] : ciudad; // Penúltimo elemento (ciudad)
+    let codigoPostal = addressComponents.length > 1 ? addressComponents[addressComponents.length - 2].match(/\d{4,5}/) : ''; // Último elemento (CP)
+    let pais = addressComponents.length > 2 ? addressComponents[addressComponents.length - 1] : ''; // último elemento (ciudad)
+
+    codigoPostal = codigoPostal ? codigoPostal[0] : ''; // Obtener el CP si existe
+
+    // Actualizar los campos en el formulario
+    document.getElementById('fullAddress').value = fullAddress;
+    document.getElementById('calle').value = calle;
+    document.getElementById('ciudad').value = ciudad;
+    document.getElementById('codigoPostal').value = codigoPostal;
     document.getElementById('latitude').value = latitude;
     document.getElementById('longitude').value = longitude;
+
+    // Mover el mapa a la ubicación seleccionada
+    map.setView(e.geocode.center, 16);
 }).addTo(map);
 
 const geocoderContainer = geocoder.getContainer();

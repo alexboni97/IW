@@ -98,13 +98,12 @@ public class UserController {
 
 	// El return es por la vista que devuelve.
 	@GetMapping("/map")
-	public String map(@RequestParam @Nullable String address, @RequestParam @Nullable String startDate,
-			@RequestParam @Nullable String endDate,
-			@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime,
+	public String map(@RequestParam @Nullable String address, 
+			@RequestParam @Nullable LocalDate startDate, @RequestParam @Nullable LocalDate endDate,
+			@RequestParam @Nullable LocalTime startTime, @RequestParam @Nullable LocalTime endTime,
 			@RequestParam @Nullable String latitude,
 			@RequestParam @Nullable String longitude, @RequestParam @Nullable Long range, Model model) {
 
-		System.out.println("Address: " + address);
 		List<Parking> parkings;
 		List<Transfer> transferParkings = new ArrayList<>();
 
