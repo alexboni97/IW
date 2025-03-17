@@ -9,12 +9,12 @@
                 destino introducido</small>
         </div>
 
-            <input type="hidden" id="fullAddress" placeholder="Dirección completa" readonly>
-            <input type="hidden" id="calle" placeholder="Calle" readonly>
-            <input type="hidden" id="ciudad" placeholder="Ciudad" readonly>
-            <input type="hidden" id="codigoPostal" placeholder="Código Postal" readonly>
-            <input type="hidden" id="latitude" placeholder="Latitud" readonly>
-            <input type="hidden" id="longitude" placeholder="Longitud" readonly>
+            <!-- <input type="text" id="fullAddress" placeholder="Dirección completa" >
+            <input type="text" id="calle" placeholder="Calle" >
+            <input type="text" id="ciudad" placeholder="Ciudad" >
+            <input type="text" id="codigoPostal" placeholder="Código Postal" > -->
+            <input type="hidden" name="latitude" id="latitude" th:value="${latitude}">
+            <input type="hidden" name="longitude" id="longitude" th:value="${longitude}">
 
         <div class="row mb-3">
             <div class="col">

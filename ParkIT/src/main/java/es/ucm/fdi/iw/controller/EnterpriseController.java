@@ -89,38 +89,38 @@ public class EnterpriseController {
     @PostMapping("/request-parking")
     public String requestParking(@RequestParam String name, @RequestParam String address, @RequestParam int cp, @RequestParam String city, @RequestParam String country, @RequestParam int telephone, @RequestParam String email, @RequestParam double feePerHour, @RequestParam String openingTime, @RequestParam String closingTime, @RequestParam Integer totalSpots, HttpSession session) {
         
-        //Creamos un objeto de tipo request
-        Request request = new Request();
+        // //Creamos un objeto de tipo request
+        // Request request = new Request();
 
-        //Metemos los datos al request
-        request.setName(name);
-        request.setAddress(address);
-        request.setEnabled(true);
-        request.setCp(cp);
-        request.setCity(city);
-        request.setCountry(country);
-        request.setTelephone(telephone);
-        request.setEmail(email);
-        request.setFeePerHour(feePerHour);
-        request.setOpeningTime(LocalTime.parse(openingTime));
-        request.setClosingTime(LocalTime.parse(closingTime));
-        request.setState("AÑADIR");
-        request.setTotalSpots(totalSpots);
-        request.setLatitude(null);
-        request.setLongitude(null);
-        request.setEnterprise((Enterprise) session.getAttribute("u"));
+        // //Metemos los datos al request
+        // request.setName(name);
+        // request.setAddress(address);
+        // request.setEnabled(true);
+        // request.setCp(cp);
+        // request.setCity(city);
+        // request.setCountry(country);
+        // request.setTelephone(telephone);
+        // request.setEmail(email);
+        // request.setFeePerHour(feePerHour);
+        // request.setOpeningTime(LocalTime.parse(openingTime));
+        // request.setClosingTime(LocalTime.parse(closingTime));
+        // request.setState("AÑADIR");
+        // request.setTotalSpots(totalSpots);
+        // request.setLatitude(null);
+        // request.setLongitude(null);
+        // request.setEnterprise((Enterprise) session.getAttribute("u"));
 
-        try {
-			entityManager.persist(request);
-			entityManager.flush();
-			entityManager.clear();
-			model.addAttribute("success", "Solcitud realizada con éxito. Esperando respuesta del administrador.");
-		} catch (Exception e) {
-			model.addAttribute("error", "Hubo un error al guardar la solicitud: " + e.getMessage());
-			return "redirect:/error";
-		}
+        // try {
+		// 	entityManager.persist(request);
+		// 	entityManager.flush();
+		// 	entityManager.clear();
+		// 	model.addAttribute("success", "Solcitud realizada con éxito. Esperando respuesta del administrador.");
+		// } catch (Exception e) {
+		// 	model.addAttribute("error", "Hubo un error al guardar la solicitud: " + e.getMessage());
+		// 	return "redirect:/error";
+		// }
         
-        //Nombre de la vista a la que quiero redirigir.
+        // //Nombre de la vista a la que quiero redirigir.
         return "enterprise-parkings";
     }
 
