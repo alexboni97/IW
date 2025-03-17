@@ -60,6 +60,18 @@ public class Parking implements Transferable<Parking.Transfer> {
 
     private double latitude;
 
+    private double width;
+
+    private double height;
+
+    private double entryX;
+
+    private double entryY;
+
+    private double exitX;
+
+    private double exitY;
+
     @ManyToOne
     @JoinColumn(name = "enterprise_id")
     private Enterprise enterprise;

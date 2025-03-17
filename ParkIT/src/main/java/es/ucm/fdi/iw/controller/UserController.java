@@ -1,7 +1,6 @@
 package es.ucm.fdi.iw.controller;
 
 import es.ucm.fdi.iw.LocalData;
-import es.ucm.fdi.iw.model.Enterprise;
 import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Parking;
 import es.ucm.fdi.iw.model.Parking.Transfer;
@@ -309,7 +308,6 @@ public class UserController {
 		reserve.setEndTime(endTime);
 		reserve.setPrice(totalPrice);
 		reserve.setState(Reserve.State.PENDING);
-		reserve.setParker(parker);
 		reserve.setSpot(spot);
 		reserve.setVehicle(vehicle);
 

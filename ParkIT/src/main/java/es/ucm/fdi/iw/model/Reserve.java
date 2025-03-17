@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
@@ -54,10 +53,6 @@ public class Reserve implements Transferable<Reserve.Transfer> {
     private String comments;
 
     @ManyToOne
-    @JoinColumn(name = "parker_id")
-    private Parker parker;
-
-    @ManyToOne
     @JoinColumn(name = "spot_id")
     private Spot spot;
     
@@ -76,7 +71,6 @@ public class Reserve implements Transferable<Reserve.Transfer> {
         private LocalTime endTime;
         private double price;
         private String comments;
-        private long parkerId;
         private long spotId;
         private long vehicleId;
         private String spotAddress;
@@ -84,7 +78,7 @@ public class Reserve implements Transferable<Reserve.Transfer> {
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(this.id, this.state.name(), this.startDate, this.endDate, this.startTime, this.endTime, this.price, this.comments, this.parker.getId(), this.spot.getId(), this.vehicle.getId(), this.spot.getAddress());
+        return new Transfer(this.id, this.state.name(), this.startDate, this.endDate, this.startTime, this.endTime, this.price, this.comments, this.spot.getId(), this.vehicle.getId(), this.spot.getAddress());
     }
 
     @Override

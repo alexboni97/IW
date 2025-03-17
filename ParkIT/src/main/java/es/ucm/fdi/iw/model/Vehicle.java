@@ -38,7 +38,7 @@ public class Vehicle  implements Transferable<Vehicle.Transfer> {
 
 	private String model;
 	
-	private String size;
+	private String size; // S, M, L, XL
 
 	@ManyToOne
 	@JoinColumn(name = "parker_id")

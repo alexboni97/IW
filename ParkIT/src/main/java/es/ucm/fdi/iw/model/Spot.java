@@ -33,17 +33,13 @@ public class Spot implements Transferable<Spot.Transfer> {
     private long id;
 
     private boolean enabled;
-    
-    public enum Type {
-        COMPACT, LARGE, HANDICAPPED, ELECTRIC
-    }
 
-    @Enumerated(EnumType.STRING)
-    private Type type;
+    private String size; // S, M, L, XL
 
-    private String size;
+    private double x;
+    private double y;
 
-    private String coords;
+    private boolean horizontal;
 
     @ManyToOne
     @JoinColumn(name = "parking_id")
@@ -58,16 +54,17 @@ public class Spot implements Transferable<Spot.Transfer> {
     public static class Transfer {
         private long id;
         private boolean enabled;
-        private String type;
         private String size;
-        private String coords;
+        private double x;
+        private double y;
+        private boolean horizontal;
         private long parkingId;
         private int totalReserves;
     }
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(this.id, this.enabled, this.type.name(), this.size, this.coords, this.parking.getId(), this.reserves.size());
+        return new Transfer(this.id, this.enabled, this.size, this.x, this.y, this.horizontal, this.parking.getId(), this.reserves.size());
     }
 
     @Override

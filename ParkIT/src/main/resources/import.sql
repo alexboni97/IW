@@ -1,5 +1,5 @@
 -- insert admin (username a, password aa)
-INSERT INTO IWUser (id, enabled, role, username, password)
+/*INSERT INTO IWUser (id, enabled, role, username, password)
 VALUES (1, TRUE, 'ADMIN', 'a',
     '{bcrypt}$2a$10$2BpNTbrsarbHjNsUWgzfNubJqBRf.0Vz9924nRSHBqlbPKerkgX.W');
 INSERT INTO IWUser (id, enabled, role, username, password)
@@ -22,9 +22,10 @@ VALUES (1, 'Sergio', 'Sanchopanza', '12345678a', '123456789', 'elmejor@ucm.es', 
 
 INSERT INTO PARKER (id, first_Name, second_Name, DNI, telephone, email, wallet)
 VALUES (2, 'Paula', 'ayuda', '12345678b', '123456780', 'lamejor@ucm.es', 200.00);
-
 INSERT INTO Enterprise (id, name, CIF, account_number, telephone)
 VALUES (3, 'Enterprise 1', '12345678a', '12345678901234567890', '123456789');
+*/
+
 -- start id numbering from a value that is larger than any assigned above
 ALTER SEQUENCE "PUBLIC"."GEN" RESTART WITH 1024;
 
