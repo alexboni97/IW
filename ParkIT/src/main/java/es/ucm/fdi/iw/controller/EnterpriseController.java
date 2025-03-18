@@ -2,6 +2,8 @@ package es.ucm.fdi.iw.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.time.LocalTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -102,43 +104,42 @@ public class EnterpriseController {
     @PostMapping("/request-parking")
     public String requestParking(@RequestParam String name, @RequestParam String address, @RequestParam int cp,
             @RequestParam String city, @RequestParam String country, @RequestParam int telephone,
-            @RequestParam String email, @RequestParam double feePerHour, @RequestParam String openingTime,
-            @RequestParam String closingTime, @RequestParam Integer totalSpots, HttpSession session) {
+            @RequestParam String email, @RequestParam double feePerHour, @RequestParam LocalTime openingTime,
+            @RequestParam LocalTime closingTime, @RequestParam Integer totalSpots, HttpSession session, Model model) {
 
         // //Creamos un objeto de tipo request
-        // Request request = new Request();
+        Request request = new Request();
 
-        // //Metemos los datos al request
-        // request.setName(name);
-        // request.setAddress(address);
-        // request.setEnabled(true);
-        // request.setCp(cp);
-        // request.setCity(city);
-        // request.setCountry(country);
-        // request.setTelephone(telephone);
-        // request.setEmail(email);
-        // request.setFeePerHour(feePerHour);
-        // request.setOpeningTime(LocalTime.parse(openingTime));
-        // request.setClosingTime(LocalTime.parse(closingTime));
-        // request.setState("AÑADIR");
-        // request.setTotalSpots(totalSpots);
-        // request.setLatitude(null);
-        // request.setLongitude(null);
-        // request.setEnterprise((Enterprise) session.getAttribute("u"));
+        //Metemos los datos al request
+        request.setName(name);
+        request.setAddress(address);
+        request.setEnabled(true);
+        request.setCp(cp);
+        request.setCity(city);
+        request.setCountry(country);
+        request.setTelephone(telephone);
+        request.setEmail(email);
+        request.setFeePerHour(feePerHour);
+        request.setLatitude(0);
+        request.setLongitude(0);
+        request.setOpeningTime(openingTime);
+        request.setClosingTime(closingTime);
+        request.setState("AÑADIR");
+        request.setTotalSpots(totalSpots);
+        request.setEnterprise((Enterprise) session.getAttribute("u"));
 
-        // try {
-        // entityManager.persist(request);
-        // entityManager.flush();
-        // entityManager.clear();
-        // model.addAttribute("success", "Solcitud realizada con éxito. Esperando
-        // respuesta del administrador.");
-        // } catch (Exception e) {
-        // model.addAttribute("error", "Hubo un error al guardar la solicitud: " +
-        // e.getMessage());
-        // return "redirect:/error";
-        // }
+        try {
+        entityManager.persist(request);
+        entityManager.flush();
+        entityManager.clear();
+        model.addAttribute("success", "Solcitud realizada con éxito. Esperando respuesta del administrador.");
+        } catch (Exception e) {
+        model.addAttribute("error", "Hubo un error al guardar la solicitud: " +
+        e.getMessage());
+        return "redirect:/error";
+        }
 
         // //Nombre de la vista a la que quiero redirigir.
-        return "enterprise-parkings";
+        return "/enterprise-parkings";
     }
 }

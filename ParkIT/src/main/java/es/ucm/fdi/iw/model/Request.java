@@ -12,6 +12,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.micrometer.common.lang.Nullable;
+
 /**
  * A request managed by an admin.
  */
@@ -67,7 +69,10 @@ public class Request implements Transferable<Request.Transfer> {
 
     private double latitude;
 
+    @Nullable
     private int idParking;
+
+    private int totalSpots;
 
     // AÑADIR --> solicitudes de añadir
     // BORRAR --> solicitudes de borrar
@@ -117,6 +122,9 @@ public class Request implements Transferable<Request.Transfer> {
             this.enterpriseId = p.getEnterprise().getId();
             this.idParking = p.getIdParking();
             this.state = p.getState();
+            this.totalSpots = p.getTotalSpots();
+            this.longitude = p.getLongitude();
+            this.latitude = p.getLatitude();
         }
     }
 

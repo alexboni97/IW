@@ -45,12 +45,12 @@ public class AdminController {
         return "admin";
     }
 
-    @GetMapping("/add-parking")
+    @GetMapping("/request-add")
     public String adminRequest(Model model) {
         List<Request> requests = entityManager
-                .createNamedQuery("findByEnabledAndState", Request.class)
+                .createNamedQuery("Request.findByEnabledAndState", Request.class)
                 .setParameter("enabled", true)
-                .setParameter("state", "AÑADIR")
+                .setParameter("state", "ANYADIR")
                 .getResultList();
 
         model.addAttribute("requests", requests);

@@ -67,6 +67,5 @@ VALUES (1, 'CONFIRMED', '2025-03-06', '2025-03-07', '10:00', '12:00', 5.0, 'Rese
 INSERT INTO RESERVE (id, state, start_date, end_date, start_time, end_time, price, comments, parker_id, spot_id, vehicle_id)
 VALUES (2, 'CONFIRMED', '2025-03-06', '2025-03-07', '10:00', '12:00', 8.0, 'Reserva para evento', 2, 2, 2);
 
--- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡TENED EN CUENTA!!!!!!!!!!!!!!!!!!!
--- CUANDO ENTRAS COMO B EN LA APP, Y LE DAS A BUSCAR, TE APARECEN LOS COCHES VINCULADOS AL PARKER CON ID 1, Q ES SERGIO, PERO CUANDO ENTRAS EN VER MIS RESERVAS DE B, 
--- APARECEN LAS RESERVAS QUE ESTÁN VINCULADAS AL IWUSER CON IDE 2 (ROLL USER) RARETE
+INSERT INTO REQUEST (id, enabled, name, address, cp, city, country, telephone, email, feePerHour, openingTime, closingTime, longitude, latitude, idParking, totalSpots, state, enterprise_id)
+VALUES (1, true, 'InterParking El Mercado', 'Calle Cerrajeros s/n', 28801, 'Alcalá de Henares', 'Espanya', '918798072', 'interparking@gmial.com', 1.1, '00:00', '00:00', 40.48205, -3.36553, null, 20, 'ANYADIR', 3);
