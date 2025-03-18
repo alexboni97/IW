@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let map = L.map('map');
     let lat ;
     let lon ;
+    let circleFind;
     let iconoMiUbicacion = L.icon({
         iconUrl: '/img/mi-ubicacion.png',
         iconSize: [40, 40],
@@ -17,7 +18,10 @@ document.addEventListener('DOMContentLoaded', function () {
     function onLocationFound(e) {
         L.marker(e.latlng, { icon: iconoMiUbicacion }).addTo(map)
             .bindTooltip("Tu Ubicación").openTooltip();
-        L.circle(e.latlng, 10000).addTo(map);
+        if(circleFind){
+            map.removeLayer(circleFind);
+        }
+        circleFind=L.circle(e.latlng, 30000).addTo(map);
     }
     if (latitudeInput?.value == '' || longitudeInput?.value  == '') {
         map.locate({ setView: true, maxZoom: 13 });
@@ -26,7 +30,10 @@ document.addEventListener('DOMContentLoaded', function () {
         lat = parseFloat(latitudeInput?.value || 40.416775);
         lon = parseFloat(longitudeInput?.value || -3.703790);
         map.setView([lat, lon], 16);
-        L.circle([lat, lon], 10000).addTo(map);
+        if(circleFind){
+            map.removeLayer(circleFind);
+        }
+        circleFind=L.circle([lat, lon], 30000).addTo(map);
     }
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
@@ -59,31 +66,21 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('latitude').value = latitude;
         document.getElementById('longitude').value = longitude;
 
-        // Mover el mapa a la ubicación seleccionada
-        map.setView(e.geocode.center, 16);
-        L.circle(e.geocode.center, 10000).addTo(map);
+        // // Mover el mapa a la ubicación seleccionada
+        // map.setView(e.geocode.center, 16);
+        // if(circleFind){
+        //     map.removeLayer(circleFind);
+        // }
+        // circleFind=L.circle(e.geocode.center, 30000).addTo(map);
     }).addTo(map);
 
     const geocoderContainer = geocoder.getContainer();
     document.getElementById('buscador').appendChild(geocoderContainer);
 
 
-
-
-
-
-    //rad = 5000; // radio por defecto de 5000m
-
-
-
     // Array para almacenar marcadores personalizados
     const markers = [];
 
-    // Evento para añadir marcadores al hacer click
-    /*map.on('click', function(e) {
-        const marker = L.marker(e.latlng).addTo(map);
-        markers.push(marker);
-    });*/
 
     // Evento para añadir los parkings al mapa
     // parkings es un array de objetos que contiene la información de los parkings
