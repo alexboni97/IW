@@ -9,46 +9,19 @@
                 destino introducido</small>
         </div>
 
-        <div class="row mb-3 mt-3">
-            <div class="col">
-                <label for="address" class="form-label">Introduce tu destino</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" name="address" id="address" aria-describedby="destinoId"
-                        placeholder="Busca aquí..." th:value="${address}" />
-                </div>
-            </div>
-
-            <div class="col">
-                <label for="latitude" class="form-label">Latitud</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" name="latitude" id="latitude" aria-describedby="latitudeId"
-                        placeholder="" th:value="${latitude}" />
-                </div>
-            </div>
-
-            <div class="col">
-                <label for="longitude" class="form-label">Longitud</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" name="longitude" id="longitude" aria-describedby="longitudeId"
-                        placeholder="" th:value="${longitude}"/>
-                </div>
-            </div>
-
-            <div class="col">
-                <label for="range" class="form-label">Rango</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" name="range" id="range" aria-describedby="rangeId"
-                        placeholder="" th:value="${range}"/>
-                </div>
-            </div>
-        </div>
+            <!-- <input type="text" id="fullAddress" placeholder="Dirección completa" >
+            <input type="text" id="calle" placeholder="Calle" >
+            <input type="text" id="ciudad" placeholder="Ciudad" >
+            <input type="text" id="codigoPostal" placeholder="Código Postal" > -->
+            <input type="hidden" name="latitude" id="latitude" th:value="${latitude}">
+            <input type="hidden" name="longitude" id="longitude" th:value="${longitude}">
 
         <div class="row mb-3">
             <div class="col">
                 <label for="startDate" class="form-label">Fecha de entrada</label>
                 <div class="input-group">
                     <input type="date" class="form-control" name="startDate" id="startDate"
-                        aria-describedby="startDateId" th:value="${startDate}" />
+                        aria-describedby="startDateId" th:value="${startDate}" required/>
                 </div>
             </div>
 
@@ -56,7 +29,7 @@
                 <label for="startTime" class="form-label">Hora de entrada</label>
                 <div class="input-group">
                     <input type="time" class="form-control" name="startTime" id="startTime"
-                        aria-describedby="startTimeId" th:value="${startTime}" />
+                        aria-describedby="startTimeId" th:value="${startTime}" required/>
                 </div>
             </div>
         </div>
@@ -66,14 +39,14 @@
                 <label for="endDate" class="form-label">Fecha de salida</label>
                 <div class="input-group">
                     <input type="date" class="form-control" name="endDate" id="endDate" aria-describedby="endDateId"
-                        th:value="${endDate}" />
+                        th:value="${endDate}" required/>
                 </div>
             </div>
             <div class="col">
                 <label for="endTime" class="form-label">Hora de salida</label>
                 <div class="input-group">
                     <input type="time" class="form-control" name="endTime" id="endTime" aria-describedby="endTimeId"
-                        th:value="${endTime}" />
+                        th:value="${endTime}" required/>
                 </div>
             </div>
         </div>

@@ -28,14 +28,14 @@ VALUES (3, 'Enterprise 1', '12345678a', '12345678901234567890', '123456789');
 
 -- start id numbering from a value that is larger than any assigned above
 
-INSERT INTO PARKING (id, name, address, telephone, email, enterprise_id, opening_time, closing_time, fee_per_hour,
-enabled, latitude, longitude) VALUES (1, 'Parking 1', 'Calle de la piruleta', '123456789', 'parking1@gmail.com', 3, '08:00', '20:00', 1.5, TRUE, 40.416775, -3.703790);
+INSERT INTO PARKING (id, name, address, cp, city, country, telephone, email, enterprise_id, opening_time, closing_time, fee_per_hour,
+enabled, latitude, longitude) VALUES (1, 'Parking 1', 'Calle de la piruleta', 28005, 'Madrid', 'Espanya', '123456789', 'parking1@gmail.com', 3, '08:00', '20:00', 1.5, TRUE, 40.416775, -3.703790);
 
-INSERT INTO PARKING (id, name, address, telephone, email, enterprise_id, opening_time, closing_time, fee_per_hour,
-enabled, latitude, longitude) VALUES (2, 'Parking 2', 'Calle de la fresa', '123456789', 'parking2@gmail.com', 3, '08:00', '20:00', 1.5, TRUE, 42.416775, -5.703790);
+INSERT INTO PARKING (id, name, address, cp, city, country, telephone, email, enterprise_id, opening_time, closing_time, fee_per_hour,
+enabled, latitude, longitude) VALUES (2, 'Parking 2', 'Calle de la fresa', 28005, 'Madrid', 'Espanya', '123456789', 'parking2@gmail.com', 3, '08:00', '20:00', 1.5, TRUE, 42.416775, -5.703790);
 
-INSERT INTO PARKING (id, name, address, telephone, email, enterprise_id, opening_time, closing_time, fee_per_hour,
-enabled, latitude, longitude) VALUES (3, 'Parking 3', 'Paseo de los Olmos', '123456789', 'parking3@gmail.com', 3, '08:00', '20:00', 1.5, TRUE, 40.404711, -3.710862);
+INSERT INTO PARKING (id, name, address, cp, city, country, telephone, email, enterprise_id, opening_time, closing_time, fee_per_hour,
+enabled, latitude, longitude) VALUES (3, 'Parking 3', 'Paseo de los Olmos', 28005, 'Madrid', 'Espanya', '123456789', 'parking3@gmail.com', 3, '08:00', '20:00', 1.5, TRUE, 40.404711, -3.710862);
 
 INSERT INTO SPOT (id, enabled, type, size, coords, parking_id)
 VALUES (1, TRUE, 'COMPACT', '2.5x5', '40.416775,-3.703790', 1);
@@ -67,7 +67,6 @@ VALUES (1, 'CONFIRMED', '2025-03-06', '2025-03-07', '10:00', '12:00', 5.0, 'Rese
 INSERT INTO RESERVE (id, state, start_date, end_date, start_time, end_time, price, comments, parker_id, spot_id, vehicle_id)
 VALUES (2, 'CONFIRMED', '2025-03-06', '2025-03-07', '10:00', '12:00', 8.0, 'Reserva para evento', 2, 2, 2);
 */
-
 
 -- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡TENED EN CUENTA!!!!!!!!!!!!!!!!!!!
 -- CUANDO ENTRAS COMO B EN LA APP, Y LE DAS A BUSCAR, TE APARECEN LOS COCHES VINCULADOS AL PARKER CON ID 1, Q ES SERGIO, PERO CUANDO ENTRAS EN VER MIS RESERVAS DE B, 

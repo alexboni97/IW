@@ -95,43 +95,50 @@ public class UserController {
 		}
 	}
 
+	public double calcularDistancia(double lat1, double lon1, double lat2, double lon2) {
+		final int R = 6371; // Radio de la Tierra en km
+		double dLat = Math.toRadians(lat2 - lat1);
+		double dLon = Math.toRadians(lon2 - lon1);
+		double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+				   Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+				   Math.sin(dLon / 2) * Math.sin(dLon / 2);
+		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+		return R * c;
+	}
+	
 	// El return es por la vista que devuelve.
 	@GetMapping("/map")
-	public String map(@RequestParam @Nullable String address, @RequestParam @Nullable String startDate,
-			@RequestParam @Nullable String endDate,
-			@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime,
+	public String map(
+			@RequestParam @Nullable LocalDate startDate, @RequestParam @Nullable LocalDate endDate,
+			@RequestParam @Nullable LocalTime startTime, @RequestParam @Nullable LocalTime endTime,
 			@RequestParam @Nullable String latitude,
-			@RequestParam @Nullable String longitude, @RequestParam @Nullable Long range, Model model) {
-
-		System.out.println("Address: " + address);
-		List<Parking> parkings;
-		List<Transfer> transferParkings = new ArrayList<>();
-
-		if (address == null || address.isEmpty()) {
-			parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
-
-			for (Parking p : parkings) {
-				transferParkings.add(p.toTransfer());
-			}
-
-		} else {
-			parkings = entityManager.createNamedQuery("Parking.findByAddress", Parking.class)
-					.setParameter("address", address).getResultList();
-
-			for (Parking p : parkings) {
-				transferParkings.add(p.toTransfer());
-			}
+			@RequestParam @Nullable String longitude,
+			Model model) {
+		Double radio = 100.0;
+		List<Parking> parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
+		double lat, lon;
+		List<Parking> parkingsInRange;
+		if(latitude == null || longitude == null) {
+			parkingsInRange = parkings;
+		}else {
+			lat = Double.parseDouble(latitude);
+			lon = Double.parseDouble(longitude);
+			parkingsInRange = parkings.stream()
+					.filter(p -> calcularDistancia(lat, lon, p.getLatitude(), p.getLongitude()) <= radio).collect(Collectors.toList());
 		}
 
+
+		List<Transfer> transferParkings = new ArrayList<>();
+		for (Parking p : parkingsInRange) {
+			transferParkings.add(p.toTransfer());
+		}
 		model.addAttribute("parkings", transferParkings);
-		model.addAttribute("address", address);
 		model.addAttribute("latitude", latitude);
 		model.addAttribute("longitude", longitude);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);
 		model.addAttribute("startTime", startTime);
 		model.addAttribute("endTime", endTime);
-		model.addAttribute("range", range);
 
 		return "map";
 	}
