@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/head.html :: header}" />
+    <title>Mis Parkings</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="~{fragments/nav.html :: nav}"></header> 
+
+    <div class="container-fluid row p-5">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Empresa</th>
+                    <th>Nombre</th>
+                    <th>Dirección</th>
+                    <th>Código Postal</th>
+                    <th>Ciudad</th>
+                    <th>País</th>
+                    <th>Teléfono</th>
+                    <th>Fecha de apertura</th>
+                    <th>Fecha de cierre</th>
+                    <th>Precio/h</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="requests : ${requests}">
+                    <td id="fila1"><a class="nav-link" th:text="${requests.enterprise.name}">Nombre de la empresa</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${requests.name}">Nombre</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${requests.address}">Dirección</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${requests.cp}">Código Postal</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${requests.city}">Ciudad</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${requests.country}">País</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${requests.telephone}">Teléfono</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${requests.openingTime}">Fecha de apertura</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${requests.ClosingTime}">Fecha de cierre</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${requests.feePerHour}">Precio/h</a></td>
+
+                    <td id="fila1"><a class="btn btn-primary m-1" th:href=""
+                            href="/enterprise/enterprise-plazas">Aceptar</a>
+                        <a class="btn btn-danger m-1" th:href=""
+                            href="">Rechazar</a>
+                    </td>
+                </tr>
+        </table>
+    </div>
+    <footer th:replace="~{fragments/footer.html :: footer}"></footer>
+</body>
+
+</html>

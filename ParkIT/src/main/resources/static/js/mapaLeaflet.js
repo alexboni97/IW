@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         lat = parseFloat(latitudeInput?.value || 40.416775);
         lon = parseFloat(longitudeInput?.value || -3.703790);
-        map.setView([lat, lon], 16);
+        map.setView([lat, lon], 13);
         if(circleFind){
             map.removeLayer(circleFind);
         }

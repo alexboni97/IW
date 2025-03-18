@@ -1,5 +1,5 @@
 package es.ucm.fdi.iw.controller;
-
+import es.ucm.fdi.iw.AppConfig;
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Parking;
@@ -62,6 +62,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
+
 //Importame el transfer
 
 /**
@@ -72,6 +73,10 @@ import java.util.ArrayList;
 @Controller()
 @RequestMapping("user")
 public class UserController {
+
+    private final AppConfig appConfig;
+
+    private final AdminController adminController;
 
 	private static final Logger log = LogManager.getLogger(UserController.class);
 
@@ -86,6 +91,11 @@ public class UserController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+    UserController(AdminController adminController, AppConfig appConfig) {
+        this.adminController = adminController;
+        this.appConfig = appConfig;
+    }
 
 	@ModelAttribute
 	public void populateModel(HttpSession session, Model model) {
@@ -114,7 +124,7 @@ public class UserController {
 			@RequestParam @Nullable String latitude,
 			@RequestParam @Nullable String longitude,
 			Model model) {
-		Double radio = 100.0;
+		Double radio = 30.0;
 		List<Parking> parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
 		double lat, lon;
 		List<Parking> parkingsInRange;
@@ -127,11 +137,30 @@ public class UserController {
 					.filter(p -> calcularDistancia(lat, lon, p.getLatitude(), p.getLongitude()) <= radio).collect(Collectors.toList());
 		}
 
-
 		List<Transfer> transferParkings = new ArrayList<>();
 		for (Parking p : parkingsInRange) {
-			transferParkings.add(p.toTransfer());
+			List<Spot> spots = p.getSpots();
+			List<Reserve> reserves = new ArrayList<>();
+			for (Spot s : spots) {
+				reserves.addAll(s.getReserves());
+			}
+			if(reserves.size()==0){
+				transferParkings.add(p.toTransfer());
+			}else{
+				for (Reserve r : reserves) {
+					if ((r.getStartDate().isBefore(endDate) && r.getEndDate().isAfter(startDate)) ||
+							(r.getStartDate().isEqual(startDate) && r.getStartTime().isBefore(endTime)) ||
+							(r.getEndDate().isEqual(endDate) && r.getEndTime().isAfter(startTime))) {
+						System.out.println("reservado");
+					}else{
+						transferParkings.add(p.toTransfer());
+						break;
+					}
+				}
+			}
+			
 		}
+
 		model.addAttribute("parkings", transferParkings);
 		model.addAttribute("latitude", latitude);
 		model.addAttribute("longitude", longitude);
@@ -146,11 +175,9 @@ public class UserController {
 	@GetMapping("/reserve/{id}")
 	public String reserve(Model model,
 			@PathVariable long id,
-			// @RequestParam(required = false) Integer selectedSlot,
-			@RequestParam @Nullable String startDate,
-			@RequestParam @Nullable String endDate,
-			@RequestParam @Nullable String startTime,
-			@RequestParam @Nullable String endTime) {
+			@RequestParam(required = false) Integer selectedSlot,
+			@RequestParam @Nullable LocalDate startDate, @RequestParam @Nullable LocalDate endDate,
+			@RequestParam @Nullable LocalTime startTime, @RequestParam @Nullable LocalTime endTime) {
 
 		Parking parking = entityManager.find(Parking.class, id);
 		if (parking == null) {
@@ -178,11 +205,8 @@ public class UserController {
 
 	@GetMapping("/confirm-select-parking/{id}")
 	public String confirmSelectParking(@PathVariable long id, @RequestParam Integer selectedSlot,
-			@RequestParam @Nullable String startDate,
-			@RequestParam @Nullable String endDate,
-			// @RequestParam Long spotId,
-			@RequestParam @Nullable String startTime,
-			@RequestParam @Nullable String endTime,
+	@RequestParam @Nullable LocalDate startDate, @RequestParam @Nullable LocalDate endDate,
+	@RequestParam @Nullable LocalTime startTime, @RequestParam @Nullable LocalTime endTime,
 			RedirectAttributes redirectAttributes) {
 		redirectAttributes.addAttribute("selectedSlot", selectedSlot);
 		redirectAttributes.addAttribute("startDate", startDate);
@@ -198,10 +222,8 @@ public class UserController {
 	public String selectParkingView(@PathVariable long id,
 			@RequestParam(required = false) Integer selectedSlot,
 			@RequestParam(required = false) Long vehicleId,
-			@RequestParam @Nullable String startDate,
-			@RequestParam @Nullable String endDate,
-			@RequestParam @Nullable String startTime,
-			@RequestParam @Nullable String endTime,
+			@RequestParam @Nullable LocalDate startDate, @RequestParam @Nullable LocalDate endDate,
+			@RequestParam @Nullable LocalTime startTime, @RequestParam @Nullable LocalTime endTime,
 			Model model) {
 		List<Integer> occupiedSpots = new ArrayList<>();
 		Parking parking = entityManager.find(Parking.class, id);
@@ -211,14 +233,11 @@ public class UserController {
 			for (Spot s : spots) {
 				reserves.addAll(s.getReserves());
 			}
-			LocalDate start = LocalDate.parse(startDate);
-			LocalDate end = LocalDate.parse(endDate);
-			LocalTime startT = LocalTime.parse(startTime);
-			LocalTime endT = LocalTime.parse(endTime);
+
 			for (Reserve r : reserves) {
-				if ((r.getStartDate().isBefore(end) && r.getEndDate().isAfter(start)) ||
-						(r.getStartDate().isEqual(start) && r.getStartTime().isBefore(endT)) ||
-						(r.getEndDate().isEqual(end) && r.getEndTime().isAfter(startT))) {
+				if ((r.getStartDate().isBefore(endDate) && r.getEndDate().isAfter(startDate)) ||
+				(r.getStartDate().isEqual(startDate) && r.getStartTime().isBefore(endTime)) ||
+				(r.getEndDate().isEqual(endDate) && r.getEndTime().isAfter(startTime))) {
 					Integer spotId = Integer.valueOf((int) r.getSpot().getId());
 					occupiedSpots.add(spotId);
 				}
