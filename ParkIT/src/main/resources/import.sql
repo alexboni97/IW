@@ -1,3 +1,4 @@
+ALTER SEQUENCE "PUBLIC"."GEN" RESTART WITH 1024;
 -- insert admin (username a, password aa)
 /*INSERT INTO IWUser (id, enabled, role, username, password)
 VALUES (1, TRUE, 'ADMIN', 'a',
@@ -24,10 +25,8 @@ INSERT INTO PARKER (id, first_Name, second_Name, DNI, telephone, email, wallet)
 VALUES (2, 'Paula', 'ayuda', '12345678b', '123456780', 'lamejor@ucm.es', 200.00);
 INSERT INTO Enterprise (id, name, CIF, account_number, telephone)
 VALUES (3, 'Enterprise 1', '12345678a', '12345678901234567890', '123456789');
-*/
 
 -- start id numbering from a value that is larger than any assigned above
-ALTER SEQUENCE "PUBLIC"."GEN" RESTART WITH 1024;
 
 INSERT INTO PARKING (id, name, address, telephone, email, enterprise_id, opening_time, closing_time, fee_per_hour,
 enabled, latitude, longitude) VALUES (1, 'Parking 1', 'Calle de la piruleta', '123456789', 'parking1@gmail.com', 3, '08:00', '20:00', 1.5, TRUE, 40.416775, -3.703790);
@@ -67,6 +66,7 @@ VALUES (1, 'CONFIRMED', '2025-03-06', '2025-03-07', '10:00', '12:00', 5.0, 'Rese
 
 INSERT INTO RESERVE (id, state, start_date, end_date, start_time, end_time, price, comments, parker_id, spot_id, vehicle_id)
 VALUES (2, 'CONFIRMED', '2025-03-06', '2025-03-07', '10:00', '12:00', 8.0, 'Reserva para evento', 2, 2, 2);
+*/
 
 
 -- ¡¡¡¡¡¡¡¡¡¡¡¡¡¡¡TENED EN CUENTA!!!!!!!!!!!!!!!!!!!
