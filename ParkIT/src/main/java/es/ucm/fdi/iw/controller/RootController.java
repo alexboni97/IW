@@ -320,6 +320,11 @@ public class RootController {
         req1.setEnterprise(e);
         entityManager.persist(req1);
 
+        /* TODO
+         * INSERT INTO REQUEST (id, enabled, name, address, cp, city, country, telephone, email, feePerHour, openingTime, closingTime, longitude, latitude, idParking, totalSpots, state, enterprise_id)
+VALUES (1, true, 'InterParking El Mercado', 'Calle Cerrajeros s/n', 28801, 'Alcalá de Henares', 'Espanya', '918798072', 'interparking@gmial.com', 1.1, '00:00', '00:00', 40.48205, -3.36553, null, 20, 'ANYADIR', 3);
+         */
+
         return "index";
     }
 
