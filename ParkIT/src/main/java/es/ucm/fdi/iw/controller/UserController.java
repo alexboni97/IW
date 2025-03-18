@@ -177,10 +177,8 @@ public class UserController {
 	public String reserve(Model model,
 			@PathVariable long id,
 			@RequestParam(required = false) Integer selectedSlot,
-			@RequestParam @Nullable String startDate,
-			@RequestParam @Nullable String endDate,
-			@RequestParam @Nullable String startTime,
-			@RequestParam @Nullable String endTime) {
+			@RequestParam @Nullable LocalDate startDate, @RequestParam @Nullable LocalDate endDate,
+			@RequestParam @Nullable LocalTime startTime, @RequestParam @Nullable LocalTime endTime) {
 
 		Parking parking = entityManager.find(Parking.class, id);
 		if (parking == null) {
@@ -208,11 +206,8 @@ public class UserController {
 
 	@GetMapping("/confirm-select-parking/{id}")
 	public String confirmSelectParking(@PathVariable long id, @RequestParam Integer selectedSlot,
-			@RequestParam @Nullable String startDate,
-			@RequestParam @Nullable String endDate,
-			// @RequestParam Long spotId,
-			@RequestParam @Nullable String startTime,
-			@RequestParam @Nullable String endTime,
+	@RequestParam @Nullable LocalDate startDate, @RequestParam @Nullable LocalDate endDate,
+	@RequestParam @Nullable LocalTime startTime, @RequestParam @Nullable LocalTime endTime,
 			RedirectAttributes redirectAttributes) {
 		redirectAttributes.addAttribute("selectedSlot", selectedSlot);
 		redirectAttributes.addAttribute("startDate", startDate);
@@ -228,10 +223,8 @@ public class UserController {
 	public String selectParkingView(@PathVariable long id,
 			@RequestParam(required = false) Integer selectedSlot,
 			@RequestParam(required = false) Long vehicleId,
-			@RequestParam @Nullable String startDate,
-			@RequestParam @Nullable String endDate,
-			@RequestParam @Nullable String startTime,
-			@RequestParam @Nullable String endTime,
+			@RequestParam @Nullable LocalDate startDate, @RequestParam @Nullable LocalDate endDate,
+			@RequestParam @Nullable LocalTime startTime, @RequestParam @Nullable LocalTime endTime,
 			Model model) {
 		List<Integer> occupiedSpots = new ArrayList<>();
 		Parking parking = entityManager.find(Parking.class, id);
@@ -241,14 +234,11 @@ public class UserController {
 			for (Spot s : spots) {
 				reserves.addAll(s.getReserves());
 			}
-			LocalDate start = LocalDate.parse(startDate);
-			LocalDate end = LocalDate.parse(endDate);
-			LocalTime startT = LocalTime.parse(startTime);
-			LocalTime endT = LocalTime.parse(endTime);
+
 			for (Reserve r : reserves) {
-				if ((r.getStartDate().isBefore(end) && r.getEndDate().isAfter(start)) ||
-						(r.getStartDate().isEqual(start) && r.getStartTime().isBefore(endT)) ||
-						(r.getEndDate().isEqual(end) && r.getEndTime().isAfter(startT))) {
+				if ((r.getStartDate().isBefore(endDate) && r.getEndDate().isAfter(startDate)) ||
+				(r.getStartDate().isEqual(startDate) && r.getStartTime().isBefore(endTime)) ||
+				(r.getEndDate().isEqual(endDate) && r.getEndTime().isAfter(startTime))) {
 					Integer spotId = Integer.valueOf((int) r.getSpot().getId());
 					occupiedSpots.add(spotId);
 				}
