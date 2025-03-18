@@ -74,7 +74,7 @@ public class RootController {
     public String poblarUsuarios() {
         
         Admin a = new Admin();
-        a.setId(1);
+        //a.setId(1);
         a.setEnabled(true);
         a.setRole(User.Role.ADMIN);
         a.setUsername("a");
@@ -86,7 +86,7 @@ public class RootController {
         entityManager.persist(a);
 
         Parker u = new Parker();
-        u.setId(2);
+        //u.setId(2);
         u.setEnabled(true);
         u.setRole(User.Role.USER);
         u.setUsername("b");
@@ -100,7 +100,7 @@ public class RootController {
         entityManager.persist(u);
 
         Enterprise e = new Enterprise();
-        e.setId(3);
+        //e.setId(3);
         e.setEnabled(true);
         e.setRole(User.Role.ENTERPRISE);
         e.setUsername("e");
@@ -113,7 +113,7 @@ public class RootController {
         entityManager.persist(e);
 
         Parker u1 = new Parker();
-        u1.setId(4);
+        //u1.setId(4);
         u1.setEnabled(true);
         u1.setRole(User.Role.USER);
         u1.setUsername("paulal10");
@@ -127,7 +127,7 @@ public class RootController {
         entityManager.persist(u1);
         
         Parker u2 = new Parker();
-        u2.setId(5);
+        //u2.setId(5);
         u2.setEnabled(true);
         u2.setRole(User.Role.USER);
         u2.setUsername("secsanc");
@@ -141,7 +141,7 @@ public class RootController {
         entityManager.persist(u2);
 
         Parking parking1 = new Parking();
-        parking1.setId(1);
+        //parking1.setId(1);
         parking1.setName("Parking 1");
         parking1.setAddress("Calle de la piruleta");
         parking1.setTelephone(123456789);
@@ -162,7 +162,7 @@ public class RootController {
         entityManager.persist(parking1);
 
         Parking parking2 = new Parking();
-        parking2.setId(2);
+        //parking2.setId(2);
         parking2.setName("Parking 2");
         parking2.setAddress("Calle de la fresa");
         parking2.setTelephone(123456789);
@@ -183,7 +183,7 @@ public class RootController {
         entityManager.persist(parking2);
 
         Parking parking3 = new Parking();
-        parking3.setId(3);
+        //parking3.setId(3);
         parking3.setName("Parking 3");
         parking3.setAddress("Paseo de los Olmos");
         parking3.setTelephone(123456789);
@@ -205,7 +205,7 @@ public class RootController {
 
         for (int j=1; j <= 13; j++) { // por ahora las plazas estan en el parking 3
             Spot spot = new Spot();
-            spot.setId(j);
+            //spot.setId(j);
             spot.setParking(parking3);
             spot.setEnabled(true); // Example value
             spot.setSize(Math.random() > 0.5 ? "M" : "L"); // Example value
@@ -216,7 +216,7 @@ public class RootController {
         }
 
         Vehicle v1 = new Vehicle();
-        v1.setId(1);
+        //v1.setId(1);
         v1.setEnabled(true);
         v1.setPlate("ABC1234");
         v1.setBrand("Toyota");
@@ -226,7 +226,7 @@ public class RootController {
         entityManager.persist(v1);
 
         Vehicle v2 = new Vehicle();
-        v2.setId(2);
+        //v2.setId(2);
         v2.setEnabled(true);
         v2.setPlate("XYZ5678");
         v2.setBrand("Honda");
@@ -236,9 +236,9 @@ public class RootController {
         entityManager.persist(v2);
 
         Vehicle v3 = new Vehicle();
-        v3.setId(3);
+        //v3.setId(3);
         v3.setEnabled(true);
-        v3.setPlate("DEF9876");
+        v3.setPlate("DEF9877");
         v3.setBrand("BMW");
         v3.setModel("X5");
         v3.setSize("XL");
@@ -246,7 +246,7 @@ public class RootController {
         entityManager.persist(v3);
 
         Vehicle v4 = new Vehicle();
-        v4.setId(4);
+        //v4.setId(4);
         v4.setEnabled(true);
         v4.setPlate("PAULA");
         v4.setBrand("Toyota");
@@ -256,7 +256,7 @@ public class RootController {
         entityManager.persist(v4);
 
         Vehicle v5 = new Vehicle();
-        v5.setId(5);
+        //v5.setId(5);
         v5.setEnabled(true);
         v5.setPlate("ARTURO");
         v5.setBrand("Honda");
@@ -266,7 +266,7 @@ public class RootController {
         entityManager.persist(v5);
 
         Vehicle v6 = new Vehicle();
-        v6.setId(6);
+        //v6.setId(6);
         v6.setEnabled(true);
         v6.setPlate("DEF9876");
         v6.setBrand("BMW");
@@ -276,7 +276,7 @@ public class RootController {
         entityManager.persist(v6);
 
         Reserve r1 = new Reserve();
-        r1.setId(1);
+        //r1.setId(1);
         r1.setState(Reserve.State.CONFIRMED);
         r1.setStartDate(LocalDate.parse("2025-03-06"));
         r1.setEndDate(LocalDate.parse("2025-03-07"));
@@ -289,7 +289,7 @@ public class RootController {
         entityManager.persist(r1);
 
         Reserve r2 = new Reserve();
-        r2.setId(2);
+        //r2.setId(2);
         r2.setState(Reserve.State.CONFIRMED);
         r2.setStartDate(LocalDate.parse("2025-03-06"));
         r2.setEndDate(LocalDate.parse("2025-03-07"));
@@ -300,6 +300,25 @@ public class RootController {
         r2.setSpot(entityManager.find(Spot.class, 2L));
         r2.setVehicle(v2);
         entityManager.persist(r2);
+
+        Request req1 = new Request();
+        req1.setEnabled(true);
+        req1.setName("Interparkking el mercado");
+        req1.setAddress("Calle cerrajeros s/n");
+        req1.setCp(28801);
+        req1.setCity("Alcala de Henares");
+        req1.setTelephone(918798072);
+        req1.setEmail("interparking@gmail.com");
+        req1.setFeePerHour(1.1);
+        req1.setOpeningTime(LocalTime.parse("00:00"));
+        req1.setClosingTime(LocalTime.parse("00:00"));
+        req1.setLatitude(40.48205);
+        req1.setLongitude(-3.36553);
+        req1.setIdParking(-1);
+        //req1.setTotalSpots(20); // TODO
+        req1.setState("AÑADIR");
+        req1.setEnterprise(e);
+        entityManager.persist(req1);
 
         return "index";
     }

@@ -146,7 +146,7 @@ public class UserController {
 	@GetMapping("/reserve/{id}")
 	public String reserve(Model model,
 			@PathVariable long id,
-			@RequestParam(required = false) Integer selectedSlot,
+			// @RequestParam(required = false) Integer selectedSlot,
 			@RequestParam @Nullable String startDate,
 			@RequestParam @Nullable String endDate,
 			@RequestParam @Nullable String startTime,
@@ -170,7 +170,7 @@ public class UserController {
 		model.addAttribute("startTime", startTime);
 		model.addAttribute("endTime", endTime);
 		model.addAttribute("id", id);
-		model.addAttribute("selectedSlot", selectedSlot);
+		// model.addAttribute("selectedSlot", selectedSlot);
 
 		System.out.println(parking.getAddress());
 		return "reserve";

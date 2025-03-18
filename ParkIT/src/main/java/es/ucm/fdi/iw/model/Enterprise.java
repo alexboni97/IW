@@ -19,7 +19,6 @@ import java.util.List;
 @NamedQueries({
 		@NamedQuery(name = "Enterprise.findByname", query = "select obj from Enterprise obj where :name = obj.name "),
 		@NamedQuery(name = "Enterprise.findByCIF", query = "select obj from Enterprise obj where :CIF = obj.CIF "),
-		@NamedQuery(name = "Enterprise.findBytelephone", query = "select obj from Enterprise obj where :telephone = obj.telephone "),
 		@NamedQuery(name = "Enterprise.findByparkings", query = "select obj from Enterprise obj where :parkings MEMBER OF obj.parkings ") })
 public class Enterprise extends User {
 

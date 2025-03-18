@@ -19,9 +19,7 @@ import java.util.List;
 @NamedQueries({
     @NamedQuery(name = "Spot.findById", query = "SELECT s FROM Spot s WHERE s.id = :id"),
     @NamedQuery(name = "Spot.findByEnabled", query = "SELECT s FROM Spot s WHERE s.enabled = :enabled"),
-    @NamedQuery(name = "Spot.findByType", query = "SELECT s FROM Spot s WHERE s.type = :type"),
     @NamedQuery(name = "Spot.findBySize", query = "SELECT s FROM Spot s WHERE s.size = :size"),
-    @NamedQuery(name = "Spot.findByCoords", query = "SELECT s FROM Spot s WHERE s.coords = :coords"),
     @NamedQuery(name = "Spot.findByParking", query = "SELECT s FROM Spot s WHERE s.parking = :parking"),
     @NamedQuery(name = "Spot.findByReserves", query = "SELECT s FROM Spot s WHERE :reserves MEMBER OF s.reserves")
 })

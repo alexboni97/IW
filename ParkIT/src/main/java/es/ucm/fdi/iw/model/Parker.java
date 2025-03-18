@@ -19,10 +19,8 @@ import java.util.List;
 		@NamedQuery(name = "negocio.Parker.findByfirstName", query = "select p from Parker p where :firstName = p.firstName "),
 		@NamedQuery(name = "negocio.Parker.findBysecondName", query = "select p from Parker p where :secondName = p.secondName "),
 		@NamedQuery(name = "negocio.Parker.findByDNI", query = "select p from Parker p where :DNI = p.DNI "),
-		@NamedQuery(name = "negocio.Parker.findBytelephone", query = "select p from Parker p where :telephone = p.telephone "),
-		@NamedQuery(name = "negocio.Parker.findByemail", query = "select p from Parker p where :email = p.email "),
-		@NamedQuery(name = "negocio.Parker.findByvehicles", query = "select p from Parker p where :vehicles MEMBER OF p.vehicles "),
-		@NamedQuery(name = "negocio.Parker.findByreserves", query = "select p from Parker p where :reserves MEMBER OF p.reserves ") })
+		@NamedQuery(name = "negocio.Parker.findByvehicles", query = "select p from Parker p where :vehicles MEMBER OF p.vehicles ") 
+})
 public class Parker extends User {
 	
 	@Column(nullable = false, unique = true)

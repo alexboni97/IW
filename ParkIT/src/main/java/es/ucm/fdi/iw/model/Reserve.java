@@ -23,7 +23,6 @@ import java.time.LocalTime;
     @NamedQuery(name = "Reserve.findByEndDate", query = "SELECT r FROM Reserve r WHERE r.endDate = :endDate"),
     @NamedQuery(name = "Reserve.findByPrice", query = "SELECT r FROM Reserve r WHERE r.price = :price"),
     @NamedQuery(name = "Reserve.findByComments", query = "SELECT r FROM Reserve r WHERE r.comments = :comments"),
-    @NamedQuery(name = "Reserve.findByParker", query = "SELECT r FROM Reserve r WHERE r.parker = :parker"),
     @NamedQuery(name = "Reserve.findBySpot", query = "SELECT r FROM Reserve r WHERE r.spot = :spot")
 })
 public class Reserve implements Transferable<Reserve.Transfer> {

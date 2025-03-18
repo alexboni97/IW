@@ -14,7 +14,7 @@ import jakarta.persistence.*;
 @NoArgsConstructor
 @PrimaryKeyJoinColumn(name = "id")
 @NamedQueries({
-    @NamedQuery(name = "Admin.findByCodigoAdmin", query = "select a from Admin a where :codigoAdmin = a.codigoAdmin")
+    @NamedQuery(name = "Admin.findByCodigo", query = "select a from Admin a where :codigo = a.codigo")
 })
 @Table(name = "IWAdmin")
 public class Admin extends User {
