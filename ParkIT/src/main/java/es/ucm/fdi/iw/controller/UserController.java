@@ -1,5 +1,5 @@
 package es.ucm.fdi.iw.controller;
-
+import es.ucm.fdi.iw.AppConfig;
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.Enterprise;
 import es.ucm.fdi.iw.model.Message;
@@ -63,6 +63,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
+
 //Importame el transfer
 
 /**
@@ -73,6 +74,10 @@ import java.util.ArrayList;
 @Controller()
 @RequestMapping("user")
 public class UserController {
+
+    private final AppConfig appConfig;
+
+    private final AdminController adminController;
 
 	private static final Logger log = LogManager.getLogger(UserController.class);
 
@@ -87,6 +92,11 @@ public class UserController {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
+    UserController(AdminController adminController, AppConfig appConfig) {
+        this.adminController = adminController;
+        this.appConfig = appConfig;
+    }
 
 	@ModelAttribute
 	public void populateModel(HttpSession session, Model model) {
@@ -115,7 +125,7 @@ public class UserController {
 			@RequestParam @Nullable String latitude,
 			@RequestParam @Nullable String longitude,
 			Model model) {
-		Double radio = 100.0;
+		Double radio = 30.0;
 		List<Parking> parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
 		double lat, lon;
 		List<Parking> parkingsInRange;
@@ -128,11 +138,30 @@ public class UserController {
 					.filter(p -> calcularDistancia(lat, lon, p.getLatitude(), p.getLongitude()) <= radio).collect(Collectors.toList());
 		}
 
-
 		List<Transfer> transferParkings = new ArrayList<>();
 		for (Parking p : parkingsInRange) {
-			transferParkings.add(p.toTransfer());
+			List<Spot> spots = p.getSpots();
+			List<Reserve> reserves = new ArrayList<>();
+			for (Spot s : spots) {
+				reserves.addAll(s.getReserves());
+			}
+			if(reserves.size()==0){
+				transferParkings.add(p.toTransfer());
+			}else{
+				for (Reserve r : reserves) {
+					if ((r.getStartDate().isBefore(endDate) && r.getEndDate().isAfter(startDate)) ||
+							(r.getStartDate().isEqual(startDate) && r.getStartTime().isBefore(endTime)) ||
+							(r.getEndDate().isEqual(endDate) && r.getEndTime().isAfter(startTime))) {
+						System.out.println("reservado");
+					}else{
+						transferParkings.add(p.toTransfer());
+						break;
+					}
+				}
+			}
+			
 		}
+
 		model.addAttribute("parkings", transferParkings);
 		model.addAttribute("latitude", latitude);
 		model.addAttribute("longitude", longitude);
