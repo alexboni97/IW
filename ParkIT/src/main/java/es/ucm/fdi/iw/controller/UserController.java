@@ -128,7 +128,7 @@ public class UserController {
 		List<Parking> parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
 		double lat, lon;
 		List<Parking> parkingsInRange;
-		if(latitude == null || longitude == null) {
+		if(latitude == null || longitude == null || latitude=="" || longitude=="") {
 			parkingsInRange = parkings;
 		}else {
 			lat = Double.parseDouble(latitude);
