@@ -1,6 +1,7 @@
 package es.ucm.fdi.iw.controller;
 import es.ucm.fdi.iw.AppConfig;
 import es.ucm.fdi.iw.LocalData;
+import es.ucm.fdi.iw.model.Enterprise;
 import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Parking;
 import es.ucm.fdi.iw.model.Parking.Transfer;
@@ -174,22 +175,23 @@ public class UserController {
 
 	@GetMapping("/reserve/{id}")
 	public String reserve(Model model,
+			HttpSession session,
 			@PathVariable long id,
 			@RequestParam(required = false) Integer selectedSlot,
-			@RequestParam @Nullable LocalDate startDate, @RequestParam @Nullable LocalDate endDate,
-			@RequestParam @Nullable LocalTime startTime, @RequestParam @Nullable LocalTime endTime) {
+			@RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate,
+			@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime) {
 
 		Parking parking = entityManager.find(Parking.class, id);
 		if (parking == null) {
 			model.addAttribute("erro", "Parking no válido");
 			return "error";
 		}
-		Parker parker = entityManager.find(Parker.class, id);
-		if (parker == null) {
-			model.addAttribute("erro", "Parker no válido");
-			return "error";
-		}
-		List<Vehicle> vehicles = parker.getVehicles();
+		Parker parker = (Parker) session.getAttribute("u");
+		System.out.println(parker.getId());
+		List<Vehicle> vehicles = entityManager.createQuery("SELECT v FROM Vehicle v WHERE v.parker.id = :parkerId", Vehicle.class)
+                                          .setParameter("parkerId", parker.getId())
+                                          .getResultList();
+
 		model.addAttribute("parking", parking.toTransfer());
 		model.addAttribute("vehicles", vehicles);
 		model.addAttribute("startDate", startDate);
@@ -217,7 +219,7 @@ public class UserController {
 
 		return "redirect:/user/reserve/" + id;
 	}
-
+	
 	@GetMapping("/select-parking/{id}")
 	public String selectParkingView(@PathVariable long id,
 			@RequestParam(required = false) Integer selectedSlot,
