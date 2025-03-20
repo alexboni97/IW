@@ -8,6 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -101,13 +102,16 @@ public class EnterpriseController {
 
     // Función para solicitar añadir un parking al administrador.
     // Ruta con la que llega a este método desde la vista
+    @Transactional
     @PostMapping("/request-parking")
     public String requestParking(@RequestParam String name, @RequestParam String address, @RequestParam int cp,
-            @RequestParam String city, @RequestParam String country, @RequestParam int telephone,
-            @RequestParam String email, @RequestParam double feePerHour, @RequestParam LocalTime openingTime,
-            @RequestParam LocalTime closingTime, @RequestParam Integer totalSpots, HttpSession session, Model model) {
+            @RequestParam String city, @RequestParam String country, @RequestParam String telephone,
+            @RequestParam String email, @RequestParam double feePerHour, @RequestParam String openingTime,
+            @RequestParam String closingTime, @RequestParam Integer totalSpots, HttpSession session, Model model) {
 
         // //Creamos un objeto de tipo request
+        LocalTime parsedOpeningTime = LocalTime.parse(openingTime);
+        LocalTime parsedClosingTime = LocalTime.parse(closingTime);
         Request request = new Request();
 
         //Metemos los datos al request
@@ -117,13 +121,13 @@ public class EnterpriseController {
         request.setCp(cp);
         request.setCity(city);
         request.setCountry(country);
-        request.setTelephone(telephone);
+        request.setTelephone(Integer.parseInt(telephone));
         request.setEmail(email);
         request.setFeePerHour(feePerHour);
         request.setLatitude(0);
         request.setLongitude(0);
-        request.setOpeningTime(openingTime);
-        request.setClosingTime(closingTime);
+        request.setOpeningTime(parsedOpeningTime);
+        request.setClosingTime(parsedClosingTime);
         request.setState("AÑADIR");
         request.setTotalSpots(totalSpots);
         request.setEnterprise((Enterprise) session.getAttribute("u"));
