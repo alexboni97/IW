@@ -118,7 +118,7 @@ public class UserController {
 	}
 	
 	// El return es por la vista que devuelve.
-	@GetMapping("/map")
+	@PostMapping("/map")
 	public String map(
 			@RequestParam @Nullable LocalDate startDate, @RequestParam @Nullable LocalDate endDate,
 			@RequestParam @Nullable LocalTime startTime, @RequestParam @Nullable LocalTime endTime,
@@ -178,6 +178,7 @@ public class UserController {
 			HttpSession session,
 			@PathVariable long id,
 			@RequestParam(required = false) Integer selectedSlot,
+			@RequestParam(required = false) Long vehicleId,
 			@RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate,
 			@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime) {
 
@@ -199,16 +200,19 @@ public class UserController {
 		model.addAttribute("startTime", startTime);
 		model.addAttribute("endTime", endTime);
 		model.addAttribute("id", id);
-		// model.addAttribute("selectedSlot", selectedSlot);
+		model.addAttribute("vehicleId", vehicleId);
+		model.addAttribute("selectedSlot", selectedSlot);
 
 		System.out.println(parking.getAddress());
 		return "reserve";
 	}
 
 	@GetMapping("/confirm-select-parking/{id}")
-	public String confirmSelectParking(@PathVariable long id, @RequestParam Integer selectedSlot,
-	@RequestParam @Nullable LocalDate startDate, @RequestParam @Nullable LocalDate endDate,
-	@RequestParam @Nullable LocalTime startTime, @RequestParam @Nullable LocalTime endTime,
+	public String confirmSelectParking(@PathVariable long id, 
+	@RequestParam Integer selectedSlot,
+	@RequestParam(required = false) Long vehicleId,
+	@RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate,
+	@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime,
 			RedirectAttributes redirectAttributes) {
 		redirectAttributes.addAttribute("selectedSlot", selectedSlot);
 		redirectAttributes.addAttribute("startDate", startDate);
@@ -216,6 +220,7 @@ public class UserController {
 		redirectAttributes.addAttribute("startTime", startTime);
 		redirectAttributes.addAttribute("endTime", endTime);
 		redirectAttributes.addAttribute("id", id);
+		redirectAttributes.addAttribute("vehicleId", vehicleId);
 
 		return "redirect:/user/reserve/" + id;
 	}
