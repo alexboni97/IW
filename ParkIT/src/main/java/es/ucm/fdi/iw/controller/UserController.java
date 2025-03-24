@@ -118,7 +118,7 @@ public class UserController {
 	}
 	
 	// El return es por la vista que devuelve.
-	@PostMapping("/map")
+	@GetMapping("/map")
 	public String map(
 			@RequestParam @Nullable LocalDate startDate, @RequestParam @Nullable LocalDate endDate,
 			@RequestParam @Nullable LocalTime startTime, @RequestParam @Nullable LocalTime endTime,
@@ -235,7 +235,7 @@ public class UserController {
 		List<Integer> occupiedSpots = new ArrayList<>();
 		List<Integer> spotsList = new ArrayList<>();
 		List<List<Integer>> spotsListFormat = new ArrayList<>();
-		int bloqueSize=5;
+		int bloqueSize=10;
 		Parking parking = entityManager.find(Parking.class, id);
 		if (parking != null) {
 			List<Spot> spots = parking.getSpots();
