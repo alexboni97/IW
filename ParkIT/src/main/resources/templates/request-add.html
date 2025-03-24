@@ -7,7 +7,7 @@
 </head>
 
 <body class="d-flex flex-column h-100">
-    <header th:replace="~{fragments/nav.html :: nav}"></header> 
+    <header th:replace="~{fragments/nav.html :: nav}"></header>
 
     <div class="container-fluid row p-5">
         <table class="table table-hover">
@@ -26,11 +26,12 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>             
+            <tbody>
                 <tr th:each="request : ${requests}" th:id="'fila-' + ${request.id}">
-                    <td id="fila1"><a class="nav-link" th:text="${request.enterprise.name}">Nombre de la empresa</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${request.enterprise.name}">Nombre de la empresa</a>
+                    </td>
                     <td id="fila1"><a class="nav-link" th:text="${request.name}">Nombre</a></td>
-                    <td id="fila1"><a class="nav-link" th:text="${request.address}">Dirección</a></td>     
+                    <td id="fila1"><a class="nav-link" th:text="${request.address}">Dirección</a></td>
                     <td id="fila1"><a class="nav-link" th:text="${request.cp}">Código Postal</a></td>
                     <td id="fila1"><a class="nav-link" th:text="${request.city}">Ciudad</a></td>
                     <td id="fila1"><a class="nav-link" th:text="${request.country}">País</a></td>
@@ -39,12 +40,56 @@
                     <td id="fila1"><a class="nav-link" th:text="${request.closingTime}">Fecha de cierre</a></td>
                     <td id="fila1"><a class="nav-link" th:text="${request.feePerHour}">Precio/h</a></td>
 
-                    <td id="fila1"><a class="btn btn-primary m-1" onclick="guardarParking(this)" th:data-id="${request.id}">Aceptar</a></td>
-                    <td id="fila1"><a class="btn btn-danger m-1" onclick="eliminarRequest(this)" th:data-id="${request.id}">Rechazar</a></td>
+                    <td id="fila1"><a class="btn btn-primary m-1" onclick="guardarParking(this)"
+                            th:data-id="${request.id}">Aceptar</a></td>
+                    <td id="fila1"><a class="btn btn-danger m-1" onclick="eliminarRequest(this)"
+                            th:data-id="${request.id}">Rechazar</a></td>
                 </tr>
         </table>
     </div>
     <script>
+        function guardarParking(button) {
+            let id = button.getAttribute('data-id');
+
+            fetch('/admin/guardarParking/' + id, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    alert("Parking guardado correctamente");
+                    button.closest('tr').remove();
+                } else {
+                    response.text().then(errorMessage => {
+                        alert('Error al guardar el parking: ' + errorMessage);
+                    });
+                }
+            }).catch(error => {
+                console.error('Error al guardar el parking', error);
+                alert('Error al guardar el parking');
+            });
+        }
+
+        function eliminarRequest(button) {
+            let id = button.getAttribute("data-id");
+
+            if (!confirm('¿Seguro que quieres eliminar este request?')) {
+                return;
+            }
+
+            fetch('/admin/eliminarRequest/' + id, {
+                method: 'DELETE'
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Request eliminado con éxito');
+                        document.getElementById('fila-' + id).remove();
+                    } else {
+                        alert('Error al eliminar el request');
+                    }
+                });
+        }
     </script>
     <footer th:replace="~{fragments/footer.html :: footer}"></footer>
 </body>
