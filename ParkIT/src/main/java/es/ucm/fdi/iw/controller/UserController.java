@@ -1,4 +1,5 @@
 package es.ucm.fdi.iw.controller;
+
 import es.ucm.fdi.iw.AppConfig;
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.Enterprise;
@@ -75,9 +76,9 @@ import java.util.ArrayList;
 @RequestMapping("user")
 public class UserController {
 
-    private final AppConfig appConfig;
+	private final AppConfig appConfig;
 
-    private final AdminController adminController;
+	private final AdminController adminController;
 
 	private static final Logger log = LogManager.getLogger(UserController.class);
 
@@ -93,10 +94,10 @@ public class UserController {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-    UserController(AdminController adminController, AppConfig appConfig) {
-        this.adminController = adminController;
-        this.appConfig = appConfig;
-    }
+	UserController(AdminController adminController, AppConfig appConfig) {
+		this.adminController = adminController;
+		this.appConfig = appConfig;
+	}
 
 	@ModelAttribute
 	public void populateModel(HttpSession session, Model model) {
@@ -111,12 +112,12 @@ public class UserController {
 		double dLat = Math.toRadians(lat2 - lat1);
 		double dLon = Math.toRadians(lon2 - lon1);
 		double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-				   Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-				   Math.sin(dLon / 2) * Math.sin(dLon / 2);
+				Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
+						Math.sin(dLon / 2) * Math.sin(dLon / 2);
 		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 		return R * c;
 	}
-	
+
 	// El return es por la vista que devuelve.
 	@GetMapping("/map")
 	public String map(
@@ -129,13 +130,14 @@ public class UserController {
 		List<Parking> parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
 		double lat, lon;
 		List<Parking> parkingsInRange;
-		if(latitude == null || longitude == null || latitude=="" || longitude=="") {
+		if (latitude == null || longitude == null || latitude == "" || longitude == "") {
 			parkingsInRange = parkings;
-		}else {
+		} else {
 			lat = Double.parseDouble(latitude);
 			lon = Double.parseDouble(longitude);
 			parkingsInRange = parkings.stream()
-					.filter(p -> calcularDistancia(lat, lon, p.getLatitude(), p.getLongitude()) <= radio).collect(Collectors.toList());
+					.filter(p -> calcularDistancia(lat, lon, p.getLatitude(), p.getLongitude()) <= radio)
+					.collect(Collectors.toList());
 		}
 
 		List<Transfer> transferParkings = new ArrayList<>();
@@ -145,21 +147,21 @@ public class UserController {
 			for (Spot s : spots) {
 				reserves.addAll(s.getReserves());
 			}
-			if(reserves.size()==0){
+			if (reserves.size() == 0) {
 				transferParkings.add(p.toTransfer());
-			}else{
+			} else {
 				for (Reserve r : reserves) {
 					if ((r.getStartDate().isBefore(endDate) && r.getEndDate().isAfter(startDate)) ||
 							(r.getStartDate().isEqual(startDate) && r.getStartTime().isBefore(endTime)) ||
 							(r.getEndDate().isEqual(endDate) && r.getEndTime().isAfter(startTime))) {
 						System.out.println("reservado");
-					}else{
+					} else {
 						transferParkings.add(p.toTransfer());
 						break;
 					}
 				}
 			}
-			
+
 		}
 
 		model.addAttribute("parkings", transferParkings);
@@ -189,9 +191,10 @@ public class UserController {
 		}
 		Parker parker = (Parker) session.getAttribute("u");
 		System.out.println(parker.getId());
-		List<Vehicle> vehicles = entityManager.createQuery("SELECT v FROM Vehicle v WHERE v.parker.id = :parkerId", Vehicle.class)
-                                          .setParameter("parkerId", parker.getId())
-                                          .getResultList();
+		List<Vehicle> vehicles = entityManager
+				.createQuery("SELECT v FROM Vehicle v WHERE v.parker.id = :parkerId", Vehicle.class)
+				.setParameter("parkerId", parker.getId())
+				.getResultList();
 
 		model.addAttribute("parking", parking.toTransfer());
 		model.addAttribute("vehicles", vehicles);
@@ -208,11 +211,11 @@ public class UserController {
 	}
 
 	@GetMapping("/confirm-select-parking/{id}")
-	public String confirmSelectParking(@PathVariable long id, 
-	@RequestParam Integer selectedSlot,
-	@RequestParam(required = false) Long vehicleId,
-	@RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate,
-	@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime,
+	public String confirmSelectParking(@PathVariable long id,
+			@RequestParam Integer selectedSlot,
+			@RequestParam(required = false) Long vehicleId,
+			@RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate,
+			@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime,
 			RedirectAttributes redirectAttributes) {
 		redirectAttributes.addAttribute("selectedSlot", selectedSlot);
 		redirectAttributes.addAttribute("startDate", startDate);
@@ -224,7 +227,7 @@ public class UserController {
 
 		return "redirect:/user/reserve/" + id;
 	}
-	
+
 	@GetMapping("/select-parking/{id}")
 	public String selectParkingView(@PathVariable long id,
 			@RequestParam(required = false) Integer selectedSlot,
@@ -235,13 +238,13 @@ public class UserController {
 		List<Integer> occupiedSpots = new ArrayList<>();
 		List<Integer> spotsList = new ArrayList<>();
 		List<List<Integer>> spotsListFormat = new ArrayList<>();
-		int bloqueSize=10;
+		int bloqueSize = 10;
 		Parking parking = entityManager.find(Parking.class, id);
 		if (parking != null) {
 			List<Spot> spots = parking.getSpots();
 			List<Reserve> reserves = new ArrayList<>();
 			for (Spot s : spots) {
-				spotsList.add((int)s.getId());
+				spotsList.add((int) s.getId());
 				reserves.addAll(s.getReserves());
 			}
 			for (int i = 0; i < spotsList.size(); i += bloqueSize) {
@@ -250,8 +253,8 @@ public class UserController {
 			}
 			for (Reserve r : reserves) {
 				if ((r.getStartDate().isBefore(endDate) && r.getEndDate().isAfter(startDate)) ||
-				(r.getStartDate().isEqual(startDate) && r.getStartTime().isBefore(endTime)) ||
-				(r.getEndDate().isEqual(endDate) && r.getEndTime().isAfter(startTime))) {
+						(r.getStartDate().isEqual(startDate) && r.getStartTime().isBefore(endTime)) ||
+						(r.getEndDate().isEqual(endDate) && r.getEndTime().isAfter(startTime))) {
 					Integer spotId = Integer.valueOf((int) r.getSpot().getId());
 					occupiedSpots.add(spotId);
 				}
@@ -268,21 +271,20 @@ public class UserController {
 		model.addAttribute("vehicleId", vehicleId);
 		return "select-parking";
 	}
-	
+
 	@PostMapping("/add-vehicule")
 	@ResponseBody
-	public  ResponseEntity<?> addVehicle (
-		@RequestParam String brand,
-		@RequestParam String model,
-		@RequestParam String plate,
-		@RequestParam String size
+	public ResponseEntity<?> addVehicle(
+			@RequestParam String brand,
+			@RequestParam String model,
+			@RequestParam String plate,
+			@RequestParam String size
 
-		) {
-		//TODO: process POST request
-		
-		return  ResponseEntity.ok("{\"message\": \"Vehiculo agregado\"}");
+	) {
+		// TODO: process POST request
+
+		return ResponseEntity.ok("{\"message\": \"Vehiculo agregado\"}");
 	}
-	
 
 	@PostMapping("/confirm-reserve")
 	@Transactional
@@ -361,7 +363,7 @@ public class UserController {
 			return "redirect:/error";
 		}
 
-		return "my-reserves";
+		return myReserves(model);
 	}
 
 	@GetMapping("/modify-reserve")
@@ -376,12 +378,11 @@ public class UserController {
 		List<Reserve> reservas = new ArrayList<>();
 		if (user instanceof Parker) {
 			Parker parker = (Parker) user;
-			long parkerId=parker.getId();
 			List<Vehicle> vehicles = entityManager
 					.createQuery("SELECT v FROM Vehicle v WHERE v.parker = :parker", Vehicle.class)
 					.setParameter("parker", parker)
 					.getResultList();
-			
+
 			for (Vehicle v : vehicles) {
 				List<Reserve> r = entityManager
 						.createQuery("SELECT r FROM Reserve r WHERE r.vehicle = :vehicle", Reserve.class)
