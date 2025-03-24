@@ -55,6 +55,9 @@
                             </li>
 
                             <li class="nav-link ">
+                                <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}" th:href="@{/enterprise/enterprise-requests}" href="/enterprise/enterprise-requests">Solicitudes</a>
+                            </li>
+                            <li class="nav-link ">
                                 <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}" th:href="@{/enterprise/enterprise-parkings}" href="/enterprise/enterprise-parkings">Ver</a>
                             </li>
                             <li class="nav-link ">
@@ -73,7 +76,7 @@
                             </li>
 
                             <li class="nav-link ">
-                                <a class="nav-link" th:if="${u.hasRole('ADMIN')}" th:href="@{/admin/}">Eliminar parking</a>
+                                <a class="nav-link" th:if="${u.hasRole('ADMIN')}" th:href="@{/admin/request-delete}">Eliminar parking</a>
                             </li>
 
                             <li class="nav-link align-self-center">

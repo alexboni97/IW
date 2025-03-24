@@ -26,24 +26,25 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                <tr th:each="requests : ${requests}">
-                    <td id="fila1"><a class="nav-link" th:text="${requests.enterprise.name}">Nombre de la empresa</a></td>
-                    <td id="fila1"><a class="nav-link" th:text="${requests.name}">Nombre</a></td>
-                    <td id="fila1"><a class="nav-link" th:text="${requests.address}">Dirección</a></td>
-                    <td id="fila1"><a class="nav-link" th:text="${requests.cp}">Código Postal</a></td>
-                    <td id="fila1"><a class="nav-link" th:text="${requests.city}">Ciudad</a></td>
-                    <td id="fila1"><a class="nav-link" th:text="${requests.country}">País</a></td>
-                    <td id="fila1"><a class="nav-link" th:text="${requests.telephone}">Teléfono</a></td>
-                    <td id="fila1"><a class="nav-link" th:text="${requests.openingTime}">Fecha de apertura</a></td>
-                    <td id="fila1"><a class="nav-link" th:text="${requests.ClosingTime}">Fecha de cierre</a></td>
-                    <td id="fila1"><a class="nav-link" th:text="${requests.feePerHour}">Precio/h</a></td>
+            <tbody>               
+                <tr th:each="request : ${requests}" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <td id="fila1"><a class="nav-link" th:text="${request.enterprise.name}">Nombre de la empresa</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${request.name}">Nombre</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${request.address}">Dirección</a></td>
+                    
+                    <td id="fila1"><a class="nav-link" th:text="${request.cp}">Código Postal</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${request.city}">Ciudad</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${request.country}">País</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${request.telephone}">Teléfono</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${request.openingTime}">Fecha de apertura</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${request.closingTime}">Fecha de cierre</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${request.feePerHour}">Precio/h</a></td>
 
-                    <td id="fila1"><a class="btn btn-primary m-1" th:href=""
-                            href="/enterprise/enterprise-plazas">Aceptar</a>
-                        <a class="btn btn-danger m-1" th:href=""
-                            href="">Rechazar</a>
+                    <td id="fila1"><a class="btn btn-primary m-1" 
+                            href="#">Aceptar</a>
                     </td>
+                    <td id="fila1"><a class="btn btn-danger m-1"
+                            href="#">Rechazar</a>
                 </tr>
         </table>
     </div>

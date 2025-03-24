@@ -26,27 +26,26 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                <tr th:each="request : ${requests}">
+            <tbody>             
+                <tr th:each="request : ${requests}" th:id="'fila-' + ${request.id}">
                     <td id="fila1"><a class="nav-link" th:text="${request.enterprise.name}">Nombre de la empresa</a></td>
                     <td id="fila1"><a class="nav-link" th:text="${request.name}">Nombre</a></td>
-                    <td id="fila1"><a class="nav-link" th:text="${request.address}">Dirección</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${request.address}">Dirección</a></td>     
                     <td id="fila1"><a class="nav-link" th:text="${request.cp}">Código Postal</a></td>
                     <td id="fila1"><a class="nav-link" th:text="${request.city}">Ciudad</a></td>
                     <td id="fila1"><a class="nav-link" th:text="${request.country}">País</a></td>
                     <td id="fila1"><a class="nav-link" th:text="${request.telephone}">Teléfono</a></td>
                     <td id="fila1"><a class="nav-link" th:text="${request.openingTime}">Fecha de apertura</a></td>
-                    <td id="fila1"><a class="nav-link" th:text="${request.ClosingTime}">Fecha de cierre</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${request.closingTime}">Fecha de cierre</a></td>
                     <td id="fila1"><a class="nav-link" th:text="${request.feePerHour}">Precio/h</a></td>
 
-                    <td id="fila1"><a class="btn btn-primary m-1" th:href=""
-                            href="/enterprise/enterprise-plazas">Aceptar</a>
-                        <a class="btn btn-danger m-1" th:href=""
-                            href="">Rechazar</a>
-                    </td>
+                    <td id="fila1"><a class="btn btn-primary m-1" onclick="guardarParking(this)" th:data-id="${request.id}">Aceptar</a></td>
+                    <td id="fila1"><a class="btn btn-danger m-1" onclick="eliminarRequest(this)" th:data-id="${request.id}">Rechazar</a></td>
                 </tr>
         </table>
     </div>
+    <script>
+    </script>
     <footer th:replace="~{fragments/footer.html :: footer}"></footer>
 </body>
 

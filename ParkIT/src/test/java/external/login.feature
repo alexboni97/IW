@@ -33,6 +33,14 @@ Scenario: login malo en github
     And input('#password', 'aa')
     When submit().click(".form-signin button")
     Then waitForUrl(baseUrl + '/admin')
+  
+  @login_e
+  Scenario: login correcto como e
+    Given driver baseUrl + '/login'
+    And input('#username', 'e')
+    And input('#password', 'aa')
+    When submit().click(".form-signin button")
+    Then waitForUrl(baseUrl + '/enterprise')
 
   Scenario: logout after login
     Given driver baseUrl + '/login'

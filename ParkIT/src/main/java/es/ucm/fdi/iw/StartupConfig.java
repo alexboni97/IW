@@ -286,7 +286,7 @@ public class StartupConfig {
 
         Request req1 = new Request();
         req1.setEnabled(true);
-        req1.setName("Interparkking el mercado");
+        req1.setName("Interparking el mercado");
         req1.setAddress("Calle cerrajeros s/n");
         req1.setCp(28801);
         req1.setCity("Alcala de Henares");
@@ -298,10 +298,31 @@ public class StartupConfig {
         req1.setLatitude(40.48205);
         req1.setLongitude(-3.36553);
         req1.setIdParking(-1);
-        //req1.setTotalSpots(20); // TODO
-        req1.setState("AÑADIR");
+        req1.setTotalSpots(20); // TODO
+        req1.setType("AÑADIR");
+        req1.setCountry("España");
         req1.setEnterprise(e);
         entityManager.persist(req1);
+
+        Request req2 = new Request();
+        req2.setEnabled(true);
+        req2.setName("Interparking San Lucas");
+        req2.setAddress("Vía Complutense");
+        req2.setCp(28805);
+        req2.setCity("Alcala de Henares");
+        req2.setTelephone(918898518);
+        req2.setEmail("interparkingsanlucas@gmail.com");
+        req2.setFeePerHour(1.1);
+        req2.setOpeningTime(LocalTime.parse("00:00"));
+        req2.setClosingTime(LocalTime.parse("00:00"));
+        req2.setLatitude(40.48528);
+        req2.setLongitude(-3.36322);
+        req2.setIdParking(-1);
+        req2.setTotalSpots(20); // TODO
+        req2.setType("ELIMINAR");
+        req2.setCountry("España");
+        req2.setEnterprise(e);
+        entityManager.persist(req2);
 
         /* TODO
          * INSERT INTO REQUEST (id, enabled, name, address, cp, city, country, telephone, email, feePerHour, openingTime, closingTime, longitude, latitude, idParking, totalSpots, state, enterprise_id)

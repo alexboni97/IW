@@ -3,6 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Obtener referencias a los inputs de latitud y longitud
     let latitudeInput = document.getElementById('latitude');
     let longitudeInput = document.getElementById('longitude');
+    let rangeInput = document.getElementById('rangeValue').value;
+
+    
 
     // Inicializar el mapa
     let map = L.map('map');
@@ -15,13 +18,23 @@ document.addEventListener('DOMContentLoaded', function () {
         iconAnchor: [20, 40],
         popupAnchor: [0, 40]
     });
+
+    function onRangeChange(){
+        if(circleFind){
+            map.removeLayer(circleFind);
+        }
+
+        circleFind = L.circle(e.latlng, 3000).addTo(map);
+    }
+
     function onLocationFound(e) {
         L.marker(e.latlng, { icon: iconoMiUbicacion }).addTo(map)
             .bindTooltip("Tu Ubicación").openTooltip();
         if(circleFind){
             map.removeLayer(circleFind);
         }
-        circleFind=L.circle(e.latlng, 30000).addTo(map);
+
+        circleFind = L.circle(e.latlng, 3000).addTo(map);
     }
     if (latitudeInput?.value == '' || longitudeInput?.value  == '') {
         map.locate({ setView: true, maxZoom: 13 });

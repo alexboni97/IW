@@ -34,7 +34,7 @@ import io.micrometer.common.lang.Nullable;
         @NamedQuery(name = "Request.findByEnterprise", query = "SELECT p FROM Request p WHERE p.enterprise = :enterprise"),
         @NamedQuery(name = "Request.findByState", query = "SELECT p FROM Request p WHERE p.state = :state"),
         @NamedQuery(name = "Request.findByEnterpriseId", query = "SELECT p FROM Request p WHERE p.enterprise.id = :enterpriseId"),
-        @NamedQuery(name = "Request.findByEnabledAndState", query = "SELECT p FROM Request p WHERE p.enabled = :enabled AND p.state = :state"),
+        @NamedQuery(name = "Request.findByEnabledAndType", query = "SELECT p FROM Request p WHERE p.enabled = :enabled AND p.type = :type"),
 })
 public class Request implements Transferable<Request.Transfer> {
 
@@ -76,6 +76,8 @@ public class Request implements Transferable<Request.Transfer> {
 
     // AÑADIR --> solicitudes de añadir
     // BORRAR --> solicitudes de borrar
+    private String type;
+
     private String state;
 
     @ManyToOne

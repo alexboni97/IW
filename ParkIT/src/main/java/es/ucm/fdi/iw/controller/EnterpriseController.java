@@ -85,6 +85,21 @@ public class EnterpriseController {
         return "enterprise-parkings";
     }
 
+    @GetMapping("/enterprise-requests")
+    public String enterpriseRequests(Model model) {
+        User user = (User) model.getAttribute("u");
+
+        List<Request> requests = entityManager
+                .createNamedQuery("Request.findByEnterprise", Request.class)
+                .setParameter("enterprise", user)
+                .getResultList();
+
+        //El nombre que le pongamos el de entre comillas es el que usamos luego para recorrer en la vista con thimeleaf
+        model.addAttribute("requests", requests);
+
+        return "enterprise-requests";
+    }
+
     @GetMapping("/add-parking")
     public String addParkings(Model model) {
         return "add-parking";
@@ -128,7 +143,8 @@ public class EnterpriseController {
         request.setLongitude(0);
         request.setOpeningTime(parsedOpeningTime);
         request.setClosingTime(parsedClosingTime);
-        request.setState("AÑADIR");
+        request.setState("PENDIENTE");
+        request.setType("AÑADIR");
         request.setTotalSpots(totalSpots);
         request.setEnterprise((Enterprise) session.getAttribute("u"));
 
@@ -146,4 +162,6 @@ public class EnterpriseController {
         // //Nombre de la vista a la que quiero redirigir.
         return "/enterprise-parkings";
     }
+
+    
 }

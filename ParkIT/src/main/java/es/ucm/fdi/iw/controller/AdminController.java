@@ -46,15 +46,28 @@ public class AdminController {
     }
 
     @GetMapping("/request-add")
-    public String adminRequest(Model model) {
+    public String adminRequestAdd(Model model) {
         List<Request> requests = entityManager
-                .createNamedQuery("Request.findByEnabledAndState", Request.class)
+                .createNamedQuery("Request.findByEnabledAndType", Request.class)
                 .setParameter("enabled", true)
-                .setParameter("state", "ANYADIR")
+                .setParameter("type", "AÑADIR")
                 .getResultList();
 
         model.addAttribute("requests", requests);
 
         return "request-add";
+    }
+
+    @GetMapping("/request-delete")
+    public String adminRequestDelete(Model model) {
+        List<Request> requests = entityManager
+                .createNamedQuery("Request.findByEnabledAndType", Request.class)
+                .setParameter("enabled", true)
+                .setParameter("type", "ELIMINAR")
+                .getResultList();
+
+        model.addAttribute("requests", requests);
+
+        return "request-delete";
     }
 }
