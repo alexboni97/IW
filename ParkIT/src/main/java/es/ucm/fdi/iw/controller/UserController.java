@@ -361,7 +361,7 @@ public class UserController {
 			return "redirect:/error";
 		}
 
-		return myReserves(model);
+		return "my-reserves";
 	}
 
 	@GetMapping("/modify-reserve")
@@ -373,12 +373,22 @@ public class UserController {
 	public String myReserves(Model model) {
 
 		User user = (User) model.getAttribute("u");
+		List<Reserve> reservas = new ArrayList<>();
 		if (user instanceof Parker) {
 			Parker parker = (Parker) user;
-			List<Reserve> reservas = entityManager
-					.createQuery("SELECT r FROM Reserve r WHERE r.parker = :parker", Reserve.class)
+			long parkerId=parker.getId();
+			List<Vehicle> vehicles = entityManager
+					.createQuery("SELECT v FROM Vehicle v WHERE v.parker = :parker", Vehicle.class)
 					.setParameter("parker", parker)
 					.getResultList();
+			
+			for (Vehicle v : vehicles) {
+				List<Reserve> r = entityManager
+						.createQuery("SELECT r FROM Reserve r WHERE r.vehicle = :vehicle", Reserve.class)
+						.setParameter("vehicle", v)
+						.getResultList();
+				reservas.addAll(r);
+			}
 
 			model.addAttribute("reservas", reservas);
 		} else {

@@ -267,7 +267,7 @@ public class StartupConfig {
         r1.setEndTime(LocalTime.parse("12:00"));
         r1.setPrice(5.0);
         r1.setComments("Reserva para evento");
-        r1.setSpot(entityManager.find(Spot.class, 1L));
+        r1.setSpot(entityManager.find(Spot.class, 1076));
         r1.setVehicle(v1);
         entityManager.persist(r1);
 
@@ -280,7 +280,7 @@ public class StartupConfig {
         r2.setEndTime(LocalTime.parse("12:00"));
         r2.setPrice(8.0);
         r2.setComments("Reserva para evento");
-        r2.setSpot(entityManager.find(Spot.class, 2L));
+        r2.setSpot(entityManager.find(Spot.class, 1075));
         r2.setVehicle(v2);
         entityManager.persist(r2);
 

@@ -38,23 +38,23 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="reservas : ${reservas}">
+                <tr th:each="r : ${reservas}">
                     <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve"
-                            th:text="${reservas.spot.address}">Ubicacion</a></td>
+                            th:text="${r.spot.parking.address}">Ubicacion</a></td>
                     <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve"
-                            th:text="${reservas.spot.id}">Nº Plaza</a></td>
+                            th:text="${r.spot.id}">Nº Plaza</a></td>
                     <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve"
-                            th:text="${reservas.vehicle.plate}">Vehículo</a></td>
+                            th:text="${r.vehicle.plate}">Vehículo</a></td>
                     <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve"
-                            th:text="${reservas.startDate}">Fecha Inicio</a></td>
+                            th:text="${r.startDate}">Fecha Inicio</a></td>
                     <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve"
-                            th:text="${reservas.endDate}">Fecha Final</a></td>
+                            th:text="${r.endDate}">Fecha Final</a></td>
                     <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve"
-                            th:text="${reservas.startTime}">Hora Inicio</a></td>
+                            th:text="${r.startTime}">Hora Inicio</a></td>
                     <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve"
-                            th:text="${reservas.endTime}">Hora Final</a></td>
+                            th:text="${r.endTime}">Hora Final</a></td>
                     <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve"
-                            th:text="${reservas.price}">Precio</a></td>
+                            th:text="${r.price}">Precio</a></td>
                     <td id="fila1"><a class="btn btn-primary m-1" th:href="@{/user/modify-reserve}"
                             href="/user/modify-reserve">Modificar</a>
                         <a class="btn btn-danger m-1" th:href="@{/user/my-reserves}"

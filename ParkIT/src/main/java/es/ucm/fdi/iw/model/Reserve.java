@@ -77,7 +77,7 @@ public class Reserve implements Transferable<Reserve.Transfer> {
 
     @Override
     public Transfer toTransfer() {
-        return new Transfer(this.id, this.state.name(), this.startDate, this.endDate, this.startTime, this.endTime, this.price, this.comments, this.spot.getId(), this.vehicle.getId(), this.spot.getAddress());
+        return new Transfer(this.id, this.state.name(), this.startDate, this.endDate, this.startTime, this.endTime, this.price, this.comments, this.spot.getId(), this.vehicle.getId(), this.spot.getParking().getAddress());
     }
 
     @Override
