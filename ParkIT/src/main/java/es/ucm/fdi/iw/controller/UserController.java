@@ -233,14 +233,21 @@ public class UserController {
 			@RequestParam @Nullable LocalTime startTime, @RequestParam @Nullable LocalTime endTime,
 			Model model) {
 		List<Integer> occupiedSpots = new ArrayList<>();
+		List<Integer> spotsList = new ArrayList<>();
+		List<List<Integer>> spotsListFormat = new ArrayList<>();
+		int bloqueSize=5;
 		Parking parking = entityManager.find(Parking.class, id);
 		if (parking != null) {
 			List<Spot> spots = parking.getSpots();
 			List<Reserve> reserves = new ArrayList<>();
 			for (Spot s : spots) {
+				spotsList.add((int)s.getId());
 				reserves.addAll(s.getReserves());
 			}
-
+			for (int i = 0; i < spotsList.size(); i += bloqueSize) {
+				int fin = Math.min(i + bloqueSize, spotsList.size());
+				spotsListFormat.add(spotsList.subList(i, fin));
+			}
 			for (Reserve r : reserves) {
 				if ((r.getStartDate().isBefore(endDate) && r.getEndDate().isAfter(startDate)) ||
 				(r.getStartDate().isEqual(startDate) && r.getStartTime().isBefore(endTime)) ||
@@ -250,7 +257,7 @@ public class UserController {
 				}
 			}
 		}
-		System.out.println("Ocupadas: " + occupiedSpots);
+		model.addAttribute("spots", spotsListFormat);
 		model.addAttribute("occupiedSpots", occupiedSpots);
 		model.addAttribute("startDate", startDate);
 		model.addAttribute("endDate", endDate);

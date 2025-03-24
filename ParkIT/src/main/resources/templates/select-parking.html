@@ -12,25 +12,14 @@
     <h2 class="text-center">🅿️ Selecciona tu Plaza de Parking</h2>
 
     <div class="parking-container">
-        <!-- Primera fila de plazas -->
-        <div class="parking-row">
-            <div th:each="i : ${#numbers.sequence(1, 5)}"
-                 th:classappend="${occupiedSpots.contains(i) ? 'occupied' : ''}"
-                 class="slot" th:attr="data-id=${i}"
-                 th:text="${i}">
+            <div th:each="bloque, iterStat : ${spots}" class="parking-row">
+                <div th:each="s : ${bloque}"
+                     th:classappend="${occupiedSpots.contains(s) ? 'occupied' : ''}"
+                     class="slot" th:attr="data-id=${s}"
+                     th:text="${s}">
+                </div>
+                <div class="street row">⬅️ Calle Central ➡️</div>
             </div>
-        </div>
-    
-        <div class="street">⬅️ Calle Central ➡️</div>
-    
-        <!-- Segunda fila de plazas -->
-        <div class="parking-row">
-            <div th:each="i : ${#numbers.sequence(6, 10)}"
-                 th:classappend="${occupiedSpots.contains(i) ? 'occupied' : ''}"
-                 class="slot" th:attr="data-id=${i}"
-                 th:text="${i}">
-            </div>
-        </div>
     </div>
     
 
