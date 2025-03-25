@@ -120,9 +120,40 @@ public class AdminController {
         }
     }
 
+    @PostMapping("/eliminarParking/{id}")
+    @ResponseBody
+    @Transactional
+    public ResponseEntity<String> eliminarParking(@PathVariable Long id) {
+        try {
+            Request request = entityManager.createNamedQuery("Request.findById", Request.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+            if (request == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se ha encontrado la petición");
+            }
+
+            Parking parking = entityManager.createNamedQuery("Parking.findById", Parking.class)
+                    .setParameter("id", request.getIdParking())
+                    .getSingleResult();
+            if (parking == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No se ha encontrado el parking");
+            }
+
+            parking.setEnabled(false);
+            entityManager.persist(parking);
+            request.setEnabled(false);
+            entityManager.persist(request);
+
+            return ResponseEntity.ok("Parking eliminado correctamente");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error al eliminar el parking: " + e.getMessage());
+        }
+    }
+
     @DeleteMapping("/eliminarRequest/{id}")
     @ResponseBody
-    @Transactional // NO LO HACE BIEN ESTE IDK
+    @Transactional
     public ResponseEntity<String> eliminarRequest(@PathVariable Long id) {
         try {
             Request request = entityManager.createNamedQuery("Request.findById", Request.class)
@@ -135,10 +166,10 @@ public class AdminController {
             request.setEnabled(false);
             entityManager.persist(request);
 
-            return ResponseEntity.ok("Request eliminado correctamente");
+            return ResponseEntity.ok("Request eliminada correctamente");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al eliminar el request: " + e.getMessage());
+                    .body("Error al eliminar la request: " + e.getMessage());
         }
     }
 

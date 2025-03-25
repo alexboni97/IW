@@ -7,7 +7,7 @@
 </head>
 
 <body class="d-flex flex-column h-100">
-    <header th:replace="~{fragments/nav.html :: nav}"></header> 
+    <header th:replace="~{fragments/nav.html :: nav}"></header>
 
     <div class="container-fluid row p-5">
         <table class="table table-hover">
@@ -26,12 +26,14 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>               
-                <tr th:each="request : ${requests}" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    <td id="fila1"><a class="nav-link" th:text="${request.enterprise.name}">Nombre de la empresa</a></td>
+            <tbody>
+                <tr th:each="request : ${requests}" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                    aria-expanded="false" aria-controls="collapseExample">
+                    <td id="fila1"><a class="nav-link" th:text="${request.enterprise.name}">Nombre de la empresa</a>
+                    </td>
                     <td id="fila1"><a class="nav-link" th:text="${request.name}">Nombre</a></td>
                     <td id="fila1"><a class="nav-link" th:text="${request.address}">Dirección</a></td>
-                    
+
                     <td id="fila1"><a class="nav-link" th:text="${request.cp}">Código Postal</a></td>
                     <td id="fila1"><a class="nav-link" th:text="${request.city}">Ciudad</a></td>
                     <td id="fila1"><a class="nav-link" th:text="${request.country}">País</a></td>
@@ -40,14 +42,91 @@
                     <td id="fila1"><a class="nav-link" th:text="${request.closingTime}">Fecha de cierre</a></td>
                     <td id="fila1"><a class="nav-link" th:text="${request.feePerHour}">Precio/h</a></td>
 
-                    <td id="fila1"><a class="btn btn-primary m-1" 
-                            href="#">Aceptar</a>
-                    </td>
-                    <td id="fila1"><a class="btn btn-danger m-1"
-                            href="#">Rechazar</a>
+                    <td id="fila1"><a class="btn btn-primary m-1" onclick="eliminarParking(this)"
+                            th:data-id="${request.id}">Aceptar</a></td>
+                    <td id="fila1"><a class="btn btn-danger m-1" onclick="eliminarRequest(this)"
+                            th:data-id="${request.id}">Rechazar</a></td>
                 </tr>
         </table>
     </div>
+    <script>
+        function eliminarParking(button) {
+            let id = button.getAttribute('data-id');
+
+            fetch('/admin/eliminarParking/' + id, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    let successMessage = document.createElement('div');
+                    successMessage.className = 'alert alert-success';
+                    successMessage.textContent = 'Parking eliminado con éxito';
+                    let container = document.querySelector('header + .container-fluid');
+                    container.prepend(successMessage);
+
+                    setTimeout(() => {
+                        successMessage.remove();
+                    }, 3000);
+
+                    button.closest('tr').remove();
+                } else {
+                    response.text().then(errorMessage => {
+                        let error = document.createElement('div');
+                        error.className = 'alert alert-danger';
+                        error.textContent = 'Error al eliminar el parking: ' + errorMessage;
+                        let container = document.querySelector('header + .container-fluid');
+                        container.prepend(error);
+
+                        setTimeout(() => {
+                            error.remove();
+                        }, 3000);
+                    });
+                }
+            }).catch(error => {
+                console.error('Error al eliminar el parking', error);
+            });
+        }
+
+        function eliminarRequest(button) {
+            let id = button.getAttribute("data-id");
+
+            fetch('/admin/eliminarRequest/' + id, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        let successMessage = document.createElement('div');
+                        successMessage.className = 'alert alert-success';
+                        successMessage.textContent = 'Request eliminado con éxito';
+                        let container = document.querySelector('header + .container-fluid');
+                        container.prepend(successMessage);
+
+                        setTimeout(() => {
+                            successMessage.remove();
+                        }, 3000);
+
+                        button.closest('tr').remove();
+                    } else {
+                        response.text().then(errorMessage => {
+                            let error = document.createElement('div');
+                            error.className = 'alert alert-danger';
+                            error.textContent = 'Error al eliminar el request: ' + errorMessage;
+                            let container = document.querySelector('header + .container-fluid');
+                            container.prepend(error);
+
+                            setTimeout(() => {
+                                error.remove();
+                            }, 300000);
+                        });
+                    }
+                });
+        }
+    </script>
     <footer th:replace="~{fragments/footer.html :: footer}"></footer>
 </body>
 

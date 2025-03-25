@@ -1,7 +1,5 @@
 package es.ucm.fdi.iw;
 
-
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -26,38 +24,38 @@ import jakarta.transaction.Transactional;
  */
 @Component
 public class StartupConfig {
-	
-	private static final Logger log = LogManager.getLogger(StartupConfig.class);
-	
-	@Autowired
-	private Environment env;
 
-	@Autowired
-	private ServletContext context;
+    private static final Logger log = LogManager.getLogger(StartupConfig.class);
 
-	@Autowired
+    @Autowired
+    private Environment env;
+
+    @Autowired
+    private ServletContext context;
+
+    @Autowired
     private EntityManager entityManager;
 
-	@Autowired
- 	private PasswordEncoder passwordEncoder;
-	
-	@EventListener(ContextRefreshedEvent.class)
-	@Transactional
-	public void contextRefreshedEvent() {
-		String debugProperty = env.getProperty("es.ucm.fdi.debug");
-		context.setAttribute("debug", debugProperty != null 
-				&& Boolean.parseBoolean(debugProperty.toLowerCase()));
-		log.info("Setting global debug property to {}", 
-				context.getAttribute("debug"));
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
-		poblarBBDD();
-	}
+    @EventListener(ContextRefreshedEvent.class)
+    @Transactional
+    public void contextRefreshedEvent() {
+        String debugProperty = env.getProperty("es.ucm.fdi.debug");
+        context.setAttribute("debug", debugProperty != null
+                && Boolean.parseBoolean(debugProperty.toLowerCase()));
+        log.info("Setting global debug property to {}",
+                context.getAttribute("debug"));
+
+        poblarBBDD();
+    }
 
     @Transactional
     public void poblarBBDD() {
-        
+
         Admin a = new Admin();
-        //a.setId(1);
+        // a.setId(1);
         a.setEnabled(true);
         a.setRole(User.Role.ADMIN);
         a.setUsername("a");
@@ -69,7 +67,7 @@ public class StartupConfig {
         entityManager.persist(a);
 
         Parker u = new Parker();
-        //u.setId(2);
+        // u.setId(2);
         u.setEnabled(true);
         u.setRole(User.Role.USER);
         u.setUsername("b");
@@ -83,7 +81,7 @@ public class StartupConfig {
         entityManager.persist(u);
 
         Enterprise e = new Enterprise();
-        //e.setId(3);
+        // e.setId(3);
         e.setEnabled(true);
         e.setRole(User.Role.ENTERPRISE);
         e.setUsername("e");
@@ -96,7 +94,7 @@ public class StartupConfig {
         entityManager.persist(e);
 
         Parker u1 = new Parker();
-        //u1.setId(4);
+        // u1.setId(4);
         u1.setEnabled(true);
         u1.setRole(User.Role.USER);
         u1.setUsername("paulal10");
@@ -108,9 +106,9 @@ public class StartupConfig {
         u1.setFirstName("Paula");
         u1.setSecondName("López");
         entityManager.persist(u1);
-        
+
         Parker u2 = new Parker();
-        //u2.setId(5);
+        // u2.setId(5);
         u2.setEnabled(true);
         u2.setRole(User.Role.USER);
         u2.setUsername("secsanc");
@@ -124,7 +122,7 @@ public class StartupConfig {
         entityManager.persist(u2);
 
         Parking parking1 = new Parking();
-        //parking1.setId(1);
+        // parking1.setId(1);
         parking1.setName("Parking 1");
         parking1.setAddress("Calle de la piruleta");
         parking1.setTelephone(123456789);
@@ -145,7 +143,7 @@ public class StartupConfig {
         entityManager.persist(parking1);
 
         Parking parking2 = new Parking();
-        //parking2.setId(2);
+        // parking2.setId(2);
         parking2.setName("Parking 2");
         parking2.setAddress("Calle de la fresa");
         parking2.setTelephone(123456789);
@@ -166,7 +164,7 @@ public class StartupConfig {
         entityManager.persist(parking2);
 
         Parking parking3 = new Parking();
-        //parking3.setId(3);
+        // parking3.setId(3);
         parking3.setName("Parking 3");
         parking3.setAddress("Paseo de los Olmos");
         parking3.setTelephone(123456789);
@@ -186,9 +184,9 @@ public class StartupConfig {
         parking3.setExitY(2.0); // Example value
         entityManager.persist(parking3);
 
-        for (int j=1; j <= 13; j++) { // por ahora las plazas estan en el parking 3
+        for (int j = 1; j <= 13; j++) { // por ahora las plazas estan en el parking 3
             Spot spot = new Spot();
-            //spot.setId(j);
+            // spot.setId(j);
             spot.setParking(parking3);
             spot.setEnabled(true); // Example value
             spot.setSize(Math.random() > 0.5 ? "M" : "L"); // Example value
@@ -199,7 +197,7 @@ public class StartupConfig {
         }
 
         Vehicle v1 = new Vehicle();
-        //v1.setId(1);
+        // v1.setId(1);
         v1.setEnabled(true);
         v1.setPlate("ABC1234");
         v1.setBrand("Toyota");
@@ -209,7 +207,7 @@ public class StartupConfig {
         entityManager.persist(v1);
 
         Vehicle v2 = new Vehicle();
-        //v2.setId(2);
+        // v2.setId(2);
         v2.setEnabled(true);
         v2.setPlate("XYZ5678");
         v2.setBrand("Honda");
@@ -219,7 +217,7 @@ public class StartupConfig {
         entityManager.persist(v2);
 
         Vehicle v3 = new Vehicle();
-        //v3.setId(3);
+        // v3.setId(3);
         v3.setEnabled(true);
         v3.setPlate("DEF9877");
         v3.setBrand("BMW");
@@ -229,7 +227,7 @@ public class StartupConfig {
         entityManager.persist(v3);
 
         Vehicle v4 = new Vehicle();
-        //v4.setId(4);
+        // v4.setId(4);
         v4.setEnabled(true);
         v4.setPlate("PAULA");
         v4.setBrand("Toyota");
@@ -239,7 +237,7 @@ public class StartupConfig {
         entityManager.persist(v4);
 
         Vehicle v5 = new Vehicle();
-        //v5.setId(5);
+        // v5.setId(5);
         v5.setEnabled(true);
         v5.setPlate("ARTURO");
         v5.setBrand("Honda");
@@ -249,7 +247,7 @@ public class StartupConfig {
         entityManager.persist(v5);
 
         Vehicle v6 = new Vehicle();
-        //v6.setId(6);
+        // v6.setId(6);
         v6.setEnabled(true);
         v6.setPlate("DEF9876");
         v6.setBrand("BMW");
@@ -259,7 +257,7 @@ public class StartupConfig {
         entityManager.persist(v6);
 
         Reserve r1 = new Reserve();
-        //r1.setId(1);
+        // r1.setId(1);
         r1.setState(Reserve.State.CONFIRMED);
         r1.setStartDate(LocalDate.parse("2025-03-06"));
         r1.setEndDate(LocalDate.parse("2025-03-07"));
@@ -272,7 +270,7 @@ public class StartupConfig {
         entityManager.persist(r1);
 
         Reserve r2 = new Reserve();
-        //r2.setId(2);
+        // r2.setId(2);
         r2.setState(Reserve.State.CONFIRMED);
         r2.setStartDate(LocalDate.parse("2025-03-06"));
         r2.setEndDate(LocalDate.parse("2025-03-07"));
@@ -324,9 +322,14 @@ public class StartupConfig {
         req2.setEnterprise(e);
         entityManager.persist(req2);
 
-        /* TODO
-         * INSERT INTO REQUEST (id, enabled, name, address, cp, city, country, telephone, email, feePerHour, openingTime, closingTime, longitude, latitude, idParking, totalSpots, state, enterprise_id)
-VALUES (1, true, 'InterParking El Mercado', 'Calle Cerrajeros s/n', 28801, 'Alcalá de Henares', 'Espanya', '918798072', 'interparking@gmial.com', 1.1, '00:00', '00:00', 40.48205, -3.36553, null, 20, 'ANYADIR', 3);
+        /*
+         * TODO
+         * INSERT INTO REQUEST (id, enabled, name, address, cp, city, country,
+         * telephone, email, feePerHour, openingTime, closingTime, longitude, latitude,
+         * idParking, totalSpots, state, enterprise_id)
+         * VALUES (1, true, 'InterParking El Mercado', 'Calle Cerrajeros s/n', 28801,
+         * 'Alcalá de Henares', 'Espanya', '918798072', 'interparking@gmial.com', 1.1,
+         * '00:00', '00:00', 40.48205, -3.36553, null, 20, 'ANYADIR', 3);
          */
     }
 }

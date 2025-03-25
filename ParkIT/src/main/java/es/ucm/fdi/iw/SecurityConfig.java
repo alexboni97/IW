@@ -56,7 +56,8 @@ public class SecurityConfig {
 
 		http
 				.csrf(csrf -> csrf
-						.ignoringRequestMatchers("/api/**", "/user/confirm-reserve", "/admin/guardarParking/**"))
+						.ignoringRequestMatchers("/api/**", "/user/confirm-reserve", "/admin/guardarParking/**",
+								"/admin/eliminarRequest/**", "/admin/eliminarParking/**"))
 				.authorizeHttpRequests(authorize -> authorize
 						.requestMatchers("/css/**", "/js/**", "/img/**", "/", "/error", "/help", "/info").permitAll()
 						.requestMatchers("/api/**").permitAll() // <-- public api access
