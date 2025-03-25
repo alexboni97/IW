@@ -160,7 +160,7 @@ public class EnterpriseController {
         }
 
         // //Nombre de la vista a la que quiero redirigir.
-        return "/enterprise-parkings";
+        return enterpriseRequests(model);
     }
 
     
