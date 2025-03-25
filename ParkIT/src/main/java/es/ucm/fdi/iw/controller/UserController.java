@@ -141,25 +141,28 @@ public class UserController {
 		}
 
 		List<Transfer> transferParkings = new ArrayList<>();
-		for (Parking p : parkingsInRange) {
-			List<Spot> spots = p.getSpots();
-			List<Reserve> reserves = new ArrayList<>();
-			for (Spot s : spots) {
-				reserves.addAll(s.getReserves());
-			}
-			if (reserves.size() == 0) {
-				transferParkings.add(p.toTransfer());
-			} else {
-				for (Reserve r : reserves) {
-					if ((r.getStartDate().isBefore(endDate) && r.getEndDate().isAfter(startDate)) ||
-							(r.getStartDate().isEqual(startDate) && r.getStartTime().isBefore(endTime)) ||
-							(r.getEndDate().isEqual(endDate) && r.getEndTime().isAfter(startTime))) {
-						System.out.println("reservado");
-					} else {
-						transferParkings.add(p.toTransfer());
-						break;
+		if(startDate!=null && endDate!=null && startTime!=null &&endTime!=null){
+			for (Parking p : parkingsInRange) {
+				List<Spot> spots = p.getSpots();
+				List<Reserve> reserves = new ArrayList<>();
+				for (Spot s : spots) {
+					reserves.addAll(s.getReserves());
+				}
+				if (reserves.size() == 0) {
+					transferParkings.add(p.toTransfer());
+				} else {
+					for (Reserve r : reserves) {
+						if ((r.getStartDate().isBefore(endDate) && r.getEndDate().isAfter(startDate)) ||
+								(r.getStartDate().isEqual(startDate) && r.getStartTime().isBefore(endTime)) ||
+								(r.getEndDate().isEqual(endDate) && r.getEndTime().isAfter(startTime))) {
+							System.out.println("reservado");
+						} else {
+							transferParkings.add(p.toTransfer());
+							break;
+						}
 					}
 				}
+	
 			}
 
 		}
