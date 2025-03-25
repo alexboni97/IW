@@ -315,12 +315,32 @@ public class StartupConfig {
         req2.setClosingTime(LocalTime.parse("00:00"));
         req2.setLatitude(40.48528);
         req2.setLongitude(-3.36322);
-        req2.setIdParking(-1);
+        req2.setIdParking(1027);
         req2.setTotalSpots(20); // TODO
         req2.setType("ELIMINAR");
         req2.setCountry("España");
         req2.setEnterprise(e);
         entityManager.persist(req2);
+
+        Request req3 = new Request();
+        req3.setEnabled(true);
+        req3.setName("Interparking el sol");
+        req3.setAddress("Calle cerrajeros s/n");
+        req3.setCp(28808);
+        req3.setCity("Madrid");
+        req3.setTelephone(918745672);
+        req3.setEmail("interparkingSol@gmail.com");
+        req3.setFeePerHour(1.7);
+        req3.setOpeningTime(LocalTime.parse("00:00"));
+        req3.setClosingTime(LocalTime.parse("00:00"));
+        req3.setLatitude(40.48205);
+        req3.setLongitude(-3.36553);
+        req3.setIdParking(-1);
+        req3.setTotalSpots(20); // TODO
+        req3.setType("AÑADIR");
+        req3.setCountry("España");
+        req3.setEnterprise(e);
+        entityManager.persist(req3);
 
         /*
          * TODO

@@ -118,6 +118,11 @@ public class UserController {
 		return R * c;
 	}
 
+	private boolean isParker(HttpSession session){
+
+		Parker parker = (Parker) session.getAttribute("u");
+		return parker!=null;
+	}
 	// El return es por la vista que devuelve.
 	@GetMapping("/map")
 	public String map(
@@ -125,57 +130,63 @@ public class UserController {
 			@RequestParam @Nullable LocalTime startTime, @RequestParam @Nullable LocalTime endTime,
 			@RequestParam @Nullable String latitude,
 			@RequestParam @Nullable String longitude,
+			HttpSession session,
 			Model model) {
-		Double radio = 30.0;
-		List<Parking> parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
-		double lat, lon;
-		List<Parking> parkingsInRange;
-		if (latitude == null || longitude == null || latitude == "" || longitude == "") {
-			parkingsInRange = parkings;
-		} else {
-			lat = Double.parseDouble(latitude);
-			lon = Double.parseDouble(longitude);
-			parkingsInRange = parkings.stream()
-					.filter(p -> calcularDistancia(lat, lon, p.getLatitude(), p.getLongitude()) <= radio)
-					.collect(Collectors.toList());
-		}
-
-		List<Transfer> transferParkings = new ArrayList<>();
-		if(startDate!=null && endDate!=null && startTime!=null &&endTime!=null){
-			for (Parking p : parkingsInRange) {
-				List<Spot> spots = p.getSpots();
-				List<Reserve> reserves = new ArrayList<>();
-				for (Spot s : spots) {
-					reserves.addAll(s.getReserves());
-				}
-				if (reserves.size() == 0) {
-					transferParkings.add(p.toTransfer());
-				} else {
-					for (Reserve r : reserves) {
-						if ((r.getStartDate().isBefore(endDate) && r.getEndDate().isAfter(startDate)) ||
-								(r.getStartDate().isEqual(startDate) && r.getStartTime().isBefore(endTime)) ||
-								(r.getEndDate().isEqual(endDate) && r.getEndTime().isAfter(startTime))) {
-							System.out.println("reservado");
-						} else {
-							transferParkings.add(p.toTransfer());
-							break;
+		if(isParker(session)){
+			Double radio = 30.0;
+			List<Parking> parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
+			double lat, lon;
+			List<Parking> parkingsInRange;
+			if (latitude == null || longitude == null || latitude == "" || longitude == "") {
+				parkingsInRange = parkings;
+			} else {
+				lat = Double.parseDouble(latitude);
+				lon = Double.parseDouble(longitude);
+				parkingsInRange = parkings.stream()
+						.filter(p -> calcularDistancia(lat, lon, p.getLatitude(), p.getLongitude()) <= radio)
+						.collect(Collectors.toList());
+			}
+			LocalDate today=LocalDate.now();
+			LocalTime timeNow=LocalTime.now();
+			List<Transfer> transferParkings = new ArrayList<>();
+			if(startDate!=null && endDate!=null && startTime!=null &&endTime!=null && (startDate.isAfter(today)||startDate.isEqual(today)&&startTime.isAfter(timeNow))){
+				for (Parking p : parkingsInRange) {
+					List<Spot> spots = p.getSpots();
+					List<Reserve> reserves = new ArrayList<>();
+					for (Spot s : spots) {
+						reserves.addAll(s.getReserves());
+					}
+					if (reserves.size() == 0) {
+						transferParkings.add(p.toTransfer());
+					} else {
+						for (Reserve r : reserves) {
+							if ((r.getStartDate().isBefore(endDate) && r.getEndDate().isAfter(startDate)) ||
+									(r.getStartDate().isEqual(startDate) && r.getStartTime().isBefore(endTime)) ||
+									(r.getEndDate().isEqual(endDate) && r.getEndTime().isAfter(startTime))) {
+								System.out.println("reservado");
+							} else {
+								transferParkings.add(p.toTransfer());
+								break;
+							}
 						}
 					}
+		
 				}
 	
 			}
-
+	
+			model.addAttribute("parkings", transferParkings);
+			model.addAttribute("latitude", latitude);
+			model.addAttribute("longitude", longitude);
+			model.addAttribute("startDate", startDate);
+			model.addAttribute("endDate", endDate);
+			model.addAttribute("startTime", startTime);
+			model.addAttribute("endTime", endTime);
+	
+			return "map";
+		}else{
+			return "login";
 		}
-
-		model.addAttribute("parkings", transferParkings);
-		model.addAttribute("latitude", latitude);
-		model.addAttribute("longitude", longitude);
-		model.addAttribute("startDate", startDate);
-		model.addAttribute("endDate", endDate);
-		model.addAttribute("startTime", startTime);
-		model.addAttribute("endTime", endTime);
-
-		return "map";
 	}
 
 	@GetMapping("/reserve/{id}")

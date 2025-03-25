@@ -31,7 +31,7 @@
                 <label for="vehiculo">Vehículo</label>
                 <select class="form-select form-select-lg" name="vehicleId" id="vehicleId" required>
                     <option th:if="${vehicleId == null}" value="" selected disabled>Selecciona 1</option>
-                    <option th:each="vehicle : ${vehicles}" th:value="${vehicle.id}" th:if="${vehicleId != null}"
+                    <option th:each="vehicle : ${vehicles}" th:value="${vehicle.id}" th:if="${vehicleId != null} and vehicleId == ${vehicle.id}"
                         th:text="${vehicle.brand}+' '+${vehicle.model}+' ('+${vehicle.plate}+')'" selected></option>
                     <option th:each="vehicle : ${vehicles}" th:value="${vehicle.id}"
                         th:text="${vehicle.brand}+' '+${vehicle.model}+' ('+${vehicle.plate}+')'"></option>
