@@ -6,7 +6,7 @@
             <th>Nombre</th>
             <th>Calle</th>
             <th>Precio/Hora</th>
-            <th>Plazas libres</th>
+            <th>Horario</th>
             <th></th>
         </tr>
         </thead>
@@ -16,7 +16,7 @@
             <th th:text="${parking.name}">Nombre</th>
             <th th:text ="${parking.address}">Calle</th>
             <th th:text="${parking.feePerHour}">Precio/Hora</th>
-            <th> 0 </th>
+            <th th:text="${parking.openingTime} +' - ' + ${parking.closingTime}">horario</th>
             <th>
                 <a th:href="@{/user/reserve/{id}(id=${parking.id}, startDate=${startDate}, endDate=${endDate}, startTime=${startTime}, endTime=${endTime})}" class="btn btn-primary">Reservar</a>
             </th>
