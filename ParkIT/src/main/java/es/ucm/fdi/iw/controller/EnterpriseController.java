@@ -3,6 +3,7 @@ package es.ucm.fdi.iw.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.Enterprise;
+import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Parker;
 import es.ucm.fdi.iw.model.Request;
 import es.ucm.fdi.iw.model.Reserve;
@@ -152,6 +154,13 @@ public class EnterpriseController {
         entityManager.persist(request);
         entityManager.flush();
         entityManager.clear();
+
+        //Creamos y enviamos la notificación
+        Message message = new Message();
+        message.setSender((User) session.getAttribute("u"));
+        message.setText("Nueva solicitud de añadir parking: "+ name +" en " + address);
+        message.setDateSent(LocalDateTime.now());
+
         model.addAttribute("success", "Solcitud realizada con éxito. Esperando respuesta del administrador.");
         } catch (Exception e) {
         model.addAttribute("error", "Hubo un error al guardar la solicitud: " +
