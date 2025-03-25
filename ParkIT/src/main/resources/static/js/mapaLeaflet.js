@@ -3,10 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Obtener referencias a los inputs de latitud y longitud
     let latitudeInput = document.getElementById('latitude');
     let longitudeInput = document.getElementById('longitude');
-    let rangeInput = document.getElementById('rangeValue').value;
-
+    let rangeInput = 3000;
+    let latlng = [40.416775, -3.703790];
     
-
     // Inicializar el mapa
     let map = L.map('map');
     let lat ;
@@ -19,23 +18,18 @@ document.addEventListener('DOMContentLoaded', function () {
         popupAnchor: [0, 40]
     });
 
-    function onRangeChange(){
-        if(circleFind){
-            map.removeLayer(circleFind);
-        }
-
-        circleFind = L.circle(e.latlng, 3000).addTo(map);
-    }
-
     function onLocationFound(e) {
+        latlng = e.latlng;
+
         L.marker(e.latlng, { icon: iconoMiUbicacion }).addTo(map)
             .bindTooltip("Tu Ubicación").openTooltip();
-        if(circleFind){
+        if(circleFind) {
             map.removeLayer(circleFind);
         }
 
-        circleFind = L.circle(e.latlng, 3000).addTo(map);
+        circleFind = L.circle(latlng, rangeInput).addTo(map);
     }
+
     if (latitudeInput?.value == '' || longitudeInput?.value  == '') {
         map.locate({ setView: true, maxZoom: 13 });
         map.on('locationfound', onLocationFound);
@@ -46,11 +40,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if(circleFind){
             map.removeLayer(circleFind);
         }
-        circleFind=L.circle([lat, lon], 30000).addTo(map);
+        //circleFind=L.circle([lat, lon], 30000).addTo(map);
     }
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors'
     }).addTo(map);
+    
     let geocoder = L.Control.geocoder({
         placeholder: 'Buscar calle...',
         defaultMarkGeocode: false,
@@ -101,15 +97,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     console.log(parkings); // Para verificar que los datos se están pasando correctamente
 
-    if (rad != null) { // muestra el rango en el que se ha hecho la busqueda
-        var circle = L.circle([lat, lon], {
-            color: 'lightblue',
-            fillColor: 'lightblue',
-            fillOpacity: 0.3,
-            radius: rad
-        }).addTo(map);
-    }
-
     // Añadir un marcador personalizado
     var marca = L.icon({
         iconUrl: '/img/marker.png',
@@ -140,4 +127,19 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
+
+    document.getElementById('customRange3').addEventListener('input', function () {
+        rangeInput = this.value;
+
+        document.getElementById('rangeValue').innerHTML = rangeInput;
+
+        if(circleFind){
+            map.removeLayer(circleFind);
+        }
+        
+        console.log(latlng);
+        console.log(rangeInput);
+        
+        circleFind = L.circle(latlng, parseInt(rangeInput)).addTo(map);
+    });
 });
