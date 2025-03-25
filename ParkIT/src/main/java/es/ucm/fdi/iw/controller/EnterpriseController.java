@@ -159,7 +159,6 @@ public class EnterpriseController {
         return "redirect:/error";
         }
 
-        // //Nombre de la vista a la que quiero redirigir.
         return enterpriseRequests(model);
     }
 
