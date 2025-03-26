@@ -1,22 +1,22 @@
 <div th:fragment="find-park-form">
+
     <form th:action="@{/user/map}" method="GET">
+
         <h1 class="mt-5">Encuentra tu plaza de aparcamiento con ParkIT</h1>
+
         <div class="container-flex row">
-            <!-- <button class="btn btn-outline-secondary" type="button" id="geocoder-container"></button> -->
             <label for="destino" class="form-label">Introduce destino </label>
             <div id="buscador"></div>
-            <small id="destinoId" class="form-text text-muted">Buscaremos los aparcamientos disponibles mas cercanos al
-                destino introducido</small>
+            <small id="destinoId" class="form-text text-muted">
+                Buscaremos los aparcamientos disponibles mas cercanos al destino introducido
+            </small>
         </div>
 
-            <!-- <input type="text" id="fullAddress" placeholder="Dirección completa" >
-            <input type="text" id="calle" placeholder="Calle" >
-            <input type="text" id="ciudad" placeholder="Ciudad" >
-            <input type="text" id="codigoPostal" placeholder="Código Postal" > -->
-            <input type="hidden" name="latitude" id="latitude" th:value="${latitude}">
-            <input type="hidden" name="longitude" id="longitude" th:value="${longitude}">
+        <input type="hidden" name="latitude" id="latitude" th:value="${latitude}">
+        <input type="hidden" name="longitude" id="longitude" th:value="${longitude}">
 
         <div class="row mb-3">
+
             <div class="col">
                 <label for="startDate" class="form-label">Fecha de entrada</label>
                 <div class="input-group">
@@ -32,9 +32,11 @@
                         aria-describedby="startTimeId" th:value="${startTime}" required/>
                 </div>
             </div>
+
         </div>
 
         <div class="row mb-3">
+
             <div class="col">
                 <label for="endDate" class="form-label">Fecha de salida</label>
                 <div class="input-group">
@@ -42,6 +44,7 @@
                         th:value="${endDate}" required/>
                 </div>
             </div>
+
             <div class="col">
                 <label for="endTime" class="form-label">Hora de salida</label>
                 <div class="input-group">
@@ -49,22 +52,31 @@
                         th:value="${endTime}" required/>
                 </div>
             </div>
+
         </div>
+
         <div class="row mb-3">
+
             <div class="col">
                 <label for="customRange3" class="form-label">Rango de busqueda</label>
                 <span id="rangeValue">3000</span> metros
                 <input type="range" class="form-range" min="250" max="10000" step="250" id="customRange3" value="3000">
             </div>
+            
         </div>
 
         <div class="row mt-3">
+
             <div class="col-6">
                 <button type="submit" class="btn btn-lg btn-outline-dark w-100">Buscar</button>
             </div>
+
             <div class="col-6">
                 <button type="reset" class="btn btn-lg btn-outline-dark w-100">Borrar datos</button>
             </div>
+
         </div>
+
     </form>
+
 </div>

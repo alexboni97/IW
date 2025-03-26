@@ -25,26 +25,7 @@
     </div>
 
     <th:block th:replace="~{fragments/leaflet.html :: mapa}" />
-    </div>
+    <th:block th:replace="~{fragments/footer.html :: footer}" />
 </body>
-<th:block th:replace="~{fragments/footer.html :: footer}" />
 
 </html>
-
-<!-- zona de admin -->
-<!--<div class="container">
-            <a class="nav-link" th:if="${u.hasRole('ADMIN')}" th:href="@{/admin/}">
-                <button type="button" class="btn btn-outline-primary">
-                    boton admin   
-                </button>
-
-
-            </a> -->
-<!-- zona de usuario normal -->
-<!--<a class="nav-link" th:unless="${u.hasRole('ADMIN')}" th:href="@{/admin/}">
-                <button type="button" class="btn btn-outline-primary">
-                    boton user   
-                   </button>
-
-            </a>        
-        </div> -->
