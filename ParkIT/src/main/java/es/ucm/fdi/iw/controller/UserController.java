@@ -371,6 +371,9 @@ public class UserController {
 			entityManager.persist(reserve);
 			entityManager.flush();
 			entityManager.clear();
+			double wallet=user.getWallet();
+			wallet-=totalPrice;
+			user.setWallet(wallet);
 			model.addAttribute("success", "Reserva realizada con éxito");
 		} catch (Exception e) {
 			model.addAttribute("error", "Hubo un error al guardar la reserva: " + e.getMessage());
