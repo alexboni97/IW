@@ -50,6 +50,7 @@ public class RootController {
             transferParkings.add(p.toTransfer());
         }
         model.addAttribute("parkings", transferParkings);
+        model.addAttribute("radius", 3000);
 
         System.out.println("Found " + parkings.size() + " parkings");
         for (Parking p : parkings) {

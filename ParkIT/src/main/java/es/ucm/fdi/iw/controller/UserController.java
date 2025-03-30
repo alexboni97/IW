@@ -107,22 +107,11 @@ public class UserController {
 		}
 	}
 
-	public double calcularDistancia(double lat1, double lon1, double lat2, double lon2) {
-		final int R = 6371; // Radio de la Tierra en km
-		double dLat = Math.toRadians(lat2 - lat1);
-		double dLon = Math.toRadians(lon2 - lon1);
-		double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-				Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-						Math.sin(dLon / 2) * Math.sin(dLon / 2);
-		double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-		return R * c;
-	}
-
 	private boolean isParker(HttpSession session){
-
 		Parker parker = (Parker) session.getAttribute("u");
 		return parker!=null;
 	}
+	
 	// El return es por la vista que devuelve.
 	@GetMapping("/map")
 	public String map(
@@ -130,27 +119,25 @@ public class UserController {
 			@RequestParam @Nullable LocalTime startTime, @RequestParam @Nullable LocalTime endTime,
 			@RequestParam @Nullable String latitude,
 			@RequestParam @Nullable String longitude,
+			@RequestParam @Nullable String radius,
 			HttpSession session,
 			Model model) {
+
 		if(isParker(session)){
-			Double radio = 30.0;
 			List<Parking> parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
-			double lat, lon;
-			List<Parking> parkingsInRange;
-			if (latitude == null || longitude == null || latitude == "" || longitude == "") {
-				parkingsInRange = parkings;
-			} else {
-				lat = Double.parseDouble(latitude);
-				lon = Double.parseDouble(longitude);
-				parkingsInRange = parkings.stream()
-						.filter(p -> calcularDistancia(lat, lon, p.getLatitude(), p.getLongitude()) <= radio)
-						.collect(Collectors.toList());
+
+			System.out.println("parkingssssssss");
+			for (Parking p : parkings) {
+				System.out.println(p.getName());
 			}
+
 			LocalDate today=LocalDate.now();
 			LocalTime timeNow=LocalTime.now();
+
 			List<Transfer> transferParkings = new ArrayList<>();
+
 			if(startDate!=null && endDate!=null && startTime!=null &&endTime!=null && (startDate.isAfter(today)||startDate.isEqual(today)&&startTime.isAfter(timeNow))){
-				for (Parking p : parkingsInRange) {
+				for (Parking p : parkings) {
 					List<Spot> spots = p.getSpots();
 					List<Reserve> reserves = new ArrayList<>();
 					for (Spot s : spots) {
@@ -172,7 +159,11 @@ public class UserController {
 					}
 		
 				}
-	
+			}
+
+			System.out.println("transferssss");
+			for (Transfer p : transferParkings) {
+				System.out.println(p.getName());
 			}
 	
 			model.addAttribute("parkings", transferParkings);
@@ -182,9 +173,10 @@ public class UserController {
 			model.addAttribute("endDate", endDate);
 			model.addAttribute("startTime", startTime);
 			model.addAttribute("endTime", endTime);
+			model.addAttribute("radius", radius);
 	
 			return "map";
-		}else{
+		} else {
 			return "login";
 		}
 	}

@@ -1,46 +1,114 @@
 //esperar que este cargado el documento
 document.addEventListener('DOMContentLoaded', function () {
-    // Obtener referencias a los inputs de latitud y longitud
-    let latitudeInput = document.getElementById('latitude');
-    let longitudeInput = document.getElementById('longitude');
-    let rangeInput = 3000;
-    let latlng = [40.416775, -3.703790];
-    
+
     // Inicializar el mapa
     let map = L.map('map');
-    let lat ;
-    let lon ;
-    let circleFind;
-    let iconoMiUbicacion = L.icon({
-        iconUrl: '/img/mi-ubicacion.png',
+
+    // Obtener la latitud y longitud
+    let latlng = [
+        parseFloat(document.getElementById('latitude').value), 
+        parseFloat(document.getElementById('longitude').value)
+    ];
+    console.log(latlng);
+
+    // Obtener el radio de búsqueda
+    let radius = parseInt(document.getElementById('customRange3').value);
+    console.log(radius);
+
+    // Círculo de búsqueda
+    let circleFind = null;
+
+    // Array para almacenar marcadores personalizados
+    const markers = [];   
+
+    // Icono para la ubicación del usuario
+    let myLocationIcon = L.icon({
+        iconUrl: '/img/my_location.png',
         iconSize: [40, 40],
         iconAnchor: [20, 40],
         popupAnchor: [0, 40]
     });
 
-    function onLocationFound(e) {
-        latlng = e.latlng;
+    // Icono para los parkings
+    let markerIcon = L.icon({
+        iconUrl: '/img/marker.png',
+        iconSize: [60, 60],
+        iconAnchor: [30, 60], 
+        popupAnchor: [0, -50]
+    });
 
-        L.marker(e.latlng, { icon: iconoMiUbicacion }).addTo(map)
-            .bindTooltip("Tu Ubicación").openTooltip();
-        if(circleFind) {
+    // Función para modificar el círculo de búsqueda
+    function setCircle() {
+        console.log("setCircle", latlng, radius);
+        if (circleFind) {
             map.removeLayer(circleFind);
         }
-
-        circleFind = L.circle(latlng, rangeInput).addTo(map);
+        circleFind = L.circle(latlng, radius).addTo(map);
     }
 
-    if (latitudeInput?.value == '' || longitudeInput?.value  == '') {
+    // Función para calcular la distancia entre dos puntos geográficos
+    function calcularDistancia(lat1, lon1, lat2, lon2) {
+        const R = 6371; // Radio de la Tierra en km
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return R * c;
+    }
+
+    // Función personalizada para buscar marcadores por nombre
+    function buscarMarcador(nombre) {
+        markers.forEach(marker => {
+            if (marker.getPopup() && marker.getPopup().getContent().includes(nombre)) {
+                map.setView(marker.getLatLng(), 16);
+                marker.openPopup();
+            }
+        });
+    }
+
+    // Inicializar el mapa en la ubicación del usuario
+    function onLocationFound(e) {
+        console.log("onLocationFound", e.latlng, radius);
+
+        latlng = e.latlng;
+
+        L.marker(latlng, { icon: myLocationIcon }).addTo(map).bindTooltip("Tu Ubicación").openTooltip();
+        
+        setCircle();
+
+        parkings.forEach(parking => {
+            console.log(latlng[0], latlng[1]);
+            console.log(calcularDistancia(latlng[0], latlng[1], parking.latitude, parking.longitude));
+            if(true || calcularDistancia(latlng[0], latlng[1], parking.latitude, parking.longitude) <= radius) {
+                const marker = L.marker([parking.latitude, parking.longitude], { icon: markerIcon }).addTo(map);
+                const id = parking.id;
+                const url = `/user/reserve/${id}`;
+                marker.bindPopup(`<b>${parking.name}</b><br>${parking.address}</br><a href="${url}" class="btn btn-outline-secondary">Reservar</a>`);
+                markers.push(marker);
+            }
+        });
+    }
+
+    if (isNaN(latlng[0]) || isNaN(latlng[1])) {
         map.locate({ setView: true, maxZoom: 13 });
         map.on('locationfound', onLocationFound);
     } else {
-        lat = parseFloat(latitudeInput?.value || 40.416775);
-        lon = parseFloat(longitudeInput?.value || -3.703790);
-        map.setView([lat, lon], 13);
-        if(circleFind){
-            map.removeLayer(circleFind);
-        }
-        //circleFind=L.circle([lat, lon], 30000).addTo(map);
+        map.setView(latlng, 13);
+        setCircle();
+
+        parkings.forEach(parking => {
+            console.log(latlng[0], latlng[1]);
+            console.log(calcularDistancia(latlng[0], latlng[1], parking.latitude, parking.longitude));
+            if(calcularDistancia(latlng[0], latlng[1], parking.latitude, parking.longitude) <= radius) {
+                const marker = L.marker([parking.latitude, parking.longitude], { icon: markerIcon }).addTo(map);
+                const id = parking.id;
+                const url = `/user/reserve/${id}`;
+                marker.bindPopup(`<b>${parking.name}</b><br>${parking.address}</br><a href="${url}" class="btn btn-outline-secondary">Reservar</a>`);
+                markers.push(marker);
+            }
+        });
     }
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -86,60 +154,24 @@ document.addEventListener('DOMContentLoaded', function () {
     const geocoderContainer = geocoder.getContainer();
     document.getElementById('buscador').appendChild(geocoderContainer);
 
-
-    // Array para almacenar marcadores personalizados
-    const markers = [];
-
-
-    // Evento para añadir los parkings al mapa
-    // parkings es un array de objetos que contiene la información de los parkings
-    // como los guardo en una variable de thymeleaf, puedo acceder a ellos desde aquí
-
-    console.log(parkings); // Para verificar que los datos se están pasando correctamente
-
-    // Añadir un marcador personalizado
-    var marca = L.icon({
-        iconUrl: '/img/marker.png',
-        //shadowUrl: '/img/marker_shadow.png',
-
-        iconSize: [60, 60], // size of the icon
-        //shadowSize: [50, 64], // size of the shadow
-        iconAnchor: [30, 60], // point of the icon which will correspond to marker's location
-        //shadowAnchor: [4, 62],  // the same for the shadow
-        popupAnchor: [0, -50] // point from which the popup should open relative to the iconAnchor
-    });
-
-    parkings.forEach(parking => {
-        const marker = L.marker([parking.latitude, parking.longitude], { icon: marca }).addTo(map);
-        const id = parking.id;
-        const url = `/user/reserve/${id}`;
-        marker.bindPopup(`<b>${parking.name}</b><br>${parking.address}</br><a href="${url}" class="btn btn-outline-secondary">Reservar</a>`);
-        markers.push(marker);
-    });
-
-
-    // Función personalizada para buscar marcadores por nombre
-    function buscarMarcador(nombre) {
-        markers.forEach(marker => {
-            if (marker.getPopup() && marker.getPopup().getContent().includes(nombre)) {
-                map.setView(marker.getLatLng(), 16);
-                marker.openPopup();
-            }
-        });
-    }
-
     document.getElementById('customRange3').addEventListener('input', function () {
-        rangeInput = this.value;
+        radius = parseInt(this.value);
 
-        document.getElementById('rangeValue').innerHTML = rangeInput;
+        document.getElementById('rangeValue').innerHTML = radius;
 
-        if(circleFind){
-            map.removeLayer(circleFind);
-        }
-        
-        console.log(latlng);
-        console.log(rangeInput);
-        
-        circleFind = L.circle(latlng, parseInt(rangeInput)).addTo(map);
+        setCircle();
+
+        // Double radio = 30.0; 
+			// double lat, lon;
+			// List<Parking> parkingsInRange;
+			// if (latitude == null || longitude == null || latitude == "" || longitude == "") {
+			// 	parkingsInRange = parkings;
+			// } else {
+			// 	lat = Double.parseDouble(latitude);
+			// 	lon = Double.parseDouble(longitude);
+			// 	parkingsInRange = parkings.stream()
+			// 			.filter(p -> calcularDistancia(lat, lon, p.getLatitude(), p.getLongitude()) <= radio)
+			// 			.collect(Collectors.toList());
+			// }
     });
 });
