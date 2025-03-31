@@ -293,8 +293,6 @@ public class StartupConfig {
         req1.setFeePerHour(1.1);
         req1.setOpeningTime(LocalTime.parse("00:00"));
         req1.setClosingTime(LocalTime.parse("00:00"));
-        req1.setLatitude(40.48205);
-        req1.setLongitude(-3.36553);
         req1.setIdParking(-1);
         req1.setTotalSpots(20); // TODO
         req1.setType("AÑADIR");
@@ -333,14 +331,30 @@ public class StartupConfig {
         req3.setFeePerHour(1.7);
         req3.setOpeningTime(LocalTime.parse("00:00"));
         req3.setClosingTime(LocalTime.parse("00:00"));
-        req3.setLatitude(40.48205);
-        req3.setLongitude(-3.36553);
         req3.setIdParking(-1);
         req3.setTotalSpots(20); // TODO
         req3.setType("AÑADIR");
         req3.setCountry("España");
         req3.setEnterprise(e);
         entityManager.persist(req3);
+
+        Request req4 = new Request();
+        req4.setEnabled(true);
+        req4.setName("Interparking San Lucas");
+        req4.setAddress("Vía Complutense");
+        req4.setCp(28805);
+        req4.setCity("Alcala de Henares");
+        req4.setTelephone(918898518);
+        req4.setEmail("interparkingsanlucas@gmail.com");
+        req4.setFeePerHour(1.1);
+        req4.setOpeningTime(LocalTime.parse("00:00"));
+        req4.setClosingTime(LocalTime.parse("00:00"));
+        req4.setIdParking(1027);
+        req4.setTotalSpots(20); // TODO
+        req4.setType("AÑADIR");
+        req4.setCountry("España");
+        req4.setEnterprise(e);
+        entityManager.persist(req4);
 
         /*
          * TODO

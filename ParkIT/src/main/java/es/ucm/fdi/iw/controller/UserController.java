@@ -112,6 +112,26 @@ public class UserController {
 		return parker!=null;
 	}
 	
+	@GetMapping("/buscar-parking")
+	public String buscarParking(Model model, HttpSession session) {
+		if(isParker(session)){
+			List<Parking> parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
+
+			List<Parking.Transfer> transferParkings = new ArrayList<>();
+
+			for (Parking p : parkings) {
+				transferParkings.add(p.toTransfer());
+			}
+
+			model.addAttribute("parkings", transferParkings);
+			model.addAttribute("radius", 3000);
+			
+			return "search";
+		} else {
+			return "login";
+		}
+	}
+
 	// El return es por la vista que devuelve.
 	@GetMapping("/map")
 	public String map(
@@ -126,10 +146,6 @@ public class UserController {
 		if(isParker(session)){
 			List<Parking> parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
 
-			System.out.println("parkingssssssss");
-			for (Parking p : parkings) {
-				System.out.println(p.getName());
-			}
 
 			LocalDate today=LocalDate.now();
 			LocalTime timeNow=LocalTime.now();
