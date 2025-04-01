@@ -27,13 +27,13 @@
                     <div class="accordion-body">
                         <div class="row">
                             <!-- Columna del mapa -->
-                            <div class="col-md-4 mapa-reserva map-container"
+                            <div class="col-md-6 mapa-reserva map-container"
                                     th:data-address="${request.address} + ', ' + ${request.city} + ', ' + ${request.country}" 
                                     th:id="'mapa-' + ${request.id}">
-                                
                             </div>
+                            
                             <!-- Columna de la información -->
-                            <div class="col-md-8">
+                            <div class="col-md-6">
                                 <div class="card p-3">
                                     <div class="card-text">
                                         <p><strong>Nombre:</strong> <span th:text="${request.name}">Nombre</span></p>
@@ -45,6 +45,9 @@
                                         <p><strong>Fecha de apertura:</strong> <span th:text="${request.openingTime}">Fecha de apertura</span></p>
                                         <p><strong>Fecha de cierre:</strong> <span th:text="${request.closingTime}">Fecha de cierre</span></p>
                                         <p><strong>Precio/h:</strong> <span th:text="${request.feePerHour}">Precio/h</span></p>
+                                        <div class="error"
+                                          th:id="'error-' + ${request.id}">
+                                        </div>
                                         <div>
                                             <a class="btn btn-primary m-1" onclick="guardarParking(this)" th:data-id="${request.id}">Aceptar</a>
                                             <a class="btn btn-danger m-1" onclick="eliminarRequest(this)" th:data-id="${request.id}">Rechazar</a>
