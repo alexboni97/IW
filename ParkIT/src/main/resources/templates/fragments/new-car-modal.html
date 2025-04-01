@@ -65,36 +65,10 @@
                     >
                         Cancelar
                     </button>
-                    <button type="button" onclick="crearVehiculo()" class="btn btn-primary">Guardar</button>
+                    <button type="button" id="newVehicleSubmit" class="btn btn-primary">Guardar</button>
                 </div>
             </div>
         </div>
     </div>
     
-    <!-- Optional: Place to the bottom of scripts -->
-    <script>
-        function crearVehiculo(){
-            let brand=document.getElementById("brand").value;
-            let model=document.getElementById("model").value;
-            let plate=document.getElementById("plate").value;
-            let size=document.getElementById("size").value;
-            let formData=new URLSearchParams();
-            formData.append("brand",brand);
-            formData.append("model",model);
-            formData.append("plate",plate);
-            formData.append("size",size);
-            fetch('/user/add-vehicle',{
-                method:'POST',
-                body:formData,
-                headers:{
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                }
-            })
-            .then(response=>response.json())
-            .then(data => {
-                alert(data.message);
-            })
-            .catch(error=>console.error("Error al añadir vehiculo",error));
-        }
-    </script>
 </div>

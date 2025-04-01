@@ -75,8 +75,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 let startTime = document.getElementById("ini-h").value;
                 let endTime = document.getElementById("fin-h").value;
                 window.location.href = `/user/select-parking/${id}?&startDate=${startDate}&endDate=${endDate}&startTime=${startTime}&endTime=${endTime}&vehicleId=${vehicleId}&selectedSlot=${selectedSlot}`;
-        });
+            });
     }
+    document.getElementById("newVehicleSubmit").addEventListener('click',function(){
+        let id = document.getElementById("parkingId").value;
+        let vehicleId= document.getElementById("vehicleId").value;
+        let selectedSlot=document.getElementById("selectedParkingSpot").value;
+        let startDate = document.getElementById("ini-f").value;
+        let endDate = document.getElementById("fin-f").value;
+        let startTime = document.getElementById("ini-h").value;
+        let endTime = document.getElementById("fin-h").value;
+        let brand = document.getElementById("brand").value;
+        let model = document.getElementById("model").value;
+        let plate = document.getElementById("plate").value;
+        let size = document.getElementById("size").value;
+        window.location.href = `/user/add-vehicle?&parkingId=${id}&startDate=${startDate}&endDate=${endDate}&startTime=${startTime}&endTime=${endTime}&vehicleId=${vehicleId}&selectedSlot=${selectedSlot}&brand=${brand}&modelo=${model}&plate=${plate}&size=${size}`;
+        
+    });
 });
 
 document.querySelector("form").addEventListener("submit", function(event) {

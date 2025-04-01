@@ -278,18 +278,45 @@ public class UserController {
 		return "select-parking";
 	}
 
-	@PostMapping("/add-vehicule")
-	@ResponseBody
-	public ResponseEntity<?> addVehicle(
-			@RequestParam String brand,
-			@RequestParam String model,
-			@RequestParam String plate,
-			@RequestParam String size
-
+	@GetMapping("/add-vehicle")
+	public String addVehicle(
+		Model model,
+		HttpSession session,
+		@RequestParam(required = false) String parkingId,
+		@RequestParam(required = false) Integer selectedSlot,
+		@RequestParam(required = false) Long vehicleId,
+		@RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate,
+		@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime,
+		@RequestParam String brand,
+		@RequestParam String modelo,
+		@RequestParam String plate,
+		@RequestParam String size,
+		RedirectAttributes redirectAttributes
 	) {
-		// TODO: process POST request
-
-		return ResponseEntity.ok("{\"message\": \"Vehiculo agregado\"}");
+		Long id= Long.parseLong(parkingId);
+		// redirectAttributes.addAttribute("selectedSlot", selectedSlot);
+		// redirectAttributes.addAttribute("startDate", startDate);
+		// redirectAttributes.addAttribute("endDate", endDate);
+		// redirectAttributes.addAttribute("startTime", startTime);
+		// redirectAttributes.addAttribute("endTime", endTime);
+		// redirectAttributes.addAttribute("id", id);
+		// redirectAttributes.addAttribute("vehicleId", vehicleId);
+		if(isParker(session)){
+			Parker parker = (Parker) session.getAttribute("u");
+			List<Vehicle>vehicles= parker.getVehicles();
+			Vehicle v= new Vehicle();
+			v.setBrand(brand);
+			v.setEnabled(true);
+			v.setModel(modelo);
+			v.setPlate(plate);
+			v.setSize(size);
+			v.setParker(parker);
+			vehicles.add(v);
+			parker.setVehicles(vehicles);
+			return reserve(model, session, id, selectedSlot, vehicleId, startDate, endDate, startTime, endTime);
+		}
+		else
+		return "login";
 	}
 
 	@PostMapping("/confirm-reserve")
