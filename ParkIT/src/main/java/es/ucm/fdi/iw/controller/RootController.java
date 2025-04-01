@@ -42,6 +42,13 @@ public class RootController {
         return "login";
     }
 
+    @GetMapping("/register")
+    public String register(Model model, HttpServletRequest request) {
+        boolean error = request.getQueryString() != null && request.getQueryString().indexOf("error") != -1;
+        model.addAttribute("loginError", error);
+        return "register";
+    }
+
 	@GetMapping("/")
     public String index(Model model) {
         List<Parking> parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();

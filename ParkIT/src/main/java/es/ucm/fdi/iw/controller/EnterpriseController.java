@@ -17,6 +17,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import org.springframework.web.bind.annotation.ResponseBody;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.Enterprise;
@@ -119,19 +127,43 @@ public class EnterpriseController {
 
     // Función para solicitar añadir un parking al administrador.
     // Ruta con la que llega a este método desde la vista
-    @Transactional
-    @PostMapping("/request-parking")
-    public String requestParking(@RequestParam String name, @RequestParam String address, @RequestParam int cp,
+    /* PARÁMETROS ELIMINADOS PARA QUE SE ENVIEN EN FORMATO DE JSON:
+    @RequestParam String name, @RequestParam String address, @RequestParam int cp,
             @RequestParam String city, @RequestParam String country, @RequestParam String telephone,
             @RequestParam String email, @RequestParam double feePerHour, @RequestParam String openingTime,
-            @RequestParam String closingTime, @RequestParam Integer totalSpots, HttpSession session, Model model) {
+            @RequestParam String closingTime, @RequestParam Integer totalSpots    
+    */
+   /**
+	 * Posts a message to a user.
+	 * 
+	 * @param id of target user (source user is from ID)
+	 * @param o  JSON-ized message, similar to {"message": "text goes here"}
+	 * @throws JsonProcessingException
+	 */
+    @PostMapping("/request-parking")
+    @Transactional
+    @ResponseBody
+    public String requestParking(@RequestBody JsonNode requestData, HttpSession session, Model model) throws JsonProcessingException {
 
-        // //Creamos un objeto de tipo request
+        try {
+        
+        String name = requestData.get("name").asText();
+        String address = requestData.get("address").asText();
+        int cp = requestData.get("cp").asInt();
+        String city = requestData.get("city").asText();
+        String country = requestData.get("country").asText();
+        String telephone = requestData.get("telephone").asText();
+        String email = requestData.get("email").asText();
+        double feePerHour = requestData.get("feePerHour").asDouble();
+        String openingTime = requestData.get("openingTime").asText();
+        String closingTime = requestData.get("closingTime").asText();
+        Integer totalSpots = requestData.get("totalSpots").asInt();
+
+
         LocalTime parsedOpeningTime = LocalTime.parse(openingTime);
         LocalTime parsedClosingTime = LocalTime.parse(closingTime);
-        Request request = new Request();
 
-        //Metemos los datos al request
+        Request request = new Request();
         request.setName(name);
         request.setAddress(address);
         request.setEnabled(true);
@@ -141,34 +173,40 @@ public class EnterpriseController {
         request.setTelephone(Integer.parseInt(telephone));
         request.setEmail(email);
         request.setFeePerHour(feePerHour);
-        request.setLatitude(0);
-        request.setLongitude(0);
+        request.setLatitude(0.0); 
+        request.setLongitude(0.0); 
         request.setOpeningTime(parsedOpeningTime);
         request.setClosingTime(parsedClosingTime);
-        request.setState("PENDIENTE");
-        request.setType("AÑADIR");
+        request.setState("Pendiente");
+        request.setType("Añadir");
         request.setTotalSpots(totalSpots);
         request.setEnterprise((Enterprise) session.getAttribute("u"));
-
-        try {
+        
         entityManager.persist(request);
         entityManager.flush();
         entityManager.clear();
 
         //Creamos y enviamos la notificación
-        Message message = new Message();
-        message.setSender((User) session.getAttribute("u"));
-        message.setText("Nueva solicitud de añadir parking: "+ name +" en " + address);
-        message.setDateSent(LocalDateTime.now());
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode messageNode= mapper.createObjectNode();
+        messageNode.put("text", "Nueva solicitud de parking de " + request.getEnterprise().getName() + " con id: " + request.getId()+ " en la dirección: " + request.getAddress());
+        messageNode.put("dateSent", LocalDateTime.now().toString());
+        messageNode.put("senderId", ((Enterprise) session.getAttribute("u")).getId());
 
-        model.addAttribute("success", "Solcitud realizada con éxito. Esperando respuesta del administrador.");
+        String messageJson = mapper.writeValueAsString(messageNode);
+        messagingTemplate.convertAndSend("/topic/admin", messageJson);
+        
+        model.addAttribute("success", "Solicitud realizada con éxito. Esperando respuesta del administrador.");
+        return "{\"result\": \"Solicitud realizada con éxito . Esperando respuesta del administrador.\"}";        
         } catch (Exception e) {
         model.addAttribute("error", "Hubo un error al guardar la solicitud: " +
         e.getMessage());
         return "redirect:/error";
         }
 
-        return enterpriseRequests(model);
+
+        /*A FALTA DE MÁS INFORMACIÓN*/
+        // return enterpriseRequests(model);
     }
 
     
