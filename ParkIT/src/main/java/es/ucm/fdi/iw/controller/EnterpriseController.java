@@ -24,7 +24,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.Enterprise;
@@ -104,7 +103,8 @@ public class EnterpriseController {
                 .setParameter("enterprise", user)
                 .getResultList();
 
-        //El nombre que le pongamos el de entre comillas es el que usamos luego para recorrer en la vista con thimeleaf
+        // El nombre que le pongamos el de entre comillas es el que usamos luego para
+        // recorrer en la vista con thimeleaf
         model.addAttribute("requests", requests);
 
         return "enterprise-requests";
@@ -127,87 +127,94 @@ public class EnterpriseController {
 
     // Función para solicitar añadir un parking al administrador.
     // Ruta con la que llega a este método desde la vista
-    /* PARÁMETROS ELIMINADOS PARA QUE SE ENVIEN EN FORMATO DE JSON:
-    @RequestParam String name, @RequestParam String address, @RequestParam int cp,
-            @RequestParam String city, @RequestParam String country, @RequestParam String telephone,
-            @RequestParam String email, @RequestParam double feePerHour, @RequestParam String openingTime,
-            @RequestParam String closingTime, @RequestParam Integer totalSpots    
-    */
-   /**
-	 * Posts a message to a user.
-	 * 
-	 * @param id of target user (source user is from ID)
-	 * @param o  JSON-ized message, similar to {"message": "text goes here"}
-	 * @throws JsonProcessingException
-	 */
+    /*
+     * PARÁMETROS ELIMINADOS PARA QUE SE ENVIEN EN FORMATO DE JSON:
+     * 
+     * @RequestParam String name, @RequestParam String address, @RequestParam int
+     * cp,
+     * 
+     * @RequestParam String city, @RequestParam String country, @RequestParam String
+     * telephone,
+     * 
+     * @RequestParam String email, @RequestParam double feePerHour, @RequestParam
+     * String openingTime,
+     * 
+     * @RequestParam String closingTime, @RequestParam Integer totalSpots
+     */
+    /**
+     * Posts a message to a user.
+     * 
+     * @param id of target user (source user is from ID)
+     * @param o  JSON-ized message, similar to {"message": "text goes here"}
+     * @throws JsonProcessingException
+     */
     @PostMapping("/request-parking")
     @Transactional
     @ResponseBody
-    public String requestParking(@RequestBody JsonNode requestData, HttpSession session, Model model) throws JsonProcessingException {
+    public String requestParking(@RequestBody JsonNode requestData, HttpSession session, Model model)
+            throws JsonProcessingException {
 
         try {
-        
-        String name = requestData.get("name").asText();
-        String address = requestData.get("address").asText();
-        int cp = requestData.get("cp").asInt();
-        String city = requestData.get("city").asText();
-        String country = requestData.get("country").asText();
-        String telephone = requestData.get("telephone").asText();
-        String email = requestData.get("email").asText();
-        double feePerHour = requestData.get("feePerHour").asDouble();
-        String openingTime = requestData.get("openingTime").asText();
-        String closingTime = requestData.get("closingTime").asText();
-        Integer totalSpots = requestData.get("totalSpots").asInt();
 
+            String name = requestData.get("name").asText();
+            String address = requestData.get("address").asText();
+            int cp = requestData.get("cp").asInt();
+            String city = requestData.get("city").asText();
+            String country = requestData.get("country").asText();
+            String telephone = requestData.get("telephone").asText();
+            String email = requestData.get("email").asText();
+            double feePerHour = requestData.get("feePerHour").asDouble();
+            String openingTime = requestData.get("openingTime").asText();
+            String closingTime = requestData.get("closingTime").asText();
+            Integer totalSpots = requestData.get("totalSpots").asInt();
 
-        LocalTime parsedOpeningTime = LocalTime.parse(openingTime);
-        LocalTime parsedClosingTime = LocalTime.parse(closingTime);
+            LocalTime parsedOpeningTime = LocalTime.parse(openingTime);
+            LocalTime parsedClosingTime = LocalTime.parse(closingTime);
 
-        Request request = new Request();
-        request.setName(name);
-        request.setAddress(address);
-        request.setEnabled(true);
-        request.setCp(cp);
-        request.setCity(city);
-        request.setCountry(country);
-        request.setTelephone(Integer.parseInt(telephone));
-        request.setEmail(email);
-        request.setFeePerHour(feePerHour);
-        request.setLatitude(0.0); 
-        request.setLongitude(0.0); 
-        request.setOpeningTime(parsedOpeningTime);
-        request.setClosingTime(parsedClosingTime);
-        request.setState("Pendiente");
-        request.setType("Añadir");
-        request.setTotalSpots(totalSpots);
-        request.setEnterprise((Enterprise) session.getAttribute("u"));
-        
-        entityManager.persist(request);
-        entityManager.flush();
-        entityManager.clear();
+            Request request = new Request();
+            request.setName(name);
+            request.setAddress(address);
+            request.setEnabled(true);
+            request.setCp(cp);
+            request.setCity(city);
+            request.setCountry(country);
+            request.setTelephone(Integer.parseInt(telephone));
+            request.setEmail(email);
+            request.setFeePerHour(feePerHour);
+            request.setLatitude(0.0);
+            request.setLongitude(0.0);
+            request.setOpeningTime(parsedOpeningTime);
+            request.setClosingTime(parsedClosingTime);
+            request.setState("Pendiente");
+            request.setType("Añadir");
+            request.setTotalSpots(totalSpots);
+            request.setEnterprise((Enterprise) session.getAttribute("u"));
 
-        //Creamos y enviamos la notificación
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode messageNode= mapper.createObjectNode();
-        messageNode.put("text", "Nueva solicitud de parking de " + request.getEnterprise().getName() + " con id: " + request.getId()+ " en la dirección: " + request.getAddress());
-        messageNode.put("dateSent", LocalDateTime.now().toString());
-        messageNode.put("senderId", ((Enterprise) session.getAttribute("u")).getId());
+            entityManager.persist(request);
+            entityManager.flush();
+            entityManager.clear();
 
-        String messageJson = mapper.writeValueAsString(messageNode);
-        messagingTemplate.convertAndSend("/topic/admin", messageJson);
-        
-        model.addAttribute("success", "Solicitud realizada con éxito. Esperando respuesta del administrador.");
-        return "{\"result\": \"Solicitud realizada con éxito . Esperando respuesta del administrador.\"}";        
+            // Creamos y enviamos la notificación
+            ObjectMapper mapper = new ObjectMapper();
+            ObjectNode messageNode = mapper.createObjectNode();
+            messageNode.put("text", "Nueva solicitud de parking de " + request.getEnterprise().getName() + " con id: "
+                    + request.getId() + " en la dirección: " + request.getAddress());
+            messageNode.put("dateSent", LocalDateTime.now().toString());
+            messageNode.put("senderId", ((Enterprise) session.getAttribute("u")).getId());
+
+            String messageJson = mapper.writeValueAsString(messageNode);
+            messagingTemplate.convertAndSend("/topic/admin", messageJson);
+
+            model.addAttribute("success", "Solicitud realizada con éxito. Esperando respuesta del administrador.");
+            return "{\"result\": \"Solicitud realizada con éxito . Esperando respuesta del administrador.\"}";
         } catch (Exception e) {
-        model.addAttribute("error", "Hubo un error al guardar la solicitud: " +
-        e.getMessage());
-        return "redirect:/error";
+            model.addAttribute("error", "Hubo un error al guardar la solicitud: " +
+                    e.getMessage());
+            return "redirect:/error";
         }
 
-
-        /*A FALTA DE MÁS INFORMACIÓN*/
+        /* A FALTA DE MÁS INFORMACIÓN */
         // return enterpriseRequests(model);
     }
 
-    
 }

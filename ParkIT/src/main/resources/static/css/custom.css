@@ -169,3 +169,15 @@ footer a:hover{
 .leaflet-control-geocoder-result{
   width: 100% !important;
 }
+
+.estado-pendiente {
+  color: gray;
+}
+
+.estado-aceptado {
+  color: green;
+}
+
+.estado-rechazado {
+  color: red;
+}
