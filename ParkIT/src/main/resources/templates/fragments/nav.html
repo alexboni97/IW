@@ -96,8 +96,9 @@
                                 </a>
                             </li>
                             <li class="nav-link align-self-center me-4">
-                                <button type="button" class="btn btn-outline-primary btn-sm position-relative">
+                                <button type="button" id="btnDropdownNotis" class="btn btn-outline-primary btn-sm position-relative" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span id="nav-unread" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
+                                    <div class="dropdown-menu" id="menuDropdownNotis"></div>
                                 </button>
                             </li>
                             <li class="nav-link align-self-center">
@@ -150,6 +151,7 @@
                 </div>
             </div>
         </nav>
+        <div id="notification-container" class="noti-style"></div>
         <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="menuOffcanvas">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title">Menú</h5>
@@ -190,8 +192,9 @@
                             </a>
                         </li>
                         <li class="nav-link btn pt-1 align-self-center me-4">
-                            <button type="button" class="btn btn-outline-primary btn-sm position-relative">
+                            <button type="button" id="btnDropdownNotis" class="btn btn-outline-primary btn-sm position-relative" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span id="nav-unread" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
+                                <div class="dropdown-menu" id="menuDropdownNotis"></div>
                             </button>
                         </li>
                         <li class="nav-link btn pt-1 align-self-center">
