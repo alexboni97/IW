@@ -70,6 +70,3 @@ function mostrarNuevaNotificacion(msg) {
     }, 5000);
 }
 
-setInterval(() => {
-    // obtenerEventoAleatorio(); 
-}, 10000);

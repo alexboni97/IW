@@ -627,24 +627,6 @@ public class UserController {
 		return "error";
 	}
 
-	@GetMapping("messages")
-	
-	public List<Message> messages(Model model, HttpSession session) {
-		long userId = ((User) session.getAttribute("u")).getId();
-		User u = entityManager.find(User.class, userId);
-		Message m = new Message();
-		m.setSender(u);
-		m.setRecipient(u);
-		m.setDateSent(LocalDateTime.now());
-		m.setDateRead(LocalDateTime.now());
-		m.setText("Hola, soy un mensaje de prueba");
-		entityManager.persist(m);
-		entityManager.flush(); // to get Id before commit
-
-		List<Message> ms= new ArrayList<>();
-		ms.add(m);
-		return ms;
-	}
 	/**
 	 * Returns JSON with all received messages
 	 */
