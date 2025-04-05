@@ -620,6 +620,22 @@ public class UserController {
 		return "{\"status\":\"photo uploaded correctly\"}";
 	}
 
+	@PostMapping("/user/{id}/pic") 
+	@ResponseBody
+	public Map<String, String> updateProfilePic(@PathVariable long id, @RequestParam("file") MultipartFile file) {
+	// Guarda la imagen en el servidor
+    File f = localData.getFile("user", id + ".jpg");
+    try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(f))) {
+        stream.write(file.getBytes());
+    } catch (IOException e) {
+        throw new RuntimeException("Error al guardar la imagen", e);
+    }
+
+    // Devuelve la URL de la nueva imagen
+    String newPicUrl = "/user/" + id + "/pic";
+    return Map.of("newPicUrl", newPicUrl);
+	}
+
 	@GetMapping("error")
 	public String error(Model model, HttpSession session, HttpServletRequest request) {
 		model.addAttribute("sess", session);
