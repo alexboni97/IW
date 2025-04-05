@@ -195,9 +195,6 @@ public class EnterpriseController {
             entityManager.clear();
 
                // Enviar notificación a los administradores
-    List<User> admins = entityManager.createNamedQuery("User.findByRole", User.class)
-            .setParameter("role", User.Role.ADMIN)
-            .getResultList();
     // Obtener la empresa del usuario actual
     // y crear el mensaje de notificación
     // (suponiendo que la empresa está en la sesión)
@@ -206,11 +203,10 @@ public class EnterpriseController {
     Enterprise enterprise = (Enterprise) session.getAttribute("u");
     String notificationText = "Nueva solicitud de parking de la empresa " + enterprise.getName() +
             " con id: " + request.getId() + " en la dirección: " + request.getAddress();
-
-    for (User admin : admins) {
+       // ID del administrador al que se le envía el mensaje (puede ser null para enviar a todos los administradores)
         Message message = new Message();
-        message.setRecipient(admin);
         message.setSender(enterprise);
+        message.setRecipient(null); // null para enviar a todos los administradores
         message.setDateSent(LocalDateTime.now());
         message.setText(notificationText);
         entityManager.persist(message);
@@ -218,8 +214,7 @@ public class EnterpriseController {
         // Convertir el mensaje a JSON y enviarlo
         ObjectMapper mapper = new ObjectMapper();
         String json = mapper.writeValueAsString(message.toTransfer());
-        messagingTemplate.convertAndSend("/user/" + admin.getUsername() + "/queue/updates", json);
-    }
+        messagingTemplate.convertAndSend("/topic/admin", json);
 
             model.addAttribute("success", "Solicitud realizada con éxito. Esperando respuesta del administrador.");
             return "{\"result\": \"Solicitud realizada con éxito . Esperando respuesta del administrador.\"}";

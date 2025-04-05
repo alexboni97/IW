@@ -40,7 +40,7 @@ public class Message implements Transferable<Message.Transfer> {
 	private long id;
 	@ManyToOne
 	private User sender;
-	@ManyToOne
+	@ManyToOne(optional = true)
 	private User recipient;
 	private String text;
 	
@@ -73,7 +73,7 @@ public class Message implements Transferable<Message.Transfer> {
 
 	@Override
 	public Transfer toTransfer() {
-		return new Transfer(sender.getUsername(), recipient.getUsername(), 
+		return new Transfer(sender.getUsername(),  recipient == null ? null : recipient.getUsername(), 
 			DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(dateSent),
 			dateRead == null ? null : DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(dateRead),
 			text, id
