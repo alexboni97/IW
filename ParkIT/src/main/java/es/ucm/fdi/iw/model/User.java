@@ -19,7 +19,8 @@ import java.util.List;
 @NamedQueries({
     @NamedQuery(name="User.byUsername", query="SELECT u FROM User u WHERE u.username = :username AND u.enabled = TRUE"),
     @NamedQuery(name="User.hasUsername", query="SELECT COUNT(u) FROM User u WHERE u.username = :username"),
-    @NamedQuery(name="User.all", query="SELECT u FROM User u")
+    @NamedQuery(name="User.all", query="SELECT u FROM User u"),
+    @NamedQuery(name="User.findByRole", query="SELECT u FROM User u WHERE u.role = :role AND u.enabled = TRUE"),
 })
 @Table(name="IWUser")
 @Inheritance(strategy = InheritanceType.JOINED)
