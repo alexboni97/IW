@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
             ws.initialize(config.socketUrl, subs);
         }else if(config.enterprise) {
             let subs = ["/enterprise/"+config.userId+"/queue/updates"];
-            console.log("subscribing to enterprise updates")
+            console.log(config)
             ws.initialize(config.socketUrl, subs);
         }
         else {
@@ -214,7 +214,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let p = document.querySelector("#nav-unread");
         if (p && (config.admin || config.user)) {
-            console.log(config)
+            // console.log(config)
             go(`${config.rootUrl}/user/unread`, "GET").then(d => p.textContent = d.unread);
         }else if (p && (config.enterprise || config.admin)) {
             go(`${config.rootUrl}/enterprise/unread`, "GET").then(d => p.textContent = d.unread);

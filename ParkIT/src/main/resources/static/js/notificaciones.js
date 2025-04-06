@@ -1,20 +1,33 @@
 
+let dropdownMenu = document.getElementById('menuDropdownNotis');
 function renderNoti(msg) {
     const li = document.createElement('li');
             li.className = 'dropdown-item';
             li.innerHTML = `
-                        <strong>Mensaje de: ${msg.from}</strong><br>
+                        <strong>Notificación de: ${msg.from}</strong><br>
                         <small>${msg.text}</small><br>
                         <small class="text-muted">${new Date(msg.sent).toLocaleString('es-ES')}</small>
                     `;
     console.log("rendering notification: ", msg);
+    li.addEventListener('click', () => {
+        li.remove();
+        if(dropdownMenu.children.length === 0) {
+            dropdownMenu.appendChild(sinNotis);
+        }
+    });
+    li.addEventListener('mouseover', () => {
+        li.style.backgroundColor = '#f0f0f0'; // Cambia el color de fondo al pasar el mouse
+    });
+    li.addEventListener('mouseout', () => {
+        li.style.backgroundColor = ''; // Restaura el color de fondo al salir el mouse
+    });
+
     return li;
 }
 
-let dropdownMenu = document.getElementById('menuDropdownNotis');
 const sinNotis = document.createElement('li');
 sinNotis.className = 'dropdown-item text-muted';
-sinNotis.textContent = 'No hay mensajes';
+sinNotis.textContent = 'No hay notificaciones';
 if(config.user){
     go(config.rootUrl + "/user/received", "GET").then(ms =>{
         if(ms.length === 0) {
