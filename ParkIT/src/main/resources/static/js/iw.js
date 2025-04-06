@@ -196,12 +196,28 @@ function postImage(img, endpoint, name, filename) {
  */
 document.addEventListener("DOMContentLoaded", () => {
     if (config.socketUrl) {
-        let subs = config.admin ? ["/topic/admin", "/user/queue/updates"] : ["/user/queue/updates"]
-        ws.initialize(config.socketUrl, subs);
+        if(config.admin) {
+            let subs = ["/topic/admin", "/user/queue/updates","/enterprise/queue/updates"];
+            ws.initialize(config.socketUrl, subs);
+        }else if(config.enterprise) {
+            let subs = ["/enterprise/"+config.userId+"/queue/updates"];
+            console.log("subscribing to enterprise updates")
+            ws.initialize(config.socketUrl, subs);
+        }
+        else {
+            let subs = ["/user/queue/updates"];
+            ws.initialize(config.socketUrl, subs);
+        }
+
+        // let subs = config.admin ? ["/topic/admin", "/user/queue/updates","/enterprise/queue/updates"] : ["/user/queue/updates"]
+        // ws.initialize(config.socketUrl, subs);
 
         let p = document.querySelector("#nav-unread");
-        if (p) {
+        if (p && (config.admin || config.user)) {
+            console.log(config)
             go(`${config.rootUrl}/user/unread`, "GET").then(d => p.textContent = d.unread);
+        }else if (p && (config.enterprise || config.admin)) {
+            go(`${config.rootUrl}/enterprise/unread`, "GET").then(d => p.textContent = d.unread);
         }
     } else {
         console.log("Not opening websocket: missing config", config)

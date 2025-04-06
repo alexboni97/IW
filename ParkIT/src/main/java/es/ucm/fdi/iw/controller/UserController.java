@@ -334,6 +334,26 @@ public class UserController {
 		else
 		return "login";
 	}
+	
+
+	private void notificarReserva(User user, Reserve reserve, Parking parking) {
+		Message m = new Message();
+		Enterprise enterprise = parking.getEnterprise();
+		m.setRecipient(enterprise);
+		m.setSender(user);
+		m.setDateSent(LocalDateTime.now());
+		m.setText("Se ha realizado una reserva en " + parking.getName() + " desde " + reserve.getStartDate() + " a "
+				+ reserve.getEndDate() + " de " + reserve.getStartTime() + " a " + reserve.getEndTime());
+		entityManager.persist(m);
+		entityManager.flush(); // to get Id before commit
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			String json = mapper.writeValueAsString(m.toTransfer());
+			messagingTemplate.convertAndSend("/enterprise/" + enterprise.getId() + "/queue/updates", json);
+		} catch (JsonProcessingException e) {
+			log.error("Error al enviar la notificación de reserva", e);
+		}
+	}
 
 	@PostMapping("/confirm-reserve")
 	@Transactional
@@ -350,6 +370,7 @@ public class UserController {
 			RedirectAttributes redirectAttributes) {
 
 		User user = (User) model.getAttribute("u");
+		User target = entityManager.find(User.class, user.getId());
 		if (!(user instanceof Parker parker)) {
 			redirectAttributes.addFlashAttribute("error", "No eres un parker válido.");
 			return "redirect:/error";
@@ -409,6 +430,8 @@ public class UserController {
 			double wallet=user.getWallet();
 			wallet-=totalPrice;
 			user.setWallet(wallet);
+			target.setWallet(wallet);
+			notificarReserva(target, reserve, spot.getParking());
 			model.addAttribute("success", "Reserva realizada con éxito");
 		} catch (Exception e) {
 			model.addAttribute("error", "Hubo un error al guardar la reserva: " + e.getMessage());

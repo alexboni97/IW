@@ -12,22 +12,37 @@ function renderNoti(msg) {
 }
 
 let dropdownMenu = document.getElementById('menuDropdownNotis');
-go(config.rootUrl + "/user/received", "GET").then(ms =>{
-    if(ms.length === 0) {
-        const li = document.createElement('li');
-        li.className = 'dropdown-item text-muted';
-        li.textContent = 'No hay mensajes';
-        dropdownMenu.appendChild(li);
-    }else {
-    ms.forEach(m => dropdownMenu.appendChild(renderNoti(m)))
-    }
+const sinNotis = document.createElement('li');
+sinNotis.className = 'dropdown-item text-muted';
+sinNotis.textContent = 'No hay mensajes';
+if(config.user){
+    go(config.rootUrl + "/user/received", "GET").then(ms =>{
+        if(ms.length === 0) {
+            dropdownMenu.appendChild(sinNotis);
+        }else {
+        ms.forEach(m => dropdownMenu.appendChild(renderNoti(m)))
+        }
+    
+    });
+}else if(config.enterprise){
+    go(config.rootUrl + "/enterprise/received", "GET").then(ms =>{
+        if(ms.length === 0) {
+            dropdownMenu.appendChild(sinNotis);
+        }else {
+        ms.forEach(m => dropdownMenu.appendChild(renderNoti(m)))
+        }
+    
+    });
+}
 
-});
 // y aquí pinta mensajes según van llegando
 if (ws.receive) {
     const oldFn = ws.receive; // guarda referencia a manejador anterior
     ws.receive = (m) => {
         oldFn(m); // llama al manejador anterior
+        if(dropdownMenu.contains(sinNotis)) {
+            dropdownMenu.removeChild(sinNotis);
+        }
         dropdownMenu.appendChild(renderNoti(m));
         mostrarNuevaNotificacion(m);
     }

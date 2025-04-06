@@ -6,6 +6,8 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,6 +33,7 @@ import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Parker;
 import es.ucm.fdi.iw.model.Request;
 import es.ucm.fdi.iw.model.Reserve;
+import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.Parking;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpSession;
@@ -228,4 +231,31 @@ public class EnterpriseController {
         // return enterpriseRequests(model);
     }
 
+    /**
+	 * Returns JSON with all received messages
+	 */
+	@GetMapping(path = "received", produces = "application/json")
+	@Transactional // para no recibir resultados inconsistentes
+	@ResponseBody // para indicar que no devuelve vista, sino un objeto (jsonizado)
+	public List<Message.Transfer> retrieveMessages(HttpSession session) {
+		long userId = ((User) session.getAttribute("u")).getId();
+		User u = entityManager.find(User.class, userId);
+		log.info("Generating message list for user {} ({} messages)",
+				u.getUsername(), u.getReceived().size());
+		return u.getReceived().stream().map(Transferable::toTransfer).collect(Collectors.toList());
+	}
+    
+    /**
+	 * Returns JSON with count of unread messages
+	 */
+	@GetMapping(path = "unread", produces = "application/json")
+	@ResponseBody
+	public String checkUnread(HttpSession session) {
+		long userId = ((User) session.getAttribute("u")).getId();
+		long unread = entityManager.createNamedQuery("Message.countUnread", Long.class)
+				.setParameter("userId", userId)
+				.getSingleResult();
+		session.setAttribute("unread", unread);
+		return "{\"unread\": " + unread + "}";
+	}
 }

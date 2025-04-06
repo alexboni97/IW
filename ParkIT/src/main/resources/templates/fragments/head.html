@@ -19,9 +19,13 @@
                     value: "[[${_csrf.token}]]"
                 },
                 admin: "[[${u != null && u.hasRole('ADMIN')} ? true : false]]",
+                user: "[[${u != null && u.hasRole('USER')} ? true : false]]",
+                enterprise: "[[${u != null && u.hasRole('ENTERPRISE')} ? true : false]]",
                 userId: +"[[${u != null} ? ${u.id} : -1]]"
             };
             config.admin = config.admin == "true"; // ensure boolean
+            config.user = config.user == "true"; // ensure boolean
+            config.enterprise = config.enterprise == "true"; // ensure boolean
         </script>
     </th:block>
 </head>
