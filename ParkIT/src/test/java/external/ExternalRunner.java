@@ -23,4 +23,8 @@ class ExternalRunner {
     // Karate testAddParking(){
     //     return Karate.run("add_request").relativeTo(getClass());
     // }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 11d8780f22df0370ac384401be302f7be92d0047
