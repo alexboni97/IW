@@ -12,6 +12,7 @@ function fn() {
     var config = {
         env: env,
         myVarName: 'someValue',
+        // baseUrl: 'https://vm023.containers.fdi.ucm.es'
         baseUrl: 'http://localhost:8080'
     }
 
