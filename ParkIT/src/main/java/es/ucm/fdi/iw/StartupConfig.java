@@ -146,6 +146,9 @@ public class StartupConfig {
         // parking2.setId(2);
         parking2.setName("Parking 2");
         parking2.setAddress("Calle de la fresa");
+        // parking2.setCity("Madrid");
+        // parking2.setCountry("España");
+        // parking2.setCp(28888);
         parking2.setTelephone(123456789);
         parking2.setEmail("parking2@gmail.com");
         parking2.setEnterprise(e);
@@ -355,6 +358,27 @@ public class StartupConfig {
         req4.setCountry("Paula");
         req4.setEnterprise(e);
         entityManager.persist(req4);
+
+        // Request req5 = new Request();
+        // // parking2.setId(2);
+        // req5.setName("Parking 2");
+        // req5.setAddress("Calle de la fresa");
+        // req5.setCity("Madrid");
+        // req5.setCountry("España");
+        // req5.setCp(28888);
+        // req5.setTelephone(123456789);
+        // req5.setEmail("parking2@gmail.com");
+        // req5.setEnterprise(e);
+        // req5.setOpeningTime(LocalTime.parse("08:00"));
+        // req5.setClosingTime(LocalTime.parse("20:00"));
+        // req5.setFeePerHour(1.5);
+        // req5.setEnabled(true);
+        // req5.setLatitude(42.416775);
+        // req5.setLongitude(-5.703790);
+        // req5.setIdParking(parking2.getId());
+        // req5.setTotalSpots(parking2.getSpots().size()); // TODO
+        // req5.setType("ELIMINAR");
+        // entityManager.persist(req5);
 
         /*
          * TODO

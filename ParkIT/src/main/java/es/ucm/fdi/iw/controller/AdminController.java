@@ -76,7 +76,7 @@ public class AdminController {
     @PostMapping("/guardarParking/{id}")
     @ResponseBody
     @Transactional
-    public ResponseEntity<String> guardarParking(@PathVariable Long id) {
+    public ResponseEntity<String> guardarParking(@PathVariable Long id, @RequestParam Double latitud, @RequestParam Double longitud) {
         try {
             Request request = entityManager.createNamedQuery("Request.findById", Request.class)
                     .setParameter("id", id)
@@ -98,8 +98,8 @@ public class AdminController {
             p.setClosingTime(request.getClosingTime());
             p.setFeePerHour(request.getFeePerHour());
             p.setEnabled(true);
-            p.setLatitude(request.getLatitude());
-            p.setLongitude(request.getLongitude());
+            p.setLatitude(latitud);
+            p.setLongitude(longitud);
             p.setWidth(20.0); // Example value
             p.setHeight(10.0); // Example value
             p.setEntryX(1.0); // Example value

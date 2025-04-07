@@ -70,7 +70,7 @@ public class Request implements Transferable<Request.Transfer> {
     private double latitude;
 
     @Nullable
-    private int idParking;
+    private long idParking;
 
     private int totalSpots;
 
@@ -104,7 +104,7 @@ public class Request implements Transferable<Request.Transfer> {
         private double latitude;
 		private long enterpriseId;
 		private int totalSpots;
-        private int idParking;
+        private long idParking;
         private String state;
 
 

@@ -45,6 +45,8 @@
                                         <p><strong>Fecha de apertura:</strong> <span th:text="${request.openingTime}">Fecha de apertura</span></p>
                                         <p><strong>Fecha de cierre:</strong> <span th:text="${request.closingTime}">Fecha de cierre</span></p>
                                         <p><strong>Precio/h:</strong> <span th:text="${request.feePerHour}">Precio/h</span></p>
+                                        <p><strong>Latitud:</strong> <span th:id="'latitud-' + ${request.id}"></span></p>
+                                        <p><strong>Longitud:</strong> <span th:id="'longitud-' + ${request.id}"></span></p>
                                         <div class="error"
                                           th:id="'error-' + ${request.id}">
                                         </div>
@@ -61,102 +63,7 @@
             </div>
         </div>
     </div>
-    
-
-    <script>
-      function guardarParking(button) {
-        let id = button.getAttribute("data-id");
-
-        fetch("/admin/guardarParking/" + id, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((response) => {
-            if (response.ok) {
-              let successMessage = document.createElement("div");
-              successMessage.className = "alert alert-success";
-              successMessage.textContent = "Parking guardado con éxito";
-              let container = document.querySelector(
-                "header + .container-fluid"
-              );
-              container.prepend(successMessage);
-
-              setTimeout(() => {
-                successMessage.remove();
-              }, 3000);
-
-              let accordionItem = button.closest(".accordion-item");
-              if (accordionItem) {
-                accordionItem.remove();
-              }
-            } else {
-              response.text().then((errorMessage) => {
-                let error = document.createElement("div");
-                error.className = "alert alert-danger";
-                error.textContent =
-                  "Error al guardar el parking: " + errorMessage;
-                let container = document.querySelector(
-                  "header + .container-fluid"
-                );
-                container.prepend(error);
-
-                setTimeout(() => {
-                  error.remove();
-                }, 3000);
-              });
-            }
-          })
-          .catch((error) => {
-            console.error("Error al guardar el parking", error);
-          });
-      }
-
-      function eliminarRequest(button) {
-        let id = button.getAttribute("data-id");
-
-        fetch("/admin/eliminarRequest/" + id, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }).then((response) => {
-          if (response.ok) {
-            let successMessage = document.createElement("div");
-            successMessage.className = "alert alert-success";
-            successMessage.textContent = "Request eliminado con éxito";
-            let container = document.querySelector("header + .container-fluid");
-            container.prepend(successMessage);
-
-            setTimeout(() => {
-              successMessage.remove();
-            }, 3000);
-
-            let accordionItem = button.closest(".accordion-item");
-            if (accordionItem) {
-              accordionItem.remove();
-            }
-          } else {
-            response.text().then((errorMessage) => {
-              let error = document.createElement("div");
-              error.className = "alert alert-danger";
-              error.textContent =
-                "Error al eliminar el request: " + errorMessage;
-              let container = document.querySelector(
-                "header + .container-fluid"
-              );
-              container.prepend(error);
-
-              setTimeout(() => {
-                error.remove();
-              }, 300000);
-            });
-          }
-        });
-      }
-    </script>
-    <script th:src="@{/js/mapa-request-add.js}"></script>
+    <script th:src="@{/js/mapa-request.js}"></script>
     <footer th:replace="~{fragments/footer.html :: footer}"></footer>
   </body>
 </html>

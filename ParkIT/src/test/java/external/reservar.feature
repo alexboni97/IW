@@ -9,20 +9,20 @@ Feature: Reservar en ParkIT
     Given driver baseUrl
     And call read('login.feature@login_b')  
     And delay(5000)
-    Then waitForUrl(baseUrl + '/user')      
+    Then waitForUrl(baseUrl + '/user/')      
 
     # Paso 2: Ir al mapa 
-    Given driver baseUrl + '/user/2'  
+    Given driver baseUrl + '/user/976'  
     And delay(2000)      
     When click("{a}Buscar")
     Then waitForUrl(baseUrl + '/user/map')
     And delay(2000)
 
     # Paso 3: Rellenar el formulario de búsqueda
-    And input('#address', 'Calle de la piruleta')
-    And input('#latitude', '')
-    And input('#longitude', '')
-    And input('#range', '')
+    
+    And input('#latitude', '40.416775')
+    And input('#longitude', '-3.703790')
+    And input('#rangeValue', '5000')
     And input('#startDate', '25062025')
     And input('#startTime', '2304')
     And input('#endDate', '26062025')
@@ -33,11 +33,11 @@ Feature: Reservar en ParkIT
     Then waitForUrl(baseUrl + '/user/map')
 
     # Paso 4: Reservar el parking
-    And delay(2000)  
-    When click("{a}Reservar")
-    Then waitForUrl(baseUrl + '/user/reserve/1')  
+    And delay(2000) 
+    And waitFor("a[parkingId='1027']")
+    When click("a[parkingId='1027']")
+    Then waitForUrl(baseUrl + '/user/reserve/1027')  
     # Seleccionamos uno de los vehiculos que se ofrecen, por ejemplo el Honda
-    And waitFor('#vehiculo')
-    And select('#vehiculo', '1')
+    And select('#vehicleId', '1125')
     When submit().click("{button}Reservar")
     Then waitForUrl(baseUrl + '/user/my-reserves')
