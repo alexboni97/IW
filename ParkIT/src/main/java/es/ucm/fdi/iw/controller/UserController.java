@@ -430,7 +430,8 @@ public class UserController {
 			double wallet=user.getWallet();
 			wallet-=totalPrice;
 			user.setWallet(wallet);
-			target.setWallet(wallet);
+			User userBD=entityManager.find(User.class, user.getId());
+			userBD.setWallet(wallet);
 			notificarReserva(target, reserve, spot.getParking());
 			model.addAttribute("success", "Reserva realizada con éxito");
 		} catch (Exception e) {
