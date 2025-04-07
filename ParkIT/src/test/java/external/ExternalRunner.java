@@ -14,13 +14,13 @@ class ExternalRunner {
     //     return Karate.run("ws").relativeTo(getClass());
     // }  
 
-    // @Karate.Test
-    // Karate testReservar(){
-    //     return Karate.run("reservar").relativeTo(getClass());
-    // }
-
     @Karate.Test
-    Karate testAddParking(){
-        return Karate.run("add_request").relativeTo(getClass());
+    Karate testReservar(){
+        return Karate.run("reservar").relativeTo(getClass());
     }
+
+    // @Karate.Test
+    // Karate testAddParking(){
+    //     return Karate.run("add_request").relativeTo(getClass());
+    // }
 }
