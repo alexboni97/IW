@@ -16,10 +16,12 @@
         <div class="card shadow border-0 rounded-4 mb-5 mt-4 col col-5 ">
             <div class="card-body p-4">
                 <ul class="list-group mt-3">
-                    <li class="list-group-item active text-center" aria-current="true">Información</li>
-                    <li class="list-group-item">Plazas: 4000</li>
-                    <li class="list-group-item">Ingresos: 1000000000000</li>
-                    <li class="list-group-item">Y otros gráficos</li>
+                    <li class="list-group-item active text-center" aria-current="true"> Información de <span th:text="${user.name}"> NombreEmpresa</span></li>
+
+                    <li class="list-group-item">Numero de Parkings: <span th:text="${user.totalParkings}"> numParkings</span> </li>
+                    <li class="list-group-item">Peticiones pendientes: <span th:text="${user.pendingRequests}"> peticiones pendientes</span> </li>
+                    <li class="list-group-item">Número de plazas: <span th:text="${user.totalSpots}"> numero plazas de la empresa</span> </li>
+                    <li class="list-group-item">Saldo: <span th:text="${user.wallet}"> Saldo de la empresa</span> </li>
                 </ul>          
             </div>
         </div>    

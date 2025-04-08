@@ -78,8 +78,9 @@ public class EnterpriseController {
 
     @GetMapping("{id}")
     public String index(@PathVariable long id, Model model, HttpSession session) {
-        User target = entityManager.find(User.class, id);
-        model.addAttribute("user", target);
+        User target = (Enterprise) entityManager.find(Enterprise.class, id);
+
+        model.addAttribute("user", target.toTransfer());
         return "enterprise-info";
     }
 

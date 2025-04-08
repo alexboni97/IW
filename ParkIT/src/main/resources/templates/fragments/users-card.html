@@ -14,9 +14,13 @@
                     <img class="img-thumbnail" id = "profilePic" th:src="@{/user/{id}/pic(id=${u.id})}">
                 </div>
                 <div class="bg-light p-4 rounded-4">
-                    <div class="text-primary fw-bolder mb-2">Empresa/Usuario</div>
-                    <div class="small fw-bolder">Correo</div>
-                    <div class="small text-muted">ciudad</div>
+                    <div class="text-primary fw-bolder mb-2"><span th:text="${user.username}"> Nombre de usuario empresa/usuario</span></div>
+                    <div th:if="${u.hasRole('ENTERPRISE')}" class="small fw-bolder"><span th:text="${user.name}"> Nombre empresa</span></div>
+                    <div class="small fw-bolder"><span th:text="${user.email}"> Correo de la empresa/usuario</span></div>
+                    <div th:if="${u.hasRole('USER')}" class="small fw-bolder"><span th:text="${user.firstName}"> Nombre del usuario</span>
+                      <span th:text="${user.secondName}"> Apellido del usuario</span></div>
+
+
                 </div>
             </div>
 
