@@ -107,15 +107,16 @@ public class UserController {
 		}
 	}
 
-	private boolean isParker(HttpSession session){
+	private boolean isParker(HttpSession session) {
 		Parker parker = (Parker) session.getAttribute("u");
-		return parker!=null;
+		return parker != null;
 	}
-	
+
 	@GetMapping("/buscar-parking")
 	public String buscarParking(Model model, HttpSession session) {
-		if(isParker(session)){
-			List<Parking> parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
+		if (isParker(session)) {
+			List<Parking> parkings = entityManager.createNamedQuery("Parking.findByEnabled", Parking.class)
+					.setParameter("enabled", true).getResultList();
 
 			List<Parking.Transfer> transferParkings = new ArrayList<>();
 
@@ -125,7 +126,7 @@ public class UserController {
 
 			model.addAttribute("parkings", transferParkings);
 			model.addAttribute("radius", 3000);
-			
+
 			return "search";
 		} else {
 			return "login";
@@ -143,16 +144,17 @@ public class UserController {
 			HttpSession session,
 			Model model) {
 
-		if(isParker(session)){
-			List<Parking> parkings = entityManager.createNamedQuery("Parking.findAll", Parking.class).getResultList();
+		if (isParker(session)) {
+			List<Parking> parkings = entityManager.createNamedQuery("Parking.findByEnabled", Parking.class)
+					.setParameter("enabled", true).getResultList();
 
-
-			LocalDate today=LocalDate.now();
-			LocalTime timeNow=LocalTime.now();
+			LocalDate today = LocalDate.now();
+			LocalTime timeNow = LocalTime.now();
 
 			List<Transfer> transferParkings = new ArrayList<>();
 
-			if(startDate!=null && endDate!=null && startTime!=null &&endTime!=null && (startDate.isAfter(today)||startDate.isEqual(today)&&startTime.isAfter(timeNow))){
+			if (startDate != null && endDate != null && startTime != null && endTime != null
+					&& (startDate.isAfter(today) || startDate.isEqual(today) && startTime.isAfter(timeNow))) {
 				for (Parking p : parkings) {
 					List<Spot> spots = p.getSpots();
 					List<Reserve> reserves = new ArrayList<>();
@@ -173,7 +175,7 @@ public class UserController {
 							}
 						}
 					}
-		
+
 				}
 			}
 
@@ -181,7 +183,7 @@ public class UserController {
 			for (Transfer p : transferParkings) {
 				System.out.println(p.getName());
 			}
-	
+
 			model.addAttribute("parkings", transferParkings);
 			model.addAttribute("latitude", latitude);
 			model.addAttribute("longitude", longitude);
@@ -190,7 +192,7 @@ public class UserController {
 			model.addAttribute("startTime", startTime);
 			model.addAttribute("endTime", endTime);
 			model.addAttribute("radius", radius);
-	
+
 			return "map";
 		} else {
 			return "login";
@@ -296,20 +298,19 @@ public class UserController {
 
 	@GetMapping("/add-vehicle")
 	public String addVehicle(
-		Model model,
-		HttpSession session,
-		@RequestParam(required = false) String parkingId,
-		@RequestParam(required = false) Integer selectedSlot,
-		@RequestParam(required = false) Long vehicleId,
-		@RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate,
-		@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime,
-		@RequestParam String brand,
-		@RequestParam String modelo,
-		@RequestParam String plate,
-		@RequestParam String size,
-		RedirectAttributes redirectAttributes
-	) {
-		Long id= Long.parseLong(parkingId);
+			Model model,
+			HttpSession session,
+			@RequestParam(required = false) String parkingId,
+			@RequestParam(required = false) Integer selectedSlot,
+			@RequestParam(required = false) Long vehicleId,
+			@RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate,
+			@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime,
+			@RequestParam String brand,
+			@RequestParam String modelo,
+			@RequestParam String plate,
+			@RequestParam String size,
+			RedirectAttributes redirectAttributes) {
+		Long id = Long.parseLong(parkingId);
 		// redirectAttributes.addAttribute("selectedSlot", selectedSlot);
 		// redirectAttributes.addAttribute("startDate", startDate);
 		// redirectAttributes.addAttribute("endDate", endDate);
@@ -317,10 +318,10 @@ public class UserController {
 		// redirectAttributes.addAttribute("endTime", endTime);
 		// redirectAttributes.addAttribute("id", id);
 		// redirectAttributes.addAttribute("vehicleId", vehicleId);
-		if(isParker(session)){
+		if (isParker(session)) {
 			Parker parker = (Parker) session.getAttribute("u");
-			List<Vehicle>vehicles= parker.getVehicles();
-			Vehicle v= new Vehicle();
+			List<Vehicle> vehicles = parker.getVehicles();
+			Vehicle v = new Vehicle();
 			v.setBrand(brand);
 			v.setEnabled(true);
 			v.setModel(modelo);
@@ -330,11 +331,9 @@ public class UserController {
 			vehicles.add(v);
 			parker.setVehicles(vehicles);
 			return reserve(model, session, id, selectedSlot, vehicleId, startDate, endDate, startTime, endTime);
-		}
-		else
-		return "login";
+		} else
+			return "login";
 	}
-	
 
 	private void notificarReserva(User user, Reserve reserve, Parking parking) {
 		Message m = new Message();
@@ -427,10 +426,10 @@ public class UserController {
 			entityManager.persist(reserve);
 			entityManager.flush();
 			entityManager.clear();
-			double wallet=user.getWallet();
-			wallet-=totalPrice;
+			double wallet = user.getWallet();
+			wallet -= totalPrice;
 			user.setWallet(wallet);
-			User userBD=entityManager.find(User.class, user.getId());
+			User userBD = entityManager.find(User.class, user.getId());
 			userBD.setWallet(wallet);
 			notificarReserva(target, reserve, spot.getParking());
 			model.addAttribute("success", "Reserva realizada con éxito");
@@ -644,20 +643,20 @@ public class UserController {
 		return "{\"status\":\"photo uploaded correctly\"}";
 	}
 
-	@PostMapping("/user/{id}/pic") 
+	@PostMapping("/user/{id}/pic")
 	@ResponseBody
 	public Map<String, String> updateProfilePic(@PathVariable long id, @RequestParam("file") MultipartFile file) {
-	// Guarda la imagen en el servidor
-    File f = localData.getFile("user", id + ".jpg");
-    try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(f))) {
-        stream.write(file.getBytes());
-    } catch (IOException e) {
-        throw new RuntimeException("Error al guardar la imagen", e);
-    }
+		// Guarda la imagen en el servidor
+		File f = localData.getFile("user", id + ".jpg");
+		try (BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(f))) {
+			stream.write(file.getBytes());
+		} catch (IOException e) {
+			throw new RuntimeException("Error al guardar la imagen", e);
+		}
 
-    // Devuelve la URL de la nueva imagen
-    String newPicUrl = "/user/" + id + "/pic";
-    return Map.of("newPicUrl", newPicUrl);
+		// Devuelve la URL de la nueva imagen
+		String newPicUrl = "/user/" + id + "/pic";
+		return Map.of("newPicUrl", newPicUrl);
 	}
 
 	@GetMapping("error")
