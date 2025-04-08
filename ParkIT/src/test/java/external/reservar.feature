@@ -5,21 +5,13 @@ Feature: Reservar en ParkIT
     * configure driver = { type: 'chrome' }  # Configuramos Chrome como driver
 
   Scenario: Flujo completo de reserva de parking como usuario
-    # Paso 1: Iniciar sesión reutilizando login_a
+    # Paso 1: Iniciar sesión reutilizando login_b
     Given driver baseUrl
     And call read('login.feature@login_b')  
     And delay(5000)
-    Then waitForUrl(baseUrl + '/user/')      
-
-    # Paso 2: Ir al mapa 
-    Given driver baseUrl + '/user/976'  
-    And delay(2000)      
-    When click("{a}Buscar")
     Then waitForUrl(baseUrl + '/user/map')
-    And delay(2000)
 
     # Paso 3: Rellenar el formulario de búsqueda
-    
     And input('#latitude', '40.416775')
     And input('#longitude', '-3.703790')
     And input('#rangeValue', '5000')

@@ -24,7 +24,7 @@ Scenario: login malo en github
     And input('#username', 'b')
     And input('#password', 'aa')
     When submit().click(".form-signin button")
-    Then waitForUrl(baseUrl + '/user/976')
+    Then waitForUrl(baseUrl + '/user/map')
 
   @login_a
   Scenario: login correcto como a
