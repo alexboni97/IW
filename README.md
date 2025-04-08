@@ -9,10 +9,11 @@ ParkIT es una aplicación web (principalmente para dispositivos móviles) que ay
 - [Instalación](#item2)
 - [Uso](#item3)
 - [Tecnologías Utilizadas](#item4)
-- [Material externo](#item5)
-- [Contribución](#item6)
-- [Contribuidores](#item7)
-- [Licencia](#item8)
+- [Despliegue](#item5)
+- [Material externo](#item6)
+- [Contribución](#item7)
+- [Contribuidores](#item8)
+- [Licencia](#item9)
 
 <a name="item1"></a>
 ## 🖥️ Diseño de la Aplicación
@@ -97,7 +98,7 @@ La aplicación cuenta con varias vistas que dependiendo de si el usuario es part
 
 
 <a name="item2"></a>
-## 🚀 Instalación
+## ⚙️ Instalación
 
 1. Clonar el repositorio:
    ```bash
@@ -107,22 +108,27 @@ La aplicación cuenta con varias vistas que dependiendo de si el usuario es part
    ```bash
    cd IW/ParkIT
    ```
-3. Instalar dependencias:
+3. 📦Instalar dependencias:
    ```bash
    mvn install
    ```
-4. Ejecutar la aplicación:
+4. ▶️Ejecutar la aplicación:
    ```bash
    mvn spring-boot:run  # Para backend
+   ```
+5. 🧪Ejecutar prueba reserva:
+   ```bash
+   mvn test -Dtest=ExternalRunner
    ```
 <a name="item3"></a>
 ## 📌 Uso
 
-1. Registrarse o iniciar sesión.
-2. Buscar una plaza de aparcamiento disponible en el mapa interactivo.
-3. Reservar la plaza y dirigirse a la ubicación guiado por la aplicación.
-4. Ver el historial de reservas y gestionar el saldo disponible.
-5. Empresas pueden agregar y gestionar plazas de aparcamiento.
+1. Iniciar sesión.
+2. Buscar un aparcamiento disponible en el mapa interactivo.
+3. Reservar una plaza del parking para unas fechas concretas.
+4. Ver reservas y gestionarlas.
+5. Empresas pueden solicitar agregar y eliminar plazas de aparcamiento.
+6. El Admin acepta las solicitudes de añadir o eliminar aparcamientos que hace la empresa.
 
 <a name="item4"></a>
 ## 🛠 Tecnologías Utilizadas
@@ -143,10 +149,21 @@ A continuación, se muestra la estructura de la base de datos utilizada en el pr
 
 ### Notificaciones
 ![WebSockets](https://img.shields.io/badge/websockets-%23009688.svg?style=for-the-badge&logo=websocket&logoColor=white)
+#### 🔹 **/enterprise/{id}/queue/updates:**
+> Canal por donde le llegan a la empresa las notificaciones de confirmación de la nueva reserva desde el usuario o confirmación de la aceptación de la solicitud del nuevo aparcamiento.
+#### 🔹 **/topic/admin:** 
+> Canal por donde le llegan al Admin las notificaciones de la nueva solicitud del nuevo aparcamiento de una empresa.
+
 ### Mapas Interactivos
-![Google Maps](https://img.shields.io/badge/Google%20Maps-%234285F4.svg?style=for-the-badge&logo=googlemaps&logoColor=white)
+![Leaflet](https://img.shields.io/badge/Leaflet-%234285F4.svg?style=for-the-badge&logo=Leafleft&logoColor=white)
 
 <a name="item5"></a>
+## 🚀 Despliegue
+>[!IMPORTANT]
+> Debes estar conectado a la VPN de la UCM.
+>> **URL:** [`vm023.containers.fdi.ucm.es`](https://vm023.containers.fdi.ucm.es/)
+
+<a name="item6"></a>
 ## 🔎 Material externo
 
 En esta sección hemos incluído enlaces a material externo sobre el que nos hemos apoyado para realizar algunas partes de la web ParkIT 🚘:
@@ -157,14 +174,14 @@ En esta sección hemos incluído enlaces a material externo sobre el que nos hem
 4. Mapa interactivo y Buscador: libreria externa para la reenderizacion de mapas interactivos [Leaflet](https://leafletjs.com/)
 5. ChatGpt: uso para consulta de funcionalidades de Java, Thymeleaf, Spring-Boot, Html, Css, etc... [ChatGpt](https://chatgpt.com/)
 
-<a name="item6"></a>
+<a name="item7"></a>
 ## 🤝 Contribución
 
 1. Haz un fork del repositorio.
 2. Crea una rama nueva (`git checkout -b feature-nueva`).
 3. Realiza tus cambios y haz un commit (`git commit -m 'Agrega nueva funcionalidad'`).
 4. Envía un pull request.
-<a name="item7"></a>
+<a name="item8"></a>
 ## 👥 Contribuidores
 
 Agradecemos a todas las personas que han contribuido a este proyecto:
@@ -175,7 +192,7 @@ Agradecemos a todas las personas que han contribuido a este proyecto:
 - [Adrián Rodríguez Margallo](https://github.com/adrizz8)
 - [Sergio Sánchez Carrasco](https://github.com/WalterDeRacagua) 
 
-<a name="item8"></a>
+<a name="item9"></a>
 ## 📜 Licencia
 
 Este proyecto está bajo la licencia [Apache License](LICENSE).
