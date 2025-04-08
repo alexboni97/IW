@@ -3,6 +3,7 @@
 
 <head>
     <th:block th:replace="~{fragments/head.html :: header}" />
+    <th:block th:replace="~{fragments/leaflet.html :: head}" />
     <title>Mis solicitudes</title>
 </head>
 
@@ -74,7 +75,7 @@
             </div>
         </div>
     </div>
-    <script th:src="@{/js/mapa-request-add.js}"></script>
+    <script th:src="@{/js/mapa-request.js}"></script>
     <footer th:replace="~{fragments/footer.html :: footer}"></footer>
 </body>
 

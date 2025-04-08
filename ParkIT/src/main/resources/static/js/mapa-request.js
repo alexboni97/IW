@@ -142,6 +142,7 @@ function guardarParking(button) {
     headers: {
       "Content-Type": "application/json",
     },
+    credentials: "include",
   })
     .then((response) => {
       if (response.ok) {

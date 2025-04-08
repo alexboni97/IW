@@ -1,5 +1,6 @@
 package es.ucm.fdi.iw.controller;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,10 +24,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import es.ucm.fdi.iw.model.Enterprise;
+import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Parking;
 import es.ucm.fdi.iw.model.Request;
+import es.ucm.fdi.iw.model.Reserve;
 import es.ucm.fdi.iw.model.Spot;
 import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.Admin;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -44,6 +53,9 @@ public class AdminController {
 
     @Autowired
     private EntityManager entityManager;
+
+    @Autowired
+    private SimpMessagingTemplate messagingTemplate;
 
     @ModelAttribute
     public void populateModel(HttpSession session, Model model) {
@@ -76,7 +88,7 @@ public class AdminController {
     @PostMapping("/guardarParking/{id}")
     @ResponseBody
     @Transactional
-    public ResponseEntity<String> guardarParking(@PathVariable Long id, @RequestParam Double latitud, @RequestParam Double longitud) {
+    public ResponseEntity<String> guardarParking(@PathVariable Long id, @RequestParam Double latitud, @RequestParam Double longitud, HttpSession session) {
         try {
             Request request = entityManager.createNamedQuery("Request.findById", Request.class)
                     .setParameter("id", id)
@@ -112,6 +124,10 @@ public class AdminController {
 
             request.setEnabled(false);
             entityManager.persist(request);
+            System.out.println(session.getAttribute("u"));
+            Admin admin = (Admin) session.getAttribute("u");
+            System.out.println(admin);
+            notificarAnyadirParking(admin, p);
 
             return ResponseEntity.ok("Parking añadido correctamente");
         } catch (Exception e) {
@@ -119,6 +135,24 @@ public class AdminController {
                     .body("Error al añadir el parking: " + e.getMessage());
         }
     }
+
+    private void notificarAnyadirParking(Admin admin, Parking parking) {
+		Message m = new Message();
+		Enterprise enterprise = parking.getEnterprise();
+		m.setRecipient(enterprise);
+		m.setSender(admin);
+		m.setDateSent(LocalDateTime.now());
+		m.setText("Se ha aceptado la solicitud de añadir el parking " + parking.getName() + " en la dirección " + parking.getAddress());
+		entityManager.persist(m);
+		entityManager.flush(); // to get Id before commit
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			String json = mapper.writeValueAsString(m.toTransfer());
+			messagingTemplate.convertAndSend("/enterprise/" + enterprise.getId() + "/queue/updates", json);
+		} catch (JsonProcessingException e) {
+			log.error("Error al enviar la notificación de añadir parking", e);
+		}
+	}
 
     @PostMapping("/eliminarParking/{id}")
     @ResponseBody

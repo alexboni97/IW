@@ -110,11 +110,28 @@
       </div>
 
       <div class="row mt-5 mb-5">
-        <div class="col-6">
-
+        <div class="col-2">
+          <button type="button" id="enviar-prueba" class="btn btn-lg btn-outline-dark w-100" onclick="addTestValues()">Rellenar</button>
+        </div>
+        <script>
+          function addTestValues() {
+            document.getElementById('name').value = 'Parking de Prueba';
+            document.getElementById('address').value = 'Calle de Prueba';
+            document.getElementById('city').value = 'Ciudad de Prueba';
+            document.getElementById('country').value = 'País de Prueba';
+            document.getElementById('cp').value = '12345';
+            document.getElementById('openingTime').value = '08:00';
+            document.getElementById('closingTime').value = '20:00';
+            document.getElementById('totalSpots').value = '50';
+            document.getElementById('feePerHour').value = '2.50';
+            document.getElementById('telephone').value = '123456789';
+            document.getElementById('email').value = 'prueba@parking.com';
+          }
+        </script>
+        <div class="col-5">
           <button type="submit" id="enviar-solicitud" class="btn btn-lg btn-outline-dark w-100">Añadir</button>
         </div>
-        <div class="col-6">
+        <div class="col-5">
           <button type="reset" class="btn btn-lg btn-outline-dark w-100">Borrar datos</button>
         </div>
       </div>
