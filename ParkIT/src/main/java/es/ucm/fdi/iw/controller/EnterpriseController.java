@@ -156,7 +156,7 @@ public class EnterpriseController {
     @Transactional
     @ResponseBody
     public String requestParking(@RequestBody JsonNode requestData, HttpSession session, Model model)
-            throws JsonProcessingException {
+ {
 
         try {
 

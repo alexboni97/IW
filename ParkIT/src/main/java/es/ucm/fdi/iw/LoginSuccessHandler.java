@@ -84,14 +84,19 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 		// redirects to 'admin' or 'user/{id}',or 'enterprise/{id}', depending on the user
 		String nextUrl;
-		if(u.hasRole(User.Role.ADMIN))
-			nextUrl = "admin/";
-		else{
-			nextUrl = u.hasRole(User.Role.USER) ? 
-			"user/" + u.getId():
-			"enterprise/" + u.getId();
+		switch (u.getRole()) {
+			case ADMIN:
+				nextUrl = "admin/";
+				break;
+			case USER:
+				nextUrl = "user/map";
+				break;
+			case ENTERPRISE:
+				nextUrl = "enterprise/" + u.getId();
+				break;
+			default:
+				throw new IllegalStateException("Unexpected role: " + u.getRole());
 		}
-
 
 		log.info("LOG IN: {} (id {}) -- session is {}, websocket is {} -- redirected to {}",
 			u.getUsername(), u.getId(), session.getId(), ws, nextUrl);

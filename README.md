@@ -31,27 +31,25 @@ La aplicación cuenta con varias vistas que dependiendo de si el usuario es part
 > **Descripción:** Documentación de uso, preguntas frecuentes y contacto para soporte.
 > **URL:** [`/help`](http://localhost:8080/help)
 
-### 2. Vistas de usuario particular
+### 1.1. Vistas de Usuario Particular(User)
 #### 🔹 Perfil
 > **Descripción:** Sección donde el usuario puede ver y editar su información personal, cambiar su contraseña y gestionar sus preferencias.
-> **URL:** [`/user/{id}`](http://localhost:8080/user/2)
+> **URL:** [`/user/{id}`](http://localhost:8080/user/976)
 
 #### 🔹 Buscar
 > **Descripción:** Visualización de plazas de aparcamiento disponibles en tiempo real.
 > **URL:** [`/user/map`](http://localhost:8080/user/map)
-> > **Vista Accesible desde esta:** Formulario de reserva de plaza de aparcamiento
-> > **URL:** [`/user/reserve`](http://localhost:8080/user/reserve)
+> > **Vista Accesible desde Buscar:** Formulario de reserva de plaza de aparcamiento
+> > **URL:** [`/user/reserve/{parkingId}`](http://localhost:8080/user/reserve/1027)
 
 #### 🔹 Reservas
 > **Descripción:** El usuario puede visualizar sus reservas activas.
 > **URL:** [`/user/my-reserves`](http://localhost:8080/user/my-reserves)
-> > **Vista Accesible desde esta:** Formulario de modificar reserva de plaza de aparcamiento
-> > **URL:** [`/user/modify-reserve`](http://localhost:8080/user/modify-reserve)
 
-### 3. Vistas de empresa
+### 1.2. Vistas de Empresa
 #### 🔹 Perfil 
 > **Descripción:** Administración de la cuenta de empresa, incluyendo estadísticas de uso.
-> **URL:** [`/entrerprise/{id}`](http://localhost:8080/enterprise/3)
+> **URL:** [`/entrerprise/{id}`](http://localhost:8080/enterprise/977)
 
 #### 🔹 Ver Parkings
 > **Descripción:** Visualizar los parkings que la empresa tiene registrados.
@@ -65,7 +63,26 @@ La aplicación cuenta con varias vistas que dependiendo de si el usuario es part
 > **Descripción:** Añadir una zona nueva de aparcamiento en la empresa.
 > **URL:** [`/enterprise/add-parking`](http://localhost:8080/enterprise/add-parking)
 
+#### 🔹 Mis solicitudes
+> **Descripción:** Añadir una zona nueva de aparcamiento en la empresa.
+> **URL:** [`/enterprise/enterprise-requests`](http://localhost:8080/enterprise/enterprise-requests)
+
+### 1.3. Vistas de Admin
+#### 🔹 Añadir Parking
+> **Descripción:** Verificar y añadir una zona nueva de aparcamiento en la empresa que lo solicita.
+> **URL:** [`/admin/request-add`](http://localhost:8080/admin/request-add)
+
+#### 🔹 Eliminar Parking
+> **Descripción:** Eliminar una zona de aparcamiento en la empresa solicitante.
+> **URL:** [`/admin/request-delete`](http://localhost:8080/admin/request-delete)
+
 ### 2. Proximamente en Vistas...
+#### 🔹 Elimnar Parking Empresa
+> **Descripción:** Añadir una zona nueva de aparcamiento en la empresa.
+
+#### 🔹 Modificar Reserva Usuario
+> **Descripción:** Formulario de modificar reserva de plaza de aparcamiento accesible desde vista Reservas [`/user/modify-reserve`](http://localhost:8080/user/modify-reserve)
+
 #### 🔹 Acerca de
 > **Descripción:** Dropdown con las vistas de información sobre la aplicacion y su propósito.
 
@@ -137,6 +154,8 @@ En esta sección hemos incluído enlaces a material externo sobre el que nos hem
 1. Users-card: hemos utilizado una [plantilla de Bootstrap](https://startbootstrap.com/theme/personal). Dicha plantilla se puede utilizar y modificar por presentar una licencia MIT.
 2. Navbar: Hemos utilizado la documentación que ofrece [Bootstrap](https://getbootstrap.com/docs/5.3/components/navbar/).
 3. Extension en VSCode: para el uso de Bootstrap y elementos preconstruidos, [Bootstrap 5 Quick Snippets](https://github.com/anburocky3/bootstrap5-snippets/tree/master)
+4. Mapa interactivo y Buscador: libreria externa para la reenderizacion de mapas interactivos [Leaflet](https://leafletjs.com/)
+5. ChatGpt: uso para consulta de funcionalidades de Java, Thymeleaf, Spring-Boot, Html, Css, etc... [ChatGpt](https://chatgpt.com/)
 
 <a name="item6"></a>
 ## 🤝 Contribución

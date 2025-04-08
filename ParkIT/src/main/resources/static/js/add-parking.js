@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () { //Para que no lo cargue directamente
     
     let b= document.getElementById("enviar-solicitud");
+    console.log(b);
     b.onclick = (e) => {
+        console.log("click", e);
         e.preventDefault();
         go("/enterprise/request-parking", 'POST', {
             name: document.getElementById("name").value,
