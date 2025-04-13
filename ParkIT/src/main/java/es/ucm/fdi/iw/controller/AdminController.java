@@ -26,6 +26,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import es.ucm.fdi.iw.model.Enterprise;
 import es.ucm.fdi.iw.model.Message;
@@ -135,10 +136,8 @@ public class AdminController {
 
             request.setEnabled(false);
             entityManager.persist(request);
-            System.out.println(session.getAttribute("u"));
             Admin admin = (Admin) session.getAttribute("u");
-            System.out.println(admin);
-            notificarAnyadirParking(admin, p);
+            notificarEstadoParking(admin, p, request);
 
             return ResponseEntity.ok("Parking añadido correctamente");
         } catch (Exception e) {
@@ -147,14 +146,20 @@ public class AdminController {
         }
     }
 
-    private void notificarAnyadirParking(Admin admin, Parking parking) {
+    private void notificarEstadoParking(Admin admin, Parking parking, Request request) {
         Message m = new Message();
         Enterprise enterprise = parking.getEnterprise();
         m.setRecipient(enterprise);
         m.setSender(admin);
         m.setDateSent(LocalDateTime.now());
-        m.setText("Se ha aceptado la solicitud de añadir el parking " + parking.getName() + " en la dirección "
-                + parking.getAddress());
+        if (request.getType().equals("AÑADIR")) {
+            m.setText("Se ha aceptado la solicitud de añadir el parking " + parking.getName() + " en la dirección "
+                    + parking.getAddress());
+        } else {
+            m.setText("Se ha aceptado la solicitud de eliminar el parking " + parking.getName() + " en la dirección "
+                    + parking.getAddress());
+        }
+
         entityManager.persist(m);
         entityManager.flush(); // to get Id before commit
         ObjectMapper mapper = new ObjectMapper();
@@ -162,14 +167,14 @@ public class AdminController {
             String json = mapper.writeValueAsString(m.toTransfer());
             messagingTemplate.convertAndSend("/enterprise/" + enterprise.getId() + "/queue/updates", json);
         } catch (JsonProcessingException e) {
-            log.error("Error al enviar la notificación de añadir parking", e);
+            log.error("Error al enviar la notificación", e);
         }
     }
 
     @PostMapping("/eliminarParking/{id}")
     @ResponseBody
     @Transactional
-    public ResponseEntity<String> eliminarParking(@PathVariable Long id) {
+    public ResponseEntity<String> eliminarParking(@PathVariable Long id, HttpSession session) {
         try {
             Request request = entityManager.createNamedQuery("Request.findById", Request.class)
                     .setParameter("id", id)
@@ -189,6 +194,8 @@ public class AdminController {
             entityManager.persist(parking);
             request.setEnabled(false);
             entityManager.persist(request);
+            Admin admin = (Admin) session.getAttribute("u");
+            notificarEstadoParking(admin, parking, request);
 
             return ResponseEntity.ok("Parking eliminado correctamente");
         } catch (Exception e) {
@@ -200,7 +207,7 @@ public class AdminController {
     @DeleteMapping("/eliminarRequest/{id}")
     @ResponseBody
     @Transactional
-    public ResponseEntity<String> eliminarRequest(@PathVariable Long id) {
+    public ResponseEntity<String> eliminarRequest(@PathVariable Long id, HttpSession session) {
         try {
             Request request = entityManager.createNamedQuery("Request.findById", Request.class)
                     .setParameter("id", id)
@@ -211,11 +218,38 @@ public class AdminController {
 
             request.setEnabled(false);
             entityManager.persist(request);
+            Admin admin = (Admin) session.getAttribute("u");
+            notificarEliminarRequest(admin, request);
 
             return ResponseEntity.ok("Request eliminada correctamente");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error al eliminar la request: " + e.getMessage());
+        }
+    }
+
+    private void notificarEliminarRequest(Admin admin, Request request) {
+        Message m = new Message();
+        Enterprise enterprise = request.getEnterprise();
+        m.setRecipient(enterprise);
+        m.setSender(admin);
+        m.setDateSent(LocalDateTime.now());
+        if (request.getType().equals("AÑADIR")) {
+            m.setText("Se ha rechazado la solicitud de añadir el parking " + request.getName() + " en la dirección "
+                    + request.getAddress());
+        } else {
+            m.setText("Se ha rechazado la solicitud de eliminar el parking " + request.getName() + " en la dirección "
+                    + request.getAddress());
+        }
+
+        entityManager.persist(m);
+        entityManager.flush(); // to get Id before commit
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String json = mapper.writeValueAsString(m.toTransfer());
+            messagingTemplate.convertAndSend("/enterprise/" + enterprise.getId() + "/queue/updates", json);
+        } catch (JsonProcessingException e) {
+            log.error("Error al enviar la notificación", e);
         }
     }
 
