@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html class="h-100" xmlns:th="http://www.thymeleaf.org">
-  <head>
+
+<head>
     <th:block th:replace="~{fragments/head.html :: header}" />
     <th:block th:replace="~{fragments/leaflet.html :: head}" />
     <title>Add Parkings</title>
@@ -28,36 +29,47 @@
                         <div class="row">
                             <!-- Columna del mapa -->
                             <div class="col-md-6 mapa-reserva map-container"
-                                    th:data-address="${request.address} + ', ' + ${request.city} + ', ' + ${request.country}" 
-                                    th:id="'mapa-' + ${request.id}">
+                                th:data-address="${request.address} + ', ' + ${request.city} + ', ' + ${request.country}"
+                                th:id="'mapa-' + ${request.id}">
                             </div>
-                            
+
                             <!-- Columna de la información -->
                             <div class="col-md-6">
                                 <div class="card p-3">
                                     <div class="card-text">
                                         <p><strong>Nombre:</strong> <span th:text="${request.name}">Nombre</span></p>
-                                        <p><strong>Dirección:</strong> <span th:text="${request.address}">Dirección</span></p>
-                                        <p><strong>Código Postal:</strong> <span th:text="${request.cp}">Código Postal</span></p>
+                                        <p><strong>Dirección:</strong> <span
+                                                th:text="${request.address}">Dirección</span></p>
+                                        <p><strong>Código Postal:</strong> <span th:text="${request.cp}">Código
+                                                Postal</span></p>
                                         <p><strong>Ciudad:</strong> <span th:text="${request.city}">Ciudad</span></p>
                                         <p><strong>País:</strong> <span th:text="${request.country}">País</span></p>
-                                        <p><strong>Teléfono:</strong> <span th:text="${request.telephone}">Teléfono</span></p>
-                                        <p><strong>Fecha de apertura:</strong> <span th:text="${request.openingTime}">Fecha de apertura</span></p>
-                                        <p><strong>Fecha de cierre:</strong> <span th:text="${request.closingTime}">Fecha de cierre</span></p>
-                                        <p><strong>Precio/h:</strong> <span th:text="${request.feePerHour}">Precio/h</span></p>
-                                        <p><strong>Latitud:</strong> <span th:id="'latitud-' + ${request.id}"></span></p>
-                                        <p><strong>Longitud:</strong> <span th:id="'longitud-' + ${request.id}"></span></p>
-                                        <div class="error"
-                                          th:id="'error-' + ${request.id}">
+                                        <p><strong>Teléfono:</strong> <span
+                                                th:text="${request.telephone}">Teléfono</span></p>
+                                        <p><strong>Fecha de apertura:</strong> <span
+                                                th:text="${request.openingTime}">Fecha de apertura</span></p>
+                                        <p><strong>Fecha de cierre:</strong> <span
+                                                th:text="${request.closingTime}">Fecha de cierre</span></p>
+                                        <p><strong>Plazas:</strong> <span th:text="${request.totalSpots}">Plazas</span>
+                                        </p>
+                                        <p><strong>Precio/h:</strong> <span
+                                                th:text="${request.feePerHour}">Precio/h</span></p>
+                                        <p><strong>Latitud:</strong> <span th:id="'latitud-' + ${request.id}"></span>
+                                        </p>
+                                        <p><strong>Longitud:</strong> <span th:id="'longitud-' + ${request.id}"></span>
+                                        </p>
+                                        <div class="error" th:id="'error-' + ${request.id}">
                                         </div>
                                         <div>
-                                            <a class="btn btn-primary m-1" onclick="guardarParking(this)" th:data-id="${request.id}">Aceptar</a>
-                                            <a class="btn btn-danger m-1" onclick="eliminarRequest(this)" th:data-id="${request.id}">Rechazar</a>
+                                            <a class="btn btn-primary m-1" onclick="guardarParking(this)"
+                                                th:data-id="${request.id}">Aceptar</a>
+                                            <a class="btn btn-danger m-1" onclick="eliminarRequest(this)"
+                                                th:data-id="${request.id}">Rechazar</a>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,5 +77,6 @@
     </div>
     <script th:src="@{/js/mapa-request.js}"></script>
     <footer th:replace="~{fragments/footer.html :: footer}"></footer>
-  </body>
+</body>
+
 </html>

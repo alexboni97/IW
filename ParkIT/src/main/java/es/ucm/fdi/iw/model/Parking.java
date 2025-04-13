@@ -28,7 +28,8 @@ import java.util.List;
         @NamedQuery(name = "Parking.findByClosingTime", query = "SELECT p FROM Parking p WHERE p.closingTime = :closingTime"),
         @NamedQuery(name = "Parking.findByEnterprise", query = "SELECT p FROM Parking p WHERE p.enterprise = :enterprise"),
         @NamedQuery(name = "Parking.findByLongitude", query = "SELECT p FROM Parking p WHERE p.longitude = :longitude"),
-        @NamedQuery(name = "Parking.findByLatitude", query = "SELECT p FROM Parking p WHERE p.latitude = :latitude")
+        @NamedQuery(name = "Parking.findByLatitude", query = "SELECT p FROM Parking p WHERE p.latitude = :latitude"),
+        @NamedQuery(name = "Parking.findByEnterpriseandEnabled", query = "SELECT p FROM Parking p WHERE p.enterprise = :enterprise AND p.enabled = :enabled")
 })
 public class Parking implements Transferable<Parking.Transfer> {
 
@@ -79,30 +80,31 @@ public class Parking implements Transferable<Parking.Transfer> {
     @JoinColumn(name = "enterprise_id")
     private Enterprise enterprise;
 
-    // @OneToMany(mappedBy = "parking", cascade = CascadeType.ALL, orphanRemoval = true)
+    // @OneToMany(mappedBy = "parking", cascade = CascadeType.ALL, orphanRemoval =
+    // true)
     @OneToMany
     @JoinColumn(name = "parking_id")
-    private List<Spot> spots  = new ArrayList<>();
+    private List<Spot> spots = new ArrayList<>();
 
-	@Getter
+    @Getter
     @AllArgsConstructor
     public static class Transfer {
-		private long id;
+        private long id;
         private boolean enabled;
-		private String name;
-		private String address;
+        private String name;
+        private String address;
         private int cp;
         private String city;
         private String country;
-		private int telephone;
-		private String email;
-		private double feePerHour;
-		private String openingTime;
-		private String closingTime;
-		private double longitude;
+        private int telephone;
+        private String email;
+        private double feePerHour;
+        private String openingTime;
+        private String closingTime;
+        private double longitude;
         private double latitude;
-		private long enterpriseId;
-		private int totalSpots;
+        private long enterpriseId;
+        private int totalSpots;
 
         public Transfer(Parking p) {
             this.id = p.getId();
@@ -124,13 +126,13 @@ public class Parking implements Transferable<Parking.Transfer> {
         }
     }
 
-	@Override
+    @Override
     public Transfer toTransfer() {
-		return new Transfer(this);
-	}
-	
-	@Override
-	public String toString() {
-		return toTransfer().toString();
-	}
+        return new Transfer(this);
+    }
+
+    @Override
+    public String toString() {
+        return toTransfer().toString();
+    }
 }

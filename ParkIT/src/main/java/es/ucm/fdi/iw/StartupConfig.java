@@ -125,6 +125,9 @@ public class StartupConfig {
         // parking1.setId(1);
         parking1.setName("Parking 1");
         parking1.setAddress("Calle de la piruleta");
+        parking1.setCity("Madrid");
+        parking1.setCountry("España");
+        parking1.setCp(28888);
         parking1.setTelephone(123456789);
         parking1.setEmail("parking1@gmail.com");
         parking1.setEnterprise(e);
@@ -141,6 +144,18 @@ public class StartupConfig {
         parking1.setExitX(2.0); // Example value
         parking1.setExitY(2.0); // Example value
         entityManager.persist(parking1);
+
+        for (int j = 1; j <= 13; j++) { // por ahora las plazas estan en el parking 3
+            Spot spot = new Spot();
+            // spot.setId(j);
+            spot.setParking(parking1);
+            spot.setEnabled(true); // Example value
+            spot.setSize(Math.random() > 0.5 ? "M" : "L"); // Example value
+            spot.setHorizontal(true); // Example value
+            spot.setX(j * 2.5); // Example value
+            spot.setY(0.0); // Example value
+            entityManager.persist(spot);
+        }
 
         Parking parking2 = new Parking();
         // parking2.setId(2);
@@ -166,10 +181,25 @@ public class StartupConfig {
         parking2.setExitY(2.0); // Example value
         entityManager.persist(parking2);
 
+        for (int j = 1; j <= 13; j++) { // por ahora las plazas estan en el parking 3
+            Spot spot = new Spot();
+            // spot.setId(j);
+            spot.setParking(parking2);
+            spot.setEnabled(true); // Example value
+            spot.setSize(Math.random() > 0.5 ? "M" : "L"); // Example value
+            spot.setHorizontal(true); // Example value
+            spot.setX(j * 2.5); // Example value
+            spot.setY(0.0); // Example value
+            entityManager.persist(spot);
+        }
+
         Parking parking3 = new Parking();
         // parking3.setId(3);
         parking3.setName("Parking 3");
         parking3.setAddress("Paseo de los Olmos");
+        parking3.setCity("Madrid");
+        parking3.setCountry("España");
+        parking3.setCp(28888);
         parking3.setTelephone(123456789);
         parking3.setEmail("parking3@gmail.com");
         parking3.setEnterprise(e);

@@ -33,6 +33,7 @@ import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Parker;
 import es.ucm.fdi.iw.model.Request;
 import es.ucm.fdi.iw.model.Reserve;
+import es.ucm.fdi.iw.model.Spot;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.Parking;
 import jakarta.persistence.EntityManager;
@@ -89,8 +90,8 @@ public class EnterpriseController {
         User user = (User) model.getAttribute("u");
 
         List<Parking> parkings = entityManager
-                .createNamedQuery("Parking.findByEnterprise", Parking.class)
-                .setParameter("enterprise", user)
+                .createNamedQuery("Parking.findByEnterpriseandEnabled", Parking.class)
+                .setParameter("enterprise", user).setParameter("enabled", true)
                 .getResultList();
 
         model.addAttribute("parkings", parkings);
@@ -120,7 +121,17 @@ public class EnterpriseController {
     }
 
     @GetMapping("/enterprise-plazas")
-    public String enterprisePlazas(Model model) {
+    public String enterprisePlazas(@RequestParam Long parkingId, Model model) {
+        Parking parking = entityManager.find(Parking.class, parkingId);
+        if (parking == null) {
+            return "redirect:/error";
+        }
+        model.addAttribute("parking", parking);
+        List<Spot> spots = entityManager
+                .createNamedQuery("Spot.findByParking", Spot.class)
+                .setParameter("parking", parking)
+                .getResultList();
+        model.addAttribute("spots", spots);
         return "enterprise-plazas";
     }
 
@@ -155,8 +166,7 @@ public class EnterpriseController {
     @PostMapping("/request-parking")
     @Transactional
     @ResponseBody
-    public String requestParking(@RequestBody JsonNode requestData, HttpSession session, Model model)
- {
+    public String requestParking(@RequestBody JsonNode requestData, HttpSession session, Model model) {
 
         try {
 
@@ -190,7 +200,7 @@ public class EnterpriseController {
             request.setOpeningTime(parsedOpeningTime);
             request.setClosingTime(parsedClosingTime);
             request.setState("Pendiente");
-            request.setType("Añadir");
+            request.setType("AÑADIR");
             request.setTotalSpots(totalSpots);
             request.setEnterprise((Enterprise) session.getAttribute("u"));
 
@@ -198,27 +208,27 @@ public class EnterpriseController {
             entityManager.flush();
             entityManager.clear();
 
-               // Enviar notificación a los administradores
-    // Obtener la empresa del usuario actual
-    // y crear el mensaje de notificación
-    // (suponiendo que la empresa está en la sesión)
+            // Enviar notificación a los administradores
+            // Obtener la empresa del usuario actual
+            // y crear el mensaje de notificación
+            // (suponiendo que la empresa está en la sesión)
 
+            Enterprise enterprise = (Enterprise) session.getAttribute("u");
+            String notificationText = "Nueva solicitud de parking de la empresa " + enterprise.getName() +
+                    " con id: " + request.getId() + " en la dirección: " + request.getAddress();
+            // ID del administrador al que se le envía el mensaje (puede ser null para
+            // enviar a todos los administradores)
+            Message message = new Message();
+            message.setSender(enterprise);
+            message.setRecipient(null); // null para enviar a todos los administradores
+            message.setDateSent(LocalDateTime.now());
+            message.setText(notificationText);
+            entityManager.persist(message);
 
-    Enterprise enterprise = (Enterprise) session.getAttribute("u");
-    String notificationText = "Nueva solicitud de parking de la empresa " + enterprise.getName() +
-            " con id: " + request.getId() + " en la dirección: " + request.getAddress();
-       // ID del administrador al que se le envía el mensaje (puede ser null para enviar a todos los administradores)
-        Message message = new Message();
-        message.setSender(enterprise);
-        message.setRecipient(null); // null para enviar a todos los administradores
-        message.setDateSent(LocalDateTime.now());
-        message.setText(notificationText);
-        entityManager.persist(message);
-
-        // Convertir el mensaje a JSON y enviarlo
-        ObjectMapper mapper = new ObjectMapper();
-        String json = mapper.writeValueAsString(message.toTransfer());
-        messagingTemplate.convertAndSend("/topic/admin", json);
+            // Convertir el mensaje a JSON y enviarlo
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(message.toTransfer());
+            messagingTemplate.convertAndSend("/topic/admin", json);
 
             model.addAttribute("success", "Solicitud realizada con éxito. Esperando respuesta del administrador.");
             return "{\"result\": \"Solicitud realizada con éxito . Esperando respuesta del administrador.\"}";
@@ -233,30 +243,30 @@ public class EnterpriseController {
     }
 
     /**
-	 * Returns JSON with all received messages
-	 */
-	@GetMapping(path = "received", produces = "application/json")
-	@Transactional // para no recibir resultados inconsistentes
-	@ResponseBody // para indicar que no devuelve vista, sino un objeto (jsonizado)
-	public List<Message.Transfer> retrieveMessages(HttpSession session) {
-		long userId = ((User) session.getAttribute("u")).getId();
-		User u = entityManager.find(User.class, userId);
-		log.info("Generating message list for user {} ({} messages)",
-				u.getUsername(), u.getReceived().size());
-		return u.getReceived().stream().map(Transferable::toTransfer).collect(Collectors.toList());
-	}
-    
+     * Returns JSON with all received messages
+     */
+    @GetMapping(path = "received", produces = "application/json")
+    @Transactional // para no recibir resultados inconsistentes
+    @ResponseBody // para indicar que no devuelve vista, sino un objeto (jsonizado)
+    public List<Message.Transfer> retrieveMessages(HttpSession session) {
+        long userId = ((User) session.getAttribute("u")).getId();
+        User u = entityManager.find(User.class, userId);
+        log.info("Generating message list for user {} ({} messages)",
+                u.getUsername(), u.getReceived().size());
+        return u.getReceived().stream().map(Transferable::toTransfer).collect(Collectors.toList());
+    }
+
     /**
-	 * Returns JSON with count of unread messages
-	 */
-	@GetMapping(path = "unread", produces = "application/json")
-	@ResponseBody
-	public String checkUnread(HttpSession session) {
-		long userId = ((User) session.getAttribute("u")).getId();
-		long unread = entityManager.createNamedQuery("Message.countUnread", Long.class)
-				.setParameter("userId", userId)
-				.getSingleResult();
-		session.setAttribute("unread", unread);
-		return "{\"unread\": " + unread + "}";
-	}
+     * Returns JSON with count of unread messages
+     */
+    @GetMapping(path = "unread", produces = "application/json")
+    @ResponseBody
+    public String checkUnread(HttpSession session) {
+        long userId = ((User) session.getAttribute("u")).getId();
+        long unread = entityManager.createNamedQuery("Message.countUnread", Long.class)
+                .setParameter("userId", userId)
+                .getSingleResult();
+        session.setAttribute("unread", unread);
+        return "{\"unread\": " + unread + "}";
+    }
 }

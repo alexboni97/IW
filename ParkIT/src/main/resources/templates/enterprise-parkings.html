@@ -50,7 +50,8 @@
                     <td id="fila1"><a class="nav-link" th:text="${parkings.ClosingTime}">Fecha de cierre</a></td>
                     <td id="fila1"><a class="nav-link" th:text="${parkings.feePerHour}">Precio/h</a></td>
 
-                    <td id="fila1"><a class="btn btn-primary m-1" th:href="@{/enterprise/enterprise-plazas}"
+                    <td id="fila1"><a class="btn btn-primary m-1"
+                            th:href="@{/enterprise/enterprise-plazas (parkingId=${parkings.id})}"
                             href="/enterprise/enterprise-plazas">Ver plazas</a>
                         <a class="btn btn-danger m-1" th:href="@{/user/my-reserves}"
                             href="/user/my-reserves">Cancelar</a>

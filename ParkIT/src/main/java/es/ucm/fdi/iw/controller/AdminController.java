@@ -88,7 +88,8 @@ public class AdminController {
     @PostMapping("/guardarParking/{id}")
     @ResponseBody
     @Transactional
-    public ResponseEntity<String> guardarParking(@PathVariable Long id, @RequestParam Double latitud, @RequestParam Double longitud, HttpSession session) {
+    public ResponseEntity<String> guardarParking(@PathVariable Long id, @RequestParam Double latitud,
+            @RequestParam Double longitud, HttpSession session) {
         try {
             Request request = entityManager.createNamedQuery("Request.findById", Request.class)
                     .setParameter("id", id)
@@ -118,9 +119,19 @@ public class AdminController {
             p.setEntryY(1.0); // Example value
             p.setExitX(2.0); // Example value
             p.setExitY(2.0); // Example value
-            // p.setSpots(new ArrayList<>(Collections.nCopies(request.getTotalSpots(), new
-            // Spot())));
             entityManager.persist(p);
+
+            for (int j = 1; j <= request.getTotalSpots(); j++) { // por ahora las plazas estan en el parking 3
+                Spot spot = new Spot();
+                // spot.setId(j);
+                spot.setParking(p);
+                spot.setEnabled(true); // Example value
+                spot.setSize(Math.random() > 0.5 ? "M" : "L"); // Example value
+                spot.setHorizontal(true); // Example value
+                spot.setX(j * 2.5); // Example value
+                spot.setY(0.0); // Example value
+                entityManager.persist(spot);
+            }
 
             request.setEnabled(false);
             entityManager.persist(request);
@@ -137,22 +148,23 @@ public class AdminController {
     }
 
     private void notificarAnyadirParking(Admin admin, Parking parking) {
-		Message m = new Message();
-		Enterprise enterprise = parking.getEnterprise();
-		m.setRecipient(enterprise);
-		m.setSender(admin);
-		m.setDateSent(LocalDateTime.now());
-		m.setText("Se ha aceptado la solicitud de añadir el parking " + parking.getName() + " en la dirección " + parking.getAddress());
-		entityManager.persist(m);
-		entityManager.flush(); // to get Id before commit
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			String json = mapper.writeValueAsString(m.toTransfer());
-			messagingTemplate.convertAndSend("/enterprise/" + enterprise.getId() + "/queue/updates", json);
-		} catch (JsonProcessingException e) {
-			log.error("Error al enviar la notificación de añadir parking", e);
-		}
-	}
+        Message m = new Message();
+        Enterprise enterprise = parking.getEnterprise();
+        m.setRecipient(enterprise);
+        m.setSender(admin);
+        m.setDateSent(LocalDateTime.now());
+        m.setText("Se ha aceptado la solicitud de añadir el parking " + parking.getName() + " en la dirección "
+                + parking.getAddress());
+        entityManager.persist(m);
+        entityManager.flush(); // to get Id before commit
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String json = mapper.writeValueAsString(m.toTransfer());
+            messagingTemplate.convertAndSend("/enterprise/" + enterprise.getId() + "/queue/updates", json);
+        } catch (JsonProcessingException e) {
+            log.error("Error al enviar la notificación de añadir parking", e);
+        }
+    }
 
     @PostMapping("/eliminarParking/{id}")
     @ResponseBody
