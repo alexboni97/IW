@@ -310,3 +310,23 @@ label:hover~label {
   width: 100%; /* Ocupar todo el ancho */
 }
 
+.col-auto i {
+  font-size: 1.5rem; /* Tamaño del ícono */
+}
+
+/* Colores personalizados para los íconos */
+.icon-parking {
+  color: #858796; /* Azul oscuro para "Número de parkings" */
+}
+
+.icon-requests {
+  color: #858796; /* Naranja para "Peticiones pendientes" */
+}
+
+.icon-spots {
+  color: #858796; /* Verde turquesa para "Número de plazas" */
+}
+
+.icon-wallet {
+  color: #858796; /* Morado grisáceo para "Saldo" */
+}
