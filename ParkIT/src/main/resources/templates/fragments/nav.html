@@ -3,7 +3,7 @@
 
 <head>
     <title>Nav fragment - rest intentionally left empty</title>
-    
+
     <!-- Librería para los iconos con Bootstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
@@ -16,9 +16,10 @@
             <div class="container-fluid">
                 <!-- nombre del sitio; es un enlace que lleva a la página principal -->
                 <a class="navbar-brand" th:href="@{/}">
-                    <img th:href="@{/}" src="/img/logo.png" alt="logo IW" width="64" height="64" class="d-inline-block align-text-top">
+                    <img th:href="@{/}" src="/img/logo.png" alt="logo IW" width="64" height="64"
+                        class="d-inline-block align-text-top">
                 </a>
-                       
+
                 <!-- menu hamburguesa si no cabe todo -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#menuOffcanvas">
                     <span class="navbar-toggler-icon"></span>
@@ -47,36 +48,44 @@
                         <th:block th:if="${u}">
 
                             <li class="nav-link ">
-                                <a class="nav-link" th:if="${u.hasRole('USER')}"  href="/user/my-reserves">Reservas</a>
-                            </li>
-            
-                            <li class="nav-link ">
-                                <a class="nav-link" th:if="${u.hasRole('USER')}" th:href="@{/user/map}" href="/user/buscar-parking">Buscar</a>
+                                <a class="nav-link" th:if="${u.hasRole('USER')}" href="/user/my-reserves">Reservas</a>
                             </li>
 
                             <li class="nav-link ">
-                                <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}" th:href="@{/enterprise/enterprise-requests}" href="/enterprise/enterprise-requests">Solicitudes</a>
+                                <a class="nav-link" th:if="${u.hasRole('USER')}" th:href="@{/user/map}"
+                                    href="/user/buscar-parking">Buscar</a>
+                            </li>
+
+                            <li class="nav-link ">
+                                <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}"
+                                    th:href="@{/enterprise/enterprise-requests}"
+                                    href="/enterprise/enterprise-requests">Solicitudes</a>
                             </li>
                             <li class="nav-link ">
-                                <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}" th:href="@{/enterprise/enterprise-parkings}" href="/enterprise/enterprise-parkings">Ver</a>
+                                <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}"
+                                    th:href="@{/enterprise/enterprise-parkings}"
+                                    href="/enterprise/enterprise-parkings">Ver</a>
                             </li>
                             <li class="nav-link ">
-                                <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}" th:href="@{/enterprise/add-parking}" href="/enterprise/add-parking">Añadir</a>
+                                <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}"
+                                    th:href="@{/enterprise/add-parking}" href="/enterprise/add-parking">Añadir</a>
                             </li>
                             <li class="nav-link ">
                                 <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}" href="#">Eliminar</a>
                             </li>
-                            
+
                             <li class="nav-link ">
                                 <a class="nav-link" th:if="${u.hasRole('ADMIN')}" th:href="@{/admin/}">Administrar</a>
                             </li>
 
                             <li class="nav-link ">
-                                <a class="nav-link" th:if="${u.hasRole('ADMIN')}" th:href="@{/admin/request-add}">Añadir parking</a>
+                                <a class="nav-link" th:if="${u.hasRole('ADMIN')}" th:href="@{/admin/request-add}">Añadir
+                                    parking</a>
                             </li>
 
                             <li class="nav-link ">
-                                <a class="nav-link" th:if="${u.hasRole('ADMIN')}" th:href="@{/admin/request-delete}">Eliminar parking</a>
+                                <a class="nav-link" th:if="${u.hasRole('ADMIN')}"
+                                    th:href="@{/admin/request-delete}">Eliminar parking</a>
                             </li>
 
                             <li class="nav-link align-self-center">
@@ -86,18 +95,23 @@
                             </li>
 
                             <li class="nav-link ">
-                                <a class="nav-link"th:if="${u.hasRole('ENTERPRISE')}" th:href="@{/enterprise/{id}(id=${u.id})}">
+                                <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}"
+                                    th:href="@{/enterprise/{id}(id=${u.id})}">
                                     <img class="iwthumb rounded" th:src="@{/user/{id}/pic(id=${u.id})}">
                                     <span th:text="${u.username}">Pepe</span>
                                 </a>
-                                <a class="nav-link"th:if="${u.hasRole('USER')}" th:href="@{/user/{id}(id=${u.id})}">
+                                <a class="nav-link" th:if="${u.hasRole('USER')}" th:href="@{/user/{id}(id=${u.id})}">
                                     <img class="iwthumb rounded" th:src="@{/user/{id}/pic(id=${u.id})}">
                                     <span th:text="${u.username}">Pepe</span>
                                 </a>
                             </li>
                             <li class="nav-link align-self-center me-4">
-                                <button type="button" id="btnDropdownNotis" class="btn btn-outline-primary btn-sm position-relative" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span id="nav-unread" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
+                                <button type="button" id="btnDropdownNotis"
+                                    class="btn btn-outline-primary btn-sm position-relative" data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    <span id="nav-unread"
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">0
+                                        <span class="visually-hidden">unread messages</span></span>
                                     <div class="dropdown-menu" id="menuDropdownNotis"></div>
                                 </button>
                             </li>
@@ -108,15 +122,18 @@
                             </li>
                         </th:block>
                         <li class="nav-link align-self-center">
-                            <a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/help}" href="/help"><img src="/img/help.png" alt="help" style="width: 32px;"></a>
+                            <a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/help}" href="/help"><img
+                                    src="/img/help.png" alt="help" style="width: 32px;"></a>
                         </li>
                         <th:block th:unless="${u}">
 
                             <li class="nav-link align-self-center ">
-                                <a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/login}" href="/login">Iniciar Sesión</a>
+                                <a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/login}"
+                                    href="/login">Iniciar Sesión</a>
                             </li>
                             <li class="nav-link align-self-center">
-                                <a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/register}" href="/register">Registrarse</a>
+                                <a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/register}"
+                                    href="/register">Registrarse</a>
                             </li>
                             <!--/*
                                 Esto es un comentario "thymeleaf" - no se verá en el HTML
@@ -124,7 +141,7 @@
                                     (ver StartupConfig.java para ver cómo se lee de la configuración
                                     y luego se escribe a ${application.debug})
                             */-->
-                           
+
                             <li class="nav-item debug align-self-center" th:if="${application.debug}">
                                 <form class="d-flex" th:action="@{/login}" method="post">
                                     <input type="hidden" name="username" value="a">
@@ -170,30 +187,52 @@
                         </ul>
                     </li>
                     <th:block th:if="${u}">
-                        <li ><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('USER')}"  href="/user/my-reserves">Reservas</a></li>
-                        <li ><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('USER')}" th:href="@{/user/map}" href="/user/map">Buscar</a></li>
-                        <li><a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/enterprise/enterprise-parkings}" href="/enterprise/enterprise-parkings">Ver Parkings</a></li>
-                        <li><a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/enterprise/add-parking}" href="/enterprise/add-parking">Añadir Parking</a></li>
-                        <li><a class="nav-link btn btn-outline-secondary pt-1" href="#">Eliminar Parking</a></li>
-                        <li ><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ADMIN')}" th:href="@{/admin/}">Administrar</a></li>
+                        <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('USER')}"
+                                href="/user/my-reserves">Reservas</a></li>
+                        <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('USER')}"
+                                th:href="@{/user/map}" href="/user/map">Buscar</a></li>
+                        <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ENTERPRISE')}"
+                                th:href="@{/enterprise/enterprise-requests}"
+                                href="/enterprise/enterprise-requests">Solicitudes</a>
+                        </li>
+                        <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ENTERPRISE')}"
+                                th:href="@{/enterprise/enterprise-parkings}" href="/enterprise/enterprise-parkings">Ver
+                                Parkings</a></li>
+                        <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ENTERPRISE')}"
+                                th:href="@{/enterprise/add-parking}" href="/enterprise/add-parking">Añadir Parking</a>
+                        </li>
+                        <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ENTERPRISE')}"
+                                href="#">Eliminar Parking</a></li>
+                        <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ADMIN')}"
+                                th:href="@{/admin/}">Administrar</a></li>
+                        <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ADMIN')}"
+                                th:href="@{/admin/request-add}">Añadir parking</a></li>
+                        <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ADMIN')}"
+                                th:href="@{/admin/request-delete}">Eliminar parking</a></li>
                         <li class="nav-link align-self-center">
-                            <a class="nav-link btn pt-1" th:if="${u.hasRole('USER')}" th:href="@{/user/{id}(id=${u.id})}">
+                            <a class="nav-link btn pt-1" th:if="${u.hasRole('USER')}"
+                                th:href="@{/user/{id}(id=${u.id})}">
                                 <span>Saldo: <span th:text="${u.wallet}"></span> €</span>
                             </a>
                         </li>
                         <li class="nav-link btn pt-1">
-                            <a class="nav-link"th:if="${u.hasRole('ENTERPRISE')}" th:href="@{/enterprise/{id}(id=${u.id})}">
+                            <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}"
+                                th:href="@{/enterprise/{id}(id=${u.id})}">
                                 <img class="iwthumb rounded" th:src="@{/user/{id}/pic(id=${u.id})}">
                                 <span th:text="${u.username}">Pepe</span>
                             </a>
-                            <a class="nav-link"th:if="${u.hasRole('USER')}" th:href="@{/user/{id}(id=${u.id})}">
+                            <a class="nav-link" th:if="${u.hasRole('USER')}" th:href="@{/user/{id}(id=${u.id})}">
                                 <img class="iwthumb rounded" th:src="@{/user/{id}/pic(id=${u.id})}">
                                 <span th:text="${u.username}">Pepe</span>
                             </a>
                         </li>
                         <li class="nav-link btn pt-1 align-self-center me-4">
-                            <button type="button" id="btnDropdownNotis" class="btn btn-outline-primary btn-sm position-relative" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span id="nav-unread" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">+99 <span class="visually-hidden">unread messages</span></span>
+                            <button type="button" id="btnDropdownNotis"
+                                class="btn btn-outline-primary btn-sm position-relative" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <span id="nav-unread"
+                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">0
+                                    <span class="visually-hidden">unread messages</span></span>
                                 <div class="dropdown-menu" id="menuDropdownNotis"></div>
                             </button>
                         </li>
@@ -202,49 +241,53 @@
                                 <button type="submit" class="btn btn-outline-secondary btn-sm">logout</button>
                             </form>
                         </li>
-                        
-                        </th:block>
-                        <li class="nav-link align-self-center">
-                            <a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/help}" href="/help"><img src="/img/help.png" alt="help" style="width: 32px;"></a>
-                        </li>
-                        <th:block th:unless="${u}">
-                            <li class="nav-link align-self-center ">
-                                <a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/login}" href="/login">Iniciar Sesión</a>
-                            </li>
-                            <li class="nav-link align-self-center">
-                                <a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/register}" href="/register">Registrarse</a>
-                            </li>
-                            
 
-                            <!--/*
+                    </th:block>
+                    <li class="nav-link align-self-center">
+                        <a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/help}" href="/help"><img
+                                src="/img/help.png" alt="help" style="width: 32px;"></a>
+                    </li>
+                    <th:block th:unless="${u}">
+                        <li class="nav-link align-self-center ">
+                            <a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/login}" href="/login">Iniciar
+                                Sesión</a>
+                        </li>
+                        <li class="nav-link align-self-center">
+                            <a class="nav-link btn btn-outline-secondary pt-1" th:href="@{/register}"
+                                href="/register">Registrarse</a>
+                        </li>
+
+
+                        <!--/*
                                 Esto es un comentario "thymeleaf" - no se verá en el HTML
                                 El bloque de "debug" sólo está activado si application.properties tiene debug a "true"
                                     (ver StartupConfig.java para ver cómo se lee de la configuración
                                     y luego se escribe a ${application.debug})
                             */-->
-                           
-                            <li class="nav-link btn pt-1 align-self-center align-content-center" th:if="${application.debug}">
-                                <form  th:action="@{/login}" method="post">
-                                    <input type="hidden" name="username" value="a">
-                                    <input type="hidden" name="password" value="aa">
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">a</button>
-                                </form>
-                            </li>
-                            <li class="nav-link btn pt-1 debug align-self-center " th:if="${application.debug}">
-                                <form  th:action="@{/login}" method="post">
-                                    <input type="hidden" name="username" value="b">
-                                    <input type="hidden" name="password" value="aa">
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">u</button>
-                                </form>
-                            </li>
-                            <li class="nav-link btn pt-1 align-self-center" th:if="${application.debug}">
-                                <form  th:action="@{/login}" method="post">
-                                    <input type="hidden" name="username" value="e">
-                                    <input type="hidden" name="password" value="aa">
-                                    <button type="submit" class="btn btn-outline-danger btn-sm">e</button>
-                                </form>
-                            </li>
-                        </th:block>
+
+                        <li class="nav-link btn pt-1 align-self-center align-content-center"
+                            th:if="${application.debug}">
+                            <form th:action="@{/login}" method="post">
+                                <input type="hidden" name="username" value="a">
+                                <input type="hidden" name="password" value="aa">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">a</button>
+                            </form>
+                        </li>
+                        <li class="nav-link btn pt-1 debug align-self-center " th:if="${application.debug}">
+                            <form th:action="@{/login}" method="post">
+                                <input type="hidden" name="username" value="b">
+                                <input type="hidden" name="password" value="aa">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">u</button>
+                            </form>
+                        </li>
+                        <li class="nav-link btn pt-1 align-self-center" th:if="${application.debug}">
+                            <form th:action="@{/login}" method="post">
+                                <input type="hidden" name="username" value="e">
+                                <input type="hidden" name="password" value="aa">
+                                <button type="submit" class="btn btn-outline-danger btn-sm">e</button>
+                            </form>
+                        </li>
+                    </th:block>
                 </ul>
             </div>
         </div>

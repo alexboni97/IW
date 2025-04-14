@@ -46,6 +46,15 @@ if(config.user){
         }
     
     });
+}else if(config.admin){
+    go(config.rootUrl + "/admin/received", "GET").then(ms =>{
+        if(ms.length === 0) {
+            dropdownMenu.appendChild(sinNotis);
+        }else {
+        ms.forEach(m => dropdownMenu.appendChild(renderNoti(m)))
+        }
+    
+    });
 }
 
 // y aquí pinta mensajes según van llegando

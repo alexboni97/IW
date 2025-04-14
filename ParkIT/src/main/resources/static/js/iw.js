@@ -219,6 +219,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }else if (p && (config.enterprise || config.admin)) {
             go(`${config.rootUrl}/enterprise/unread`, "GET").then(d => p.textContent = d.unread);
         }
+        else{
+            go(`${config.rootUrl}/admin/unread`, "GET").then(d => p.textContent = d.unread);
+        }
     } else {
         console.log("Not opening websocket: missing config", config)
     }
