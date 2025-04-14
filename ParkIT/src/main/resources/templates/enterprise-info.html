@@ -9,20 +9,77 @@
     <main class="container text-center">
         <h1 class="m-3">Información Empresa</h1>
     </main>
-    <div class="containers d-flex justify-content-center">
+    <div class="container d-flex justify-content-center pt-0">
         <div th:replace="~{fragments/users-card.html :: users-card}">
         </div>
         <!--Lo hemos sacado de bootstrap-->
-        <div class="card shadow border-0 rounded-4 mb-5 mt-4 col col-5 ">
-            <div class="card-body p-4">
-                <ul class="list-group mt-3">
-                    <li class="list-group-item active text-center" aria-current="true"> Información de <span th:text="${user.name}"> NombreEmpresa</span></li>
+        <div class="container cards-container mb-4 mt-4 col col-5 ">
+            <!-- Número de parkings que posee la empresa  -->
+            <div class="col-12 mb-4">
+                <div class="card custom-card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="card-title text-xs font-weight-bold text-primary text-uppercase mb-1">Número de parkings</div>
+                                <div class="card-value h5 mb-0 font-weight-bold text-gray-800"><span th:text="${user.totalParkings}"> numParkings </span></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-building fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
 
-                    <li class="list-group-item">Numero de Parkings: <span th:text="${user.totalParkings}"> numParkings</span> </li>
-                    <li class="list-group-item">Peticiones pendientes: <span th:text="${user.pendingRequests}"> peticiones pendientes</span> </li>
-                    <li class="list-group-item">Número de plazas: <span th:text="${user.totalSpots}"> numero plazas de la empresa</span> </li>
-                    <li class="list-group-item">Saldo: <span th:text="${user.wallet}"> Saldo de la empresa</span> </li>
-                </ul>          
+                </div>
+            </div>
+            <!-- Solicitudes pendientes -->
+            <div class="col-12 mb-4">
+                <div class="card custom-card border-left-primary shadow h-100 py-2">
+                    <div class="card-body custom-card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="card-title text-xs font-weight-bold text-primary text-uppercase mb-1">Peticiones pendientes</div>
+                                <div class="card-value h5 mb-0 font-weight-bold text-gray-800"><span th:text="${user.pendingRequests}"> peticiones pendientes </span></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-building fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Número de plazas de la empresa  -->
+            <div class="col-12 mb-4">
+                <div class="card custom-card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="card-title text-xs font-weight-bold text-primary text-uppercase mb-1">Número de plazas</div>
+                                <div class="card-value h5 mb-0 font-weight-bold text-gray-800"><span th:text="${user.totalSpots}"> plazas </span></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-building fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Saldo de la empresa -->
+            <div class="col-12  mb-4">
+                <div class="card custom-card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="card-title text-xs font-weight-bold text-primary text-uppercase mb-1">Saldo</div>
+                                <div class="card-value h5 mb-0 font-weight-bold text-gray-800"><span th:text="${user.wallet}">  saldo </span></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-building fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>    
     
