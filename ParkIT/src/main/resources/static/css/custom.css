@@ -257,7 +257,6 @@ label:hover~label {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
   background-color: #fff; /* Fondo blanco */
   border-left: 4px solid #38b6ff; /* Borde azul a la izquierda */
-
 }
 
 
@@ -315,18 +314,13 @@ label:hover~label {
 }
 
 /* Colores personalizados para los íconos */
-.icon-parking {
+.fas {
   color: #858796; /* Azul oscuro para "Número de parkings" */
 }
 
-.icon-requests {
-  color: #858796; /* Naranja para "Peticiones pendientes" */
-}
+@media (max-width: 550px) {
 
-.icon-spots {
-  color: #858796; /* Verde turquesa para "Número de plazas" */
-}
-
-.icon-wallet {
-  color: #858796; /* Morado grisáceo para "Saldo" */
+  i.fas {
+    display: none; /* Ocultar íconos en pantallas pequeñas */
+  }
 }
