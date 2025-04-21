@@ -34,6 +34,7 @@
                     <th>Hora Inicio</th>
                     <th>Hora Final</th>
                     <th>Precio</th>
+                    <th>Estado</th>
                     <th></th>
                 </tr>
             </thead>
@@ -55,10 +56,14 @@
                             th:text="${r.endTime}">Hora Final</a></td>
                     <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve"
                             th:text="${r.price}">Precio</a></td>
+                    <td id="fila1"><a class="nav-link" th:href="@{/user/modify-reserve}" href="/user/modify-reserve"
+                            th:text="${r.state}">Estado</a></td>
                     <td id="fila1"><a class="btn btn-primary m-1" th:href="@{/user/modify-reserve}"
                             href="/user/modify-reserve">Modificar</a>
-                        <a class="btn btn-danger m-1" th:href="@{/user/my-reserves}"
-                            href="/user/my-reserves">Cancelar</a>
+                        <a class="btn btn-danger m-1" data-bs-toggle="modal" data-bs-target="#confirmCancelModal"
+                            th:attr="data-id=${r.id}">
+                            Cancelar
+                        </a>
                     </td>
                 </tr>
         </table>
@@ -66,4 +71,28 @@
     <footer th:replace="~{fragments/footer.html :: footer}"></footer>
 </body>
 
+<div class="modal fade" id="confirmCancelModal" tabindex="-1" aria-labelledby="confirmCancelModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="cancelForm" th:action="@{/user/cancel-reserve/__ID__}" method="post">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmCancelModalLabel">Confirmar Cancelación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Estás seguro de que deseas cancelar esta reserva?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                    <button type="submit" class="btn btn-danger">Sí, Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/my-reserves.js}"></script>
+
 </html>
+

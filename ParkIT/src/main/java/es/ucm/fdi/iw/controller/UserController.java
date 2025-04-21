@@ -475,6 +475,58 @@ public class UserController {
 		return "my-reserves";
 	}
 
+	@PostMapping("/cancel-reserve/{id}")
+	@Transactional
+	public String cancelReserve(@PathVariable long id, Model model) {
+		Reserve reserve = entityManager.find(Reserve.class, id);
+		if (reserve != null && reserve.getState() == Reserve.State.CONFIRMED) {
+			User user = reserve.getVehicle().getParker();
+			User sessionUser = (User) model.getAttribute("u");
+
+			if (user == null || sessionUser == null) {
+				model.addAttribute("error", "Usuario no válido");
+				return "error";
+			}
+
+			double userWallet = user.getWallet();
+			double price = reserve.getPrice();
+
+			reserve.setState(Reserve.State.CANCELLED);
+			user.setWallet(userWallet + price);
+			sessionUser.setWallet(userWallet + price);
+
+			Enterprise enterprise = reserve.getSpot().getParking().getEnterprise();
+			double enterpriseWallet = enterprise.getWallet();
+			enterprise.setWallet(enterpriseWallet - price);
+
+			notificarCancelacionReserva(user, reserve, enterprise);
+
+			model.addAttribute("success", "Reserva cancelada con éxito");
+		} else {
+			model.addAttribute("error", "Reserva ya canelada o no válida");
+		}
+		return myReserves(model);
+	}
+
+	private void notificarCancelacionReserva(User user, Reserve reserve, Enterprise enterprise) {
+		Message m = new Message();
+		m.setRecipient(enterprise);
+		m.setSender(user);
+		m.setDateSent(LocalDateTime.now());
+		m.setText("El usuario " + user.getUsername() + "ha cancelado una reserva en " + reserve.getSpot().getParking().getName() + " desde "
+				+ reserve.getStartDate() + " a " + reserve.getEndDate() + " de " + reserve.getStartTime() + " a "
+				+ reserve.getEndTime());
+		entityManager.persist(m);
+		entityManager.flush(); // to get Id before commit
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			String json = mapper.writeValueAsString(m.toTransfer());
+			messagingTemplate.convertAndSend("/enterprise/" + enterprise.getId() + "/queue/updates", json);
+		} catch (JsonProcessingException e) {
+			log.error("Error al enviar la notificación de reserva", e);
+		}
+	}
+
 	/**
 	 * Exception to use when denying access to unauthorized users.
 	 * 
