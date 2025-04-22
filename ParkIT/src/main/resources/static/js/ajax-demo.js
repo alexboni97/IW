@@ -110,5 +110,7 @@ document.querySelector("#postAvatar").onclick = e => {
         let cacheBuster = "?" + new Date().getTime();
         document.querySelector("a.nav-link>img.iwthumb").src = url + cacheBuster;
         document.querySelector("img.img-thumbnail").src = url + cacheBuster;
+        img.remove();
+        file.value='';
     });
 };
