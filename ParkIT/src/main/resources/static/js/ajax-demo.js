@@ -100,7 +100,7 @@ document.querySelector("#f_avatar").onchange = e => {
     console.log(img, fileInput);
     readImageFileData(fileInput.files[0], img);
 };
-// click en boton de enviar avatar
+// este es el metodo que actualiza la foto sin usar f5
 document.querySelector("#postAvatar").onclick = e => {
     e.preventDefault();
     let url = document.querySelector("#postAvatar").parentNode.action;
@@ -109,5 +109,6 @@ document.querySelector("#postAvatar").onclick = e => {
     postImage(img, url, "photo").then(() => {
         let cacheBuster = "?" + new Date().getTime();
         document.querySelector("a.nav-link>img.iwthumb").src = url + cacheBuster;
+        document.querySelector("img.img-thumbnail").src = url + cacheBuster;
     });
 };
