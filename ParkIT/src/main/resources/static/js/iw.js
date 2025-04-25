@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }else if (p && (config.enterprise || config.admin)) {
             go(`${config.rootUrl}/enterprise/unread`, "GET").then(d => p.textContent = d.unread);
         }
-        else{
+        else if( p && config.admin) {
             go(`${config.rootUrl}/admin/unread`, "GET").then(d => p.textContent = d.unread);
         }
     } else {

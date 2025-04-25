@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +35,7 @@ import es.ucm.fdi.iw.model.Parking;
 import es.ucm.fdi.iw.model.Request;
 import es.ucm.fdi.iw.model.Reserve;
 import es.ucm.fdi.iw.model.Spot;
+import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.Admin;
 import jakarta.persistence.EntityManager;
@@ -264,5 +266,33 @@ public class AdminController {
         model.addAttribute("requests", requests);
 
         return "request-delete";
+    }
+
+    /**
+     * Returns JSON with all received messages
+     */
+    @GetMapping(path = "received", produces = "application/json")
+    @Transactional // para no recibir resultados inconsistentes
+    @ResponseBody // para indicar que no devuelve vista, sino un objeto (jsonizado)
+    public List<Message.Transfer> retrieveMessages(HttpSession session) {
+        long userId = ((User) session.getAttribute("u")).getId();
+        User u = entityManager.find(User.class, userId);
+        log.info("Generating message list for user {} ({} messages)",
+                u.getUsername(), u.getReceived().size());
+        return u.getReceived().stream().map(Transferable::toTransfer).collect(Collectors.toList());
+    }
+
+    /**
+     * Returns JSON with count of unread messages
+     */
+    @GetMapping(path = "unread", produces = "application/json")
+    @ResponseBody
+    public String checkUnread(HttpSession session) {
+        long userId = ((User) session.getAttribute("u")).getId();
+        long unread = entityManager.createNamedQuery("Message.countUnread", Long.class)
+                .setParameter("userId", userId)
+                .getSingleResult();
+        session.setAttribute("unread", unread);
+        return "{\"unread\": " + unread + "}";
     }
 }

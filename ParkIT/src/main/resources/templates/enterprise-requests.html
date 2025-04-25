@@ -12,8 +12,8 @@
     <div class="container-fluid text-center">
         <h1>Mis solicitudes</h1>
     </div>
-    
-    
+
+
     <div class="container-fluid row p-1">
         <div th:if="${success}">
             <div class="alert alert-success">
@@ -44,32 +44,39 @@
                     <div class="accordion-body">
                         <div class="row">
                             <!-- Columna del mapa -->
-                            <div class="col-md-6 mapa-reserva map-container"
-                                    th:data-address="${request.address} + ', ' + ${request.city} + ', ' + ${request.country}" 
-                                    th:id="'mapa-' + ${request.id}">
+                            <div class="col-md-6 mapa-reserva map-container order-lg-1 order-1"
+                                th:data-address="${request.address} + ', ' + ${request.city} + ', ' + ${request.country}"
+                                th:id="'mapa-' + ${request.id}">
                             </div>
                             <!-- Columna de la información -->
-                            <div class="col-md-6">
+                            <div class="col-md-6 order-lg-2 order-2">
                                 <div class="card p-3">
                                     <div class="card-text">
                                         <p><strong>Nombre:</strong> <span th:text="${request.name}">Nombre</span></p>
-                                        <p><strong>Dirección:</strong> <span th:text="${request.address}">Dirección</span></p>
-                                        <p><strong>Código Postal:</strong> <span th:text="${request.cp}">Código Postal</span></p>
+                                        <p><strong>Dirección:</strong> <span
+                                                th:text="${request.address}">Dirección</span></p>
+                                        <p><strong>Código Postal:</strong> <span th:text="${request.cp}">Código
+                                                Postal</span></p>
                                         <p><strong>Ciudad:</strong> <span th:text="${request.city}">Ciudad</span></p>
                                         <p><strong>País:</strong> <span th:text="${request.country}">País</span></p>
-                                        <p><strong>Teléfono:</strong> <span th:text="${request.telephone}">Teléfono</span></p>
-                                        <p><strong>Fecha de apertura:</strong> <span th:text="${request.openingTime}">Fecha de apertura</span></p>
-                                        <p><strong>Fecha de cierre:</strong> <span th:text="${request.closingTime}">Fecha de cierre</span></p>
-                                        <p><strong>Precio/h:</strong> <span th:text="${request.feePerHour}">Precio/h</span></p>
+                                        <p><strong>Teléfono:</strong> <span
+                                                th:text="${request.telephone}">Teléfono</span></p>
+                                        <p><strong>Fecha de apertura:</strong> <span
+                                                th:text="${request.openingTime}">Fecha de apertura</span></p>
+                                        <p><strong>Fecha de cierre:</strong> <span
+                                                th:text="${request.closingTime}">Fecha de cierre</span></p>
+                                        <p><strong>Precio/h:</strong> <span
+                                                th:text="${request.feePerHour}">Precio/h</span></p>
                                         <p><strong>Tipo:</strong> <span th:text="${request.type}">Tipo</span></p>
-                                        <p><strong>Estado de la petición:</strong> <span th:text="${request.state}" th:class="${request.state == 'Pendiente' ? 'estado-pendiente' : request.state == 'Aceptada' ? 'estado-aceptado' : request.state == 'Rechazada' ? 'estado-rechazado' : ''}">
-                                        Estado
-                                    </span></p>
-                                        <div class="error"th:id="'error-' + ${request.id}"> </div>
+                                        <p><strong>Estado de la petición:</strong> <span th:text="${request.state}"
+                                                th:class="${request.state == 'Pendiente' ? 'estado-pendiente' : request.state == 'Aceptada' ? 'estado-aceptado' : request.state == 'Rechazada' ? 'estado-rechazado' : ''}">
+                                                Estado
+                                            </span></p>
+                                        <div class="error" th:id="'error-' + ${request.id}"> </div>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
-                        </div> 
+                        </div>
                     </div>
                 </div>
             </div>
