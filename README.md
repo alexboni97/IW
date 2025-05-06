@@ -77,9 +77,9 @@ La aplicación cuenta con varias vistas que dependiendo de si el usuario es part
 > **Descripción:** Eliminar una zona de aparcamiento en la empresa solicitante.
 > **URL:** [`/admin/request-delete`](http://localhost:8080/admin/request-delete)
 
-### 2. Proximamente en Vistas...
+### 2. Proximamente nuevas Vistas...
 #### 🔹 Elimnar Parking Empresa
-> **Descripción:** Añadir una zona nueva de aparcamiento en la empresa.
+> **Descripción:** Eliminar una zona nueva de aparcamiento en la empresa.
 
 #### 🔹 Modificar Reserva Usuario
 > **Descripción:** Formulario de modificar reserva de plaza de aparcamiento accesible desde vista Reservas [`/user/modify-reserve`](http://localhost:8080/user/modify-reserve)
@@ -96,6 +96,9 @@ La aplicación cuenta con varias vistas que dependiendo de si el usuario es part
 #### 🔹 Historial de empresa
 > **Descripción:** Estadísticas y datos de ocupación de los parkings de la empresa.
 
+### 2. Falta implementar...
+#### 🔹 Especificar dimensiones parking Empresa
+> **Descripción:** Falta añadir cuadrícula donde se vean plazas libres y ocupadas especificadas para una zona nueva de aparcamiento en la empresa.
 
 <a name="item2"></a>
 ## ⚙️ Instalación
