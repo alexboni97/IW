@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <th:block th:fragment="modify-reserve-form">
+        <div class="col mx-3">
+            <form action="/confirm-reserve" method="post">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="ini-f" class="form-label">Fecha inicio</label>
+                        <input type="date" class="form-control" id="ini-f" value="" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fin-f" class="form-label">Fecha final</label>
+                        <input type="date" class="form-control" id="fecha-f" value="" required />
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="ini-h" class="form-label">Hora inicio</label>
+                        <input type="time" class="form-control" id="ini-h" value="" required />
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fin-h" class="form-label">Hora final</label>
+                        <input type="time" class="form-control" id="fin-h" value="" required />
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                        <label for="vehiculo">Vehículo</label>
+                        <select
+                            class="form-select form-select-lg "
+                            name=""
+                            id=""
+                        >
+                            <option selected>Selecciona 1</option>
+                            <option value="">Coche 1</option>
+                            <option value="">Coche 2</option>
+                            <option value="">Coche 3</option> 
+                        </select>
+                        <div class="container text-center">
+                            <div th:replace="~{/fragments/new-car-modal.html :: new-car-modal}" ></div>
+                        </div>
+                        
+                </div>
+                <div class="row pt-1 m-1">
+                    
+                    <h4>Precio total:</h4>
+                    <p>0.00€</p>
+                </div>
+                <div class="row justify-content-center pt-5">
+                    <!-- <button class="btn btn-danger m-1 col col-lg-3">Cancelar</button> -->
+                    <a href="/user/my-reserves"class="btn btn-secondary m-1 col col-lg-3">Cancelar</a>
+                    <button class="btn btn-primary m-1 col col-lg-3">Modificar</button>
+                    <button class="btn btn-danger m-1 col col-lg-3">Eliminar</button>
+                </div>
+            </form>
+        </div>
+    </th:block>
+</html>

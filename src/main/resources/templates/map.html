@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/head.html :: header}" />
+    <title>Buscar Aparcamiento</title>
+    <th:block th:replace="~{fragments/leaflet.html :: head}" />
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="~{fragments/nav.html :: nav}"></header>
+
+    <div class="container">
+        <div th:replace="~{fragments/find-park-form.html :: find-park-form}"></div>
+        <div class="row mt-5 mb-5">
+            <div class="card mb-3 p-3 col col-lg-4 col-md-12 col-sm-12" style="max-width: 940px; min-width: 400px">
+                <!-- mapa leaflef -->
+                <div id="map"></div>
+            </div>
+            <div class="col">
+                <div th:replace="~{fragments/parkings-table.html :: parkings-table}"></div>
+            </div>
+            <!-- <img class="img-fluid mb-5 h-100 w-100" src="/img/mapa2.jpg" alt="map"> -->
+        </div>
+    </div>
+
+    <th:block th:replace="~{fragments/leaflet.html :: mapa}" />
+    <th:block th:replace="~{fragments/footer.html :: footer}" />
+</body>
+
+</html>

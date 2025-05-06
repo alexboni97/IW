@@ -1,0 +1,23 @@
+<th:block th:fragment="head">
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
+</th:block>
+
+<th:block th:fragment="mapa">
+
+    <!-- pasamos los parkings a js -->
+    <script th:inline="javascript">
+        var parkings = /*[[${parkings}]]*/[];
+    </script>
+
+    <!-- despues de cargar los parkings, cargamos el js -->
+    <script th:src="@{/js/mapaLeaflet.js}"></script>
+
+</th:block>

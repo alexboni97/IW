@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="reserve-form">
+    <div class="col mx-3">
+        <form method="post" th:action="@{/user/confirm-reserve}">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="ini-f" class="form-label">Fecha inicio</label>
+                    <input type="date" class="form-control" id="ini-f" name="startDate" th:value="${startDate}"
+                        required />
+                </div>
+                <div class="col-md-6">
+                    <label for="fin-f" class="form-label">Fecha final</label>
+                    <input type="date" class="form-control" id="fin-f" name="endDate" th:value="${endDate}" required />
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="ini-h" class="form-label">Hora inicio</label>
+                    <input type="time" class="form-control" id="ini-h" name="startTime" th:value="${startTime}"
+                        required />
+                </div>
+                <div class="col-md-6">
+                    <label for="fin-h" class="form-label">Hora final</label>
+                    <input type="time" class="form-control" id="fin-h" name="endTime" th:value="${endTime}" required />
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <label for="vehiculo">Vehículo</label>
+                <select class="form-select form-select-lg" name="vehicleId" id="vehicleId" required>
+                    <option th:if="${vehicleId == null}" value="" selected disabled>Selecciona 1</option>
+                    <option th:each="vehicle : ${vehicles}" th:value="${vehicle.id}" th:if="${vehicleId != null} and vehicleId == ${vehicle.id}"
+                        th:text="${vehicle.brand}+' '+${vehicle.model}+' ('+${vehicle.plate}+')'" selected></option>
+                    <option th:each="vehicle : ${vehicles}" th:value="${vehicle.id}"
+                        th:text="${vehicle.brand}+' '+${vehicle.model}+' ('+${vehicle.plate}+')'"></option>
+                </select>
+                <div class="container text-center">
+                    <div th:replace="~{fragments/new-car-modal.html :: new-car-modal}" ></div>
+                </div>
+
+            </div>
+            <div class="row pt-1 m-1">
+                <p id="errorMsg"></p>
+                <h4>Precio total:</h4>
+                <p><span id="totalPrecio">0.00</span>€</p>
+                <input type="hidden" name="totalPrice" id="totalPrice" value="0.00" />
+
+            </div>
+
+
+
+            <div class="row text-center mt-3">
+                <div th:if="${selectedSlot != null}" class="fw-bold text-success">
+                    <p>Plaza seleccionada: <span th:text="${selectedSlot}"></span></p>
+
+                    <button id="cambiar-plaza" class="btn btn-info" type="button">Cambiar Plaza</button>
+                </div>
+            
+                <div th:if="${selectedSlot == null}">
+
+                    <button id="seleccionar-plaza" class="btn btn-info" type="button">Seleccionar Plaza</button>
+                </div>
+            </div>
+            
+            
+
+            <div class="row justify-content-center pt-5">
+                <a  th:href="@{/user/map(startDate=${startDate}, endDate=${endDate}, startTime=${startTime}, endTime=${endTime})}" class="btn btn-danger m-1 col col-lg-3">Cancelar</a>
+                <div id="errorNotification" class="alert alert-danger d-none" role="alert"></div>
+                <input type="hidden" id="parkingId" name="parkingId" th:value="${parking.id}" />
+                <input type="hidden" name="selectedParkingSpot" id="selectedParkingSpot" th:value="${selectedSlot}" />
+                <button id="reservarFormulario" class="btn btn-primary m-1 col col-lg-3" type="submit">Reservar</button>
+            </div>
+        </form>
+    </div>
+    <script th:inline="javascript">
+        let precioPorHora = /*[[${parking.feePerHour}]]*/{};
+    </script>
+    <script th:src="@{/js/mapa-reserva.js}"></script>
+</th:block>
+
+</html>

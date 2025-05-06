@@ -1,0 +1,40 @@
+<div th:fragment="helpf" class="container">
+    <h1 class="mt-5">Preguntas frecuentes</h1>
+
+    <div class="input-group mt-4">
+        <input type="text" class="form-control" id="searchq" placeholder="Buscar preguntas frecuentes...">
+        <button class="btn btn-primary">Buscar</button>
+    </div>
+
+        <div id="qContainer" class="mt-5">
+            <div class="faq-item">
+                <h5>¿Cómo funciona?</h5>
+                <p class="faq-answer">Nuestra plataforma conecta a usuarios con información en tiempo real.</p>
+            </div>
+    
+            <div class="faq-item">
+                <h5>¿Está disponible en todas las ciudades?</h5>
+                <p class="faq-answer">Por ahora operamos en ciudades específicas, pero estamos en expansión.</p>
+            </div>
+    
+            <div class="faq-item">
+                <h5>¿Necesito registrarme?</h5>
+                <p class="faq-answer">Sí, necesitas una cuenta para acceder a todas las funciones.</p>
+            </div>
+    
+            <div class="faq-item">
+                <h5>¿Cómo se actualizan las plazas disponibles?</h5>
+                <p class="faq-answer">La información proviene de reportes en tiempo real de usuarios, empresas y administradores, además de algoritmos predictivos basados en datos históricos.</p>
+            </div>
+
+    <div class="mt-5 mb-5 pb-5">
+        <h2>¿Tienes alguna otra pregunta?</h2>
+        <form id="questionForm">
+            <div class="mb-3">
+                <label for="userQuestion" class="form-label">Tu pregunta:</label>
+                <textarea class="form-control" id="userQuestion" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Enviar</button>
+        </form>
+    </div>
+</div>

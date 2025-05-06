@@ -1,0 +1,26 @@
+<div th:fragment="parkings-table">
+    
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Calle</th>
+            <th>Precio/Hora</th>
+            <th>Horario</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        
+        <tr th:each="parking : ${parkings}">
+            <th th:text="${parking.name}">Nombre</th>
+            <th th:text ="${parking.address}">Calle</th>
+            <th th:text="${parking.feePerHour}">Precio/Hora</th>
+            <th th:text="${parking.openingTime} +' - ' + ${parking.closingTime}">horario</th>
+            <th>
+                <a th:href="@{/user/reserve/{id}(id=${parking.id}, startDate=${startDate}, endDate=${endDate}, startTime=${startTime}, endTime=${endTime})}" class="btn btn-primary" th:attr="parkingId=${parking.id}">Reservar</a>
+            </th>
+        </tr>
+        </tbody>
+    </table>
+</div>

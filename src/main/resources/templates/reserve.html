@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/head.html :: header}" />
+    <title>Reservar Plaza</title>
+    <th:block th:replace="~{fragments/leaflet.html :: head}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="~{fragments/nav.html :: nav}"></header>
+    <div class="container-fluid row p-5">
+        <div th:replace="~{fragments/parking-space-card.html :: ps-card}"></div>
+        <div th:replace="~{fragments/reserve-form.html :: reserve-form}"></div>
+        <div th:if="${error}">
+            <script>
+                toastr.error('[[${error}]]');
+            </script>
+        </div>
+
+        <div th:if="${success}">
+            <script>
+                toastr.success('[[${success}]]');
+            </script>
+        </div>
+    </div>
+
+    <footer th:replace="~{fragments/footer.html :: footer}"></footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+</body>
+
+</html>

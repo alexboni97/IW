@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Footer fragment - rest is empty</title>  <!-- no se que es esto, no lo utilizamos pero lo mismp deberiamos -->
+</head>
+
+<body>
+    <main class="flex-shrink-0">
+        <div class="container">
+            <h1 class="mt-5">mapa</h1>  
+        </div>
+        <th:block th:replace="~{fragments/things.html :: things}" />
+    </main>
+            
+        <!-- Bootstrap -->
+        <script th:src="@{/js/bootstrap.bundle-5.3.3.js}" src="js/bootstrap.bundle-5.3.3.js"></script>
+
+        <!-- Websockets -->
+        <script th:src="@{/js/stomp.js}" src="js/stomp.js"></script>
+        <script th:src="@{/js/iw.js}" src="js/iw.js"></script>
+
+        <!-- Otros scripts de interacción, aquí -->
+    </footer>
+</body>
+
+</html>

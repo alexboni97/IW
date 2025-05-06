@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Footer fragment - rest is empty</title>
+</head>
+
+<body>
+
+    <footer th:fragment="footer" class="footer mt-auto py-3 bg-dark text-white text-center">
+        <ul class="list-group list-group-flush "data-bs-theme="dark">
+            
+            <li class="list-group-item">
+
+                <div class="row">
+
+                    <div class="col col-sm-3">
+                        <br>
+                        <a href="/">
+                            <img src="/img/logo_full.png" alt="Logo" width="150em" height="150em" class="d-inline-block align-text-top">
+                        </a>
+                    </div>
+
+                    <div class="col col-sm-3">
+                        <br>
+                        <h4>PARTICULARES</h4>
+                        <a href="#">Reserva tu parking</a>
+                        <br>
+                        <a href="#">Promociones</a>
+                        <br>
+                        <a href="#">Resuelve tus dudas</a>
+                        <br>
+                        <a href="#">Ofertas de empleo</a>
+                        <br>
+                    </div>
+
+                    <div class="col col-sm-3">
+                        <br>
+                        <h4>EMPRESAS</h4>
+                        <a href="#">Soluciones para empresas</a>
+                        <br>
+                        <a href="#">Area inversores</a>
+                    </div>
+                    
+                    <div class="col col-sm-3">
+                        <br>
+                        <h4>SÍGUENOS EN</h4>
+                        <a href="#">Facebook</a>
+                        <br>
+                        <a href="#">Instagram</a>
+                        <br>
+                        <a href="#">Tik Tok</a>
+                        <br>
+                        <a href="#">Whatsapp</a>
+                        <br>
+                        <a href="#">X</a>
+                        <br>
+                    </div>
+                    
+                </div>
+
+            </li>
+
+            <li class="list-group-item">
+                <a href="#">Política de privacidad</a>
+                <a href="#">Política de cookies</a>
+                <a href="#">Aviso Legal</a>
+                <a href="#">Centro Legal</a>
+                <p>
+                    <span class="text-muted">&copy; 2025 ParkIT.</span>
+                </p>
+            </li>
+
+        </ul>
+            
+        <!-- Bootstrap -->
+        <script th:src="@{/js/bootstrap.bundle-5.3.3.js}" src="js/bootstrap.bundle-5.3.3.js"></script>
+
+        <!-- Websockets -->
+        <script th:src="@{/js/stomp.js}" src="js/stomp.js"></script>
+        <script th:src="@{/js/iw.js}" src="js/iw.js"></script>
+        <script th:src="@{/js/notificaciones.js}" src="js/notificaciones.js"></script>
+
+    </footer>
+</body>
+
+</html>

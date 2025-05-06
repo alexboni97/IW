@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/head.html :: header}"></th:block>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <title>Enterprise Information</title>
+</head>
+<body class="d-flex flex-column h-100">
+    <header th:replace="~{fragments/nav.html :: nav}"></header>
+    <main class="container text-center">
+        <h1 class="m-3">Información Empresa</h1>
+    </main>
+    <div class="container d-flex justify-content-center pt-0">
+        <div th:replace="~{fragments/users-card.html :: users-card}">
+        </div>
+        <!--Lo hemos sacado de bootstrap-->
+        <div class="container cards-container mb-4 mt-4 col col-5 ">
+            <!-- Número de parkings que posee la empresa  -->
+            <div class="col-12 mb-4">
+                <div class="card custom-card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="card-title text-xs font-weight-bold text-primary text-uppercase mb-1">Número de parkings</div>
+                                <div class="card-value h5 mb-0 font-weight-bold text-gray-800"><span th:text="${user.totalParkings}"> numParkings </span></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-parking fa-2x text-gray-300 icon-parking"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Solicitudes pendientes -->
+            <div class="col-12 mb-4">
+                <div class="card custom-card border-left-primary shadow h-100 py-2">
+                    <div class="card-body custom-card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="card-title text-xs font-weight-bold text-primary text-uppercase mb-1">Peticiones pendientes</div>
+                                <div class="card-value h5 mb-0 font-weight-bold text-gray-800"><span th:text="${user.pendingRequests}"> peticiones pendientes </span></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clock fa-2x text-gray-300 icon-requests"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Número de plazas de la empresa  -->
+            <div class="col-12 mb-4">
+                <div class="card custom-card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="card-title text-xs font-weight-bold text-primary text-uppercase mb-1">Número de plazas</div>
+                                <div class="card-value h5 mb-0 font-weight-bold text-gray-800"><span th:text="${user.totalSpots}"> plazas </span></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-car fa-2x text-gray-300 icon-spots"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Saldo de la empresa -->
+            <div class="col-12  mb-4">
+                <div class="card custom-card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="card-title text-xs font-weight-bold text-primary text-uppercase mb-1">Saldo</div>
+                                <div class="card-value h5 mb-0 font-weight-bold text-gray-800"><span th:text="${user.wallet}">  saldo </span></div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-wallet fa-2x text-gray-300 icon-wallet"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>    
+    
+    </div>
+
+<script th:src="@{/js/ajax-demo.js}"></script>
+</body>
+
+<footer th:replace="~{fragments/footer.html :: footer}"></footer>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{fragments/head.html :: header}" />
+    <title>ParkIT: Inicio</title>
+</head>
+
+<body class="d-flex flex-column h-100">
+    <header th:replace="~{fragments/nav.html :: nav}"></header>
+
+    <div class="container-fluid ">
+        <section class="row bg-light align-items-center p-4">
+            <div class="col-lg-6 text-lg-end order-lg-1 order-2">
+                <span>
+                    <h3 class="pt-md-1">Aparca donde quieras y cuando quieras...</h3>
+                    <p>Con ParkIT puedes encontrar aparcamiento en cualquier lugar de la ciudad, sin importar la hora o
+                        el día.</p>
+                    <a class="btn btn-dark btn-lg" href="/user/buscar-parking">Buscar</a>
+                    <a class="btn btn-light btn-lg" href="/register">¿No tienes cuenta? Registrate</a>
+                </span>
+            </div>
+            <div class="col-lg-6 text-lg-start text-center order-lg-2 order-1">
+                <img class="img-fluid" src="/img/ambient1.webp" alt="car-electric" style="width: 500px;">
+            </div>
+        </section>
+
+        <section class="row bg-dark text-white align-items-center p-4">
+            <div class="col-lg-6 text-lg-end text-center">
+                <img class="img-fluid" src="/img/ambient2.webp" alt="car-electric" style="width: 500px;">
+            </div>
+            <div class="col-lg-6 text-start ">
+                <h3>Aparca donde quieras y cuando quieras...</h3>
+                <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat quos atque enim officiis,
+                    delectus, excepturi, fugiat iure ab rerum voluptas molestias. Magni quos perspiciatis deleniti
+                    itaque neque cumque fugit ipsam.</span>
+            </div>
+        </section>
+
+        <section class="row bg-light align-items-center p-4">
+            <div class="col-lg-6 text-lg-end order-lg-1 order-2">
+                <h3>Aparca donde quieras y cuando quieras...</h3>
+                <span>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Placeat quos atque enim officiis,
+                    delectus, excepturi, fugiat iure ab rerum voluptas molestias. Magni quos perspiciatis deleniti
+                    itaque neque cumque fugit ipsam.</span>
+            </div>
+            <div class="col-lg-6 text-lg-start text-center order-lg-2 order-1">
+                <img class="img-fluid" src="/img/ambient1.webp" alt="car-electric" style="width: 500px;">
+            </div>
+        </section>
+
+    </div>
+    <th:block th:replace="~{fragments/footer.html :: footer}" />
+</body>
+
+</html>
