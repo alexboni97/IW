@@ -69,7 +69,6 @@ public class EnterpriseController {
 
     @GetMapping("/")
     public String index(Model model) {
-        log.info("Empresa acaba de entrar");
         return "enterprise";
     }
 
