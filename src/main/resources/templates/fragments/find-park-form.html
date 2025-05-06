@@ -40,8 +40,8 @@
             <div class="col">
                 <label for="endDate" class="form-label">Fecha de salida</label>
                 <div class="input-group">
-                    <input type="date" class="form-control" name="endDate" id="endDate" aria-describedby="endDateId"
-                        th:value="${endDate}" required/>
+                    <input type="date" class="form-control" name="endDate" id="endDate" 
+                        aria-describedby="endDateId" th:value="${endDate}" required/>
                 </div>
             </div>
 
@@ -67,40 +67,18 @@
 
         <div class="row mt-3">
 
-            <div class="col-2">
-                <button type="button" class="btn btn-lg btn-outline-dark w-100" onclick="fillForm()">Rellenar</button>
-            </div>
-            <script>
-                function fillForm() {
-                    const now = new Date();
-                    const startDate = now.toISOString().split('T')[0];
-                    const startTime = now.toTimeString().split(':').slice(0, 2).join(':');
-                    
-                    now.setMinutes(now.getMinutes() + 30); // Add 30 minutes
-                    const startDatePlus30 = now.toISOString().split('T')[0];
-                    const startTimePlus30 = now.toTimeString().split(':').slice(0, 2).join(':');
-                    
-                    now.setHours(now.getHours() + 2); // Add 2 hours
-                    const endDate = now.toISOString().split('T')[0];
-                    const endTime = now.toTimeString().split(':').slice(0, 2).join(':');
-
-                    document.getElementById('startDate').value = startDatePlus30;
-                    document.getElementById('startTime').value = startTimePlus30;
-                    document.getElementById('endDate').value = endDate;
-                    document.getElementById('endTime').value = endTime;
-                }
-            </script>
-
-            <div class="col-5">
+            <div class="col-6">
                 <button type="submit" class="btn btn-lg btn-outline-dark w-100">Buscar</button>
             </div>
 
-            <div class="col-5">
+            <div class="col-6">
                 <button type="reset" class="btn btn-lg btn-outline-dark w-100">Borrar datos</button>
             </div>
 
         </div>
 
     </form>
+
+    <script th:src="@{/js/find-park-form.js}"></script>
 
 </div>
