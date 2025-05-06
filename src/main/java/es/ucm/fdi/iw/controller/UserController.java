@@ -147,15 +147,17 @@ public class UserController {
 		if (isParker(session)) {
 			List<Parking> parkings = entityManager.createNamedQuery("Parking.findByEnabled", Parking.class)
 					.setParameter("enabled", true).getResultList();
-
+					
 			LocalDate today = LocalDate.now();
 			LocalTime timeNow = LocalTime.now();
-
+					
+			log.info("generando transfers de parkings");
 			List<Transfer> transferParkings = new ArrayList<>();
 
 			if (startDate != null && endDate != null && startTime != null && endTime != null
 					&& (startDate.isAfter(today) || startDate.isEqual(today) && startTime.isAfter(timeNow))) {
 				for (Parking p : parkings) {
+					log.info("comprobando parking " + p.getName());
 					List<Spot> spots = p.getSpots();
 					List<Reserve> reserves = new ArrayList<>();
 					for (Spot s : spots) {
@@ -168,8 +170,9 @@ public class UserController {
 							if ((r.getStartDate().isBefore(endDate) && r.getEndDate().isAfter(startDate)) ||
 									(r.getStartDate().isEqual(startDate) && r.getStartTime().isBefore(endTime)) ||
 									(r.getEndDate().isEqual(endDate) && r.getEndTime().isAfter(startTime))) {
-								System.out.println("reservado");
+								log.info("reservado -> no se añade");
 							} else {
+								log.info("no reservado -> se añade");
 								transferParkings.add(p.toTransfer());
 								break;
 							}
@@ -177,11 +180,6 @@ public class UserController {
 					}
 
 				}
-			}
-
-			System.out.println("transferssss");
-			for (Transfer p : transferParkings) {
-				System.out.println(p.getName());
 			}
 
 			model.addAttribute("parkings", transferParkings);
@@ -214,7 +212,7 @@ public class UserController {
 			return "error";
 		}
 		Parker parker = (Parker) session.getAttribute("u");
-		System.out.println(parker.getId());
+		log.info("realizando reserva de parker" + parker.getId());
 		List<Vehicle> vehicles = entityManager
 				.createQuery("SELECT v FROM Vehicle v WHERE v.parker.id = :parkerId", Vehicle.class)
 				.setParameter("parkerId", parker.getId())
@@ -230,7 +228,6 @@ public class UserController {
 		model.addAttribute("vehicleId", vehicleId);
 		model.addAttribute("selectedSlot", selectedSlot);
 
-		System.out.println(parking.getAddress());
 		return "reserve";
 	}
 

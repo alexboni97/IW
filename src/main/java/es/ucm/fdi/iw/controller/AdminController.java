@@ -71,7 +71,6 @@ public class AdminController {
 
     @GetMapping("/")
     public String index(Model model) {
-        log.info("Admin acaba de entrar");
         return "admin";
     }
 
