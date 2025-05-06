@@ -59,21 +59,13 @@
                             <li class="nav-link ">
                                 <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}"
                                     th:href="@{/enterprise/enterprise-requests}"
-                                    href="/enterprise/enterprise-requests">Solicitudes</a>
+                                    href="/enterprise/enterprise-requests">Mis solicitudes</a>
                             </li>
                             <li class="nav-link ">
                                 <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}"
                                     th:href="@{/enterprise/enterprise-parkings}"
-                                    href="/enterprise/enterprise-parkings">Ver</a>
+                                    href="/enterprise/enterprise-parkings">Ver parkings</a>
                             </li>
-                            <li class="nav-link ">
-                                <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}"
-                                    th:href="@{/enterprise/add-parking}" href="/enterprise/add-parking">Añadir</a>
-                            </li>
-                            <li class="nav-link ">
-                                <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}" href="#">Eliminar</a>
-                            </li>
-
                             <li class="nav-link ">
                                 <a class="nav-link" th:if="${u.hasRole('ADMIN')}" th:href="@{/admin/}">Administrar</a>
                             </li>
@@ -193,16 +185,11 @@
                                 th:href="@{/user/map}" href="/user/map">Buscar</a></li>
                         <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ENTERPRISE')}"
                                 th:href="@{/enterprise/enterprise-requests}"
-                                href="/enterprise/enterprise-requests">Solicitudes</a>
+                                href="/enterprise/enterprise-requests">Mis solicitudes</a>
                         </li>
                         <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ENTERPRISE')}"
                                 th:href="@{/enterprise/enterprise-parkings}" href="/enterprise/enterprise-parkings">Ver
-                                Parkings</a></li>
-                        <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ENTERPRISE')}"
-                                th:href="@{/enterprise/add-parking}" href="/enterprise/add-parking">Añadir Parking</a>
-                        </li>
-                        <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ENTERPRISE')}"
-                                href="#">Eliminar Parking</a></li>
+                                parkings</a></li>
                         <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ADMIN')}"
                                 th:href="@{/admin/}">Administrar</a></li>
                         <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ADMIN')}"
