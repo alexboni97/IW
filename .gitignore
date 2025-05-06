@@ -34,5 +34,8 @@ hs_err_pid*
 iwdb.mv.db
 iwdb.trace.db
 
-
 credentials.json
+
+# Ignore target and iwdata directories
+target/
+iwdata/
