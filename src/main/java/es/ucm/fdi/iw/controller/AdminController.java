@@ -136,6 +136,7 @@ public class AdminController {
             }
 
             request.setEnabled(false);
+            request.setState("Aceptada");
             entityManager.persist(request);
             Admin admin = (Admin) session.getAttribute("u");
             notificarEstadoParking(admin, p, request);
@@ -194,6 +195,7 @@ public class AdminController {
             parking.setEnabled(false);
             entityManager.persist(parking);
             request.setEnabled(false);
+            request.setState("Aceptada");
             entityManager.persist(request);
             Admin admin = (Admin) session.getAttribute("u");
             notificarEstadoParking(admin, parking, request);
@@ -218,6 +220,7 @@ public class AdminController {
             }
 
             request.setEnabled(false);
+            request.setState("Rechazada");
             entityManager.persist(request);
             Admin admin = (Admin) session.getAttribute("u");
             notificarEliminarRequest(admin, request);

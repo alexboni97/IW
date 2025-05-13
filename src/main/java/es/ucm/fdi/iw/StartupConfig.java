@@ -329,6 +329,7 @@ public class StartupConfig {
         req1.setIdParking(-1);
         req1.setTotalSpots(20); // TODO
         req1.setType("AÑADIR");
+        req1.setState("Pendiente");
         req1.setCountry("España");
         req1.setEnterprise(e);
         entityManager.persist(req1);
@@ -349,6 +350,7 @@ public class StartupConfig {
         req2.setIdParking(1027);
         req2.setTotalSpots(20); // TODO
         req2.setType("ELIMINAR");
+        req2.setState("Pendiente");
         req2.setCountry("España");
         req2.setEnterprise(e);
         entityManager.persist(req2);
@@ -367,6 +369,7 @@ public class StartupConfig {
         req3.setIdParking(-1);
         req3.setTotalSpots(20); // TODO
         req3.setType("AÑADIR");
+        req3.setState("Pendiente");
         req3.setCountry("España");
         req3.setEnterprise(e);
         entityManager.persist(req3);
@@ -385,6 +388,7 @@ public class StartupConfig {
         req4.setIdParking(1027);
         req4.setTotalSpots(20); // TODO
         req4.setType("AÑADIR");
+        req4.setState("Pendiente");
         req4.setCountry("Paula");
         req4.setEnterprise(e);
         entityManager.persist(req4);
@@ -408,6 +412,7 @@ public class StartupConfig {
         req5.setIdParking(parking2.getId());
         req5.setTotalSpots(parking2.getSpots().size()); // TODO
         req5.setType("ELIMINAR");
+        req5.setState("Pendiente");
         entityManager.persist(req5);
 
         /*
