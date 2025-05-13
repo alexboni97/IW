@@ -241,6 +241,50 @@ public class EnterpriseController {
         // return enterpriseRequests(model);
     }
 
+    @PostMapping("/delete-parking")
+    @Transactional
+    public String deleteParking(@RequestParam Long parkingId, Model model, HttpSession session) {
+        try {
+            Parking parking = entityManager.find(Parking.class, parkingId);
+
+            if (parking != null) {
+
+                Request request = new Request();
+                request.setName(parking.getName());
+                request.setAddress(parking.getAddress());
+                request.setEnabled(true);
+                request.setCp(parking.getCp());
+                request.setCity(parking.getCity());
+                request.setCountry(parking.getCountry());
+                request.setTelephone(parking.getTelephone());
+                request.setEmail(parking.getEmail());
+                request.setFeePerHour(parking.getFeePerHour());
+                request.setLatitude(0.0);
+                request.setLongitude(0.0);
+                request.setOpeningTime(parking.getOpeningTime());
+                request.setClosingTime(parking.getClosingTime());
+                request.setState("Pendiente");
+                request.setType("ELIMINAR");
+                request.setTotalSpots(parking.getSpots().size());
+                request.setEnterprise((Enterprise) session.getAttribute("u"));
+                request.setIdParking(parkingId);
+
+                entityManager.persist(request);
+
+                entityManager.flush();
+                entityManager.clear();
+
+                model.addAttribute("success", "Solicitud de eliminación de parking realizada con éxito.");
+            } else {
+                model.addAttribute("error", "No se encontró el parking con id " + parkingId);
+            }
+        } catch (Exception e) {
+            model.addAttribute("error", "Hubo un error al procesar la solicitud: " + e.getMessage());
+        }
+
+        return "redirect:/enterprise/enterprise-requests";
+    }
+
     /**
      * Returns JSON with all received messages
      */

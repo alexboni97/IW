@@ -34,9 +34,12 @@
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         th:data-bs-target="'#collapse-' + ${request.id}" aria-expanded="false"
                         th:aria-controls="'collapse-' + ${request.id}">
-                        <p>
-                            <span th:text="${request.name}">Nombre</span>
-                        </p>
+                        <p><span th:text="${request.name}">Nombre</span></p>
+                        <p>, Estado: <span th:text="${request.state}"
+                                th:class="${request.state == 'Pendiente' ? 'estado-pendiente' : request.state == 'Aceptada' ? 'estado-aceptado' : request.state == 'Rechazada' ? 'estado-rechazado' : ''}">
+                                Estado
+                            </span></p>
+                        <p>, <span th:text="${request.type}">Tipo</span></p>
                     </button>
                 </h2>
                 <div th:id="'collapse-' + ${request.id}" class="accordion-collapse collapse"

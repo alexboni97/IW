@@ -12,7 +12,14 @@
 
     <div class="container-fluid row p-5">
         <div class="accordion" id="parkingAccordion">
-            <div th:each="request : ${requests}" class="accordion-item">
+            <div th:if="${#lists.isEmpty(requests)}" class="d-flex justify-content-center align-items-center w-100"
+                style="height: 50vh;">
+                <div class="text-center">
+                    <h3 class="text-muted">No hay solicitudes pendientes.</h3>
+                </div>
+            </div>
+
+            <div th:if="${not #lists.isEmpty(requests)}" class="accordion" id="parkingAccordion">
                 <h2 class="accordion-header" th:id="'heading-' + ${request.id}">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                         th:data-bs-target="'#collapse-' + ${request.id}" aria-expanded="false"
