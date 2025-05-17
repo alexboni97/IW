@@ -31,9 +31,16 @@
                 <div class="mb-3">
                   <img class="preview w-100 h-100" id="avatar" />
                 </div>
-                <form id="avatarform" th:action="@{/user/__${user.id}__/pic}" method ="post" enctype="multipart/form-data">
+                <div th:if="${u.hasRole('ENTERPRISE')}" >
+                  <form id="avatarform" th:action="@{/enterprise/__${user.id}__/pic}" method ="post" enctype="multipart/form-data">
                   <button id="postAvatar" class="perfilable btn btn-outline-dark w-100">Usar como foto de perfil</button>
-                </form>
+                  </form>
+                </div>
+                <div th:if="${u.hasRole('USER')}" >
+                  <form id="avatarform" th:action="@{/user/__${user.id}__/pic}" method ="post" enctype="multipart/form-data">
+                  <button id="postAvatar" class="perfilable btn btn-outline-dark w-100">Usar como foto de perfil</button>
+                  </form>
+                </div>
               </div>
 
         </div>

@@ -3,9 +3,12 @@ package es.ucm.fdi.iw.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,6 +67,11 @@ public class EnterpriseController {
             model.addAttribute(name, session.getAttribute(name));
         }
     }
+
+    private boolean isEnterprise(HttpSession session) {
+		Enterprise enterprise = (Enterprise) session.getAttribute("u");
+		return enterprise != null;
+	}
 
     private static final Logger log = LogManager.getLogger(EnterpriseController.class);
 
@@ -312,4 +320,85 @@ public class EnterpriseController {
         session.setAttribute("unread", unread);
         return "{\"unread\": " + unread + "}";
     }
+
+    /* EJERCICIO MÍO. TENGO QUE CREAR UNA VISTA QUE MUESTRE PARA CADA PARKING DE LA EMPRESA LOS SPOTS QUE ESTÁN RESERVADOS*/
+    @GetMapping("/enterprise-reserved-spots")
+    @Transactional
+    public String reservedSpots(HttpSession session, Model model) {
+
+        /* Verificamos que el usuario sea una enterprise y el id coincida con el de la sesión */
+        if (isEnterprise(session)) {
+            List<Parking> parkings = entityManager
+                    .createNamedQuery("Parking.findByEnterpriseandEnabled", Parking.class)
+                    .setParameter("enterprise", session.getAttribute("u"))
+                    .setParameter("enabled", true)
+                    .getResultList();
+            List<Map<String,Object>> parkingStats = new ArrayList<>();
+            LocalDate currentDate = LocalDate.now();
+            LocalTime currentTime = LocalTime.now();
+
+            for (Parking parking : parkings) {
+                List<Spot> spots = entityManager
+                        .createNamedQuery("Spot.findByParking", Spot.class)
+                        .setParameter("parking", parking)
+                        .getResultList();
+
+                int reservedSpots = 0;
+                for (Spot spot : spots) {
+                    for (Reserve reserve : spot.getReserves()) {
+                        if ((reserve.getState() == Reserve.State.CONFIRMED || reserve.getState() == Reserve.State.PENDING) &&
+                        ((reserve.getStartDate().isBefore(currentDate) ||  reserve.getStartDate().isEqual(currentDate) && reserve.getStartTime().isBefore(currentTime)) &&
+                        (reserve.getEndDate().isAfter(currentDate) || reserve.getEndDate().isEqual(currentDate) && reserve.getEndTime().isAfter(currentTime)))) {
+                            reservedSpots++;
+                            break;
+                        }
+                    }
+                }
+                
+                //Porcentaje de plazas ocupadas
+                double occupancyPercentage = reservedSpots > 0 ? (reservedSpots * 100.0 / reservedSpots) : 0.0;
+
+                int freeSpots = spots.size() - reservedSpots;
+                
+                Map<String, Object> stats = Map.of(
+                        "parkingName", parking.getName(),
+                        "reservedSpots", reservedSpots,
+                        "totalSpots", spots.size(),
+                        "occupancyPercentage", occupancyPercentage,
+                        "freeSpots", freeSpots
+                );
+
+                parkingStats.add(stats);
+            }
+            model.addAttribute("parkingStats", parkingStats);
+            return "enterprise-reserved-spots";
+        }
+        else {
+            return "login";
+        }
+
+    }
+
+    // Muestra los detalles de un parking
+    @GetMapping("/{eid}/parking/{pid}")
+    public String parkingDetails(@PathVariable long eid, @PathVariable long pid, Model model, HttpSession session) {
+        Enterprise enterprise = (Enterprise) session.getAttribute("u");
+        if (enterprise == null || enterprise.getId() != eid) {
+            model.addAttribute("error", "Acceso no autorizado");
+            return "error";
+        }
+
+        Parking parking = entityManager.find(Parking.class, pid);
+        if (parking == null || parking.getEnterprise().getId() != eid) {
+            model.addAttribute("error", "Parking no válido");
+            return "error";
+        }
+
+        model.addAttribute("parking", parking);
+        model.addAttribute("enterprise", enterprise);
+        return "parking-details"; // Devuelve la vista de detalles del parking
+    }
+    
+
+
 }

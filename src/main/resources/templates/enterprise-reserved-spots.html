@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/head.html :: header}" />
+    <title>Plazas reservadas</title>
+</head>
+<!-- Nav y footer siempre dentro del body. -->
+<body class="d-flex flex-column h-100">
+    <header th:replace="~{fragments/nav.html :: nav}"></header>
+    <div class="container">
+        <h1 class="text-center mt-3"> ESTADÍSTICAS DE PLAZAS </h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Plazas totales</th>
+                    <th>Plazas libres</th>
+                    <th>Plazas ocupadas</th>
+                    <th>Porcentaje de ocupadas</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="parking : ${parkingStats}">
+                    <td id="fila1"><a class="nav-link" th:text="${parking.parkingName}">Nombre</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${parking.totalSpots}">Plazas totales</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${parking.freeSpots}">Plazas libre</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${parking.reservedSpots}">Plazas reservadas</a></td>
+                    <td id="fila1"><a class="nav-link" th:text="${parking.occupancyPercentage}">Porcentaje de ocupación</a></td>
+                </tr>
+        </table>
+
+    </div>   
+    <footer th:replace="~{fragments/footer.html :: footer}"></footer>
+</body>
+
+</html>

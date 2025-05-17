@@ -55,7 +55,11 @@
                                 <a class="nav-link" th:if="${u.hasRole('USER')}" th:href="@{/user/map}"
                                     href="/user/buscar-parking">Buscar</a>
                             </li>
-
+                            <li class="nav-link ">
+                                <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}"
+                                    th:href="@{/enterprise/enterprise-reserved-spots}"
+                                    href="/enterprise/enterprise-reserved-spots">Mis plazas reservadas</a>
+                            </li>
                             <li class="nav-link ">
                                 <a class="nav-link" th:if="${u.hasRole('ENTERPRISE')}"
                                     th:href="@{/enterprise/enterprise-requests}"
@@ -183,6 +187,10 @@
                                 href="/user/my-reserves">Reservas</a></li>
                         <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('USER')}"
                                 th:href="@{/user/map}" href="/user/map">Buscar</a></li>
+                        <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ENTERPRISE')}"
+                                th:href="@{/enterprise/enterprise-reserved-spots}"
+                                href="/enterprise/enterprise-reserved-spots">Mis plazas reservadas</a>
+                        </li>
                         <li><a class="nav-link btn btn-outline-secondary pt-1" th:if="${u.hasRole('ENTERPRISE')}"
                                 th:href="@{/enterprise/enterprise-requests}"
                                 href="/enterprise/enterprise-requests">Mis solicitudes</a>
