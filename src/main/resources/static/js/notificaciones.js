@@ -85,7 +85,7 @@ if (ws.receive) {
             let ul = reservasTd.querySelector("ul");
 
             const reserva = document.createElement('li');
-            reserva.textContent = reservaJSON.startDate + " " + reservaJSON.startTime + "-" + reservaJSON.endDate + " " + reservaJSON.endTime;
+            reserva.textContent = reservaJSON.startDate + " " + reservaJSON.startTime + " - " + reservaJSON.endDate + " " + reservaJSON.endTime;
             ul.appendChild(reserva);
         }
     }
