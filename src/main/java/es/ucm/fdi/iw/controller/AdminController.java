@@ -37,6 +37,7 @@ import es.ucm.fdi.iw.model.Reserve;
 import es.ucm.fdi.iw.model.Spot;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.Message.Type;
 import es.ucm.fdi.iw.model.Admin;
 import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.HttpServletRequest;
@@ -154,6 +155,7 @@ public class AdminController {
         m.setRecipient(enterprise);
         m.setSender(admin);
         m.setDateSent(LocalDateTime.now());
+        m.setType(Type.MOSTRAR);
         if (request.getType().equals("AÑADIR")) {
             m.setText("Se ha aceptado la solicitud de añadir el parking " + parking.getName() + " en la dirección "
                     + parking.getAddress());
@@ -238,6 +240,7 @@ public class AdminController {
         m.setRecipient(enterprise);
         m.setSender(admin);
         m.setDateSent(LocalDateTime.now());
+        m.setType(Type.MOSTRAR);
         if (request.getType().equals("AÑADIR")) {
             m.setText("Se ha rechazado la solicitud de añadir el parking " + request.getName() + " en la dirección "
                     + request.getAddress());

@@ -12,6 +12,7 @@ import es.ucm.fdi.iw.model.Spot;
 import es.ucm.fdi.iw.model.Transferable;
 import es.ucm.fdi.iw.model.User;
 import es.ucm.fdi.iw.model.Vehicle;
+import es.ucm.fdi.iw.model.Message.Type;
 import es.ucm.fdi.iw.model.User.Role;
 import io.micrometer.common.lang.Nullable;
 
@@ -333,18 +334,22 @@ public class UserController {
 	}
 
 	private void notificarReserva(User user, Reserve reserve, Parking parking) {
-		Message m = new Message();
-		Enterprise enterprise = parking.getEnterprise();
-		m.setRecipient(enterprise);
-		m.setSender(user);
-		m.setDateSent(LocalDateTime.now());
-		m.setText("Se ha realizado una reserva en " + parking.getName() + " desde " + reserve.getStartDate() + " a "
-				+ reserve.getEndDate() + " de " + reserve.getStartTime() + " a " + reserve.getEndTime());
-		entityManager.persist(m);
-		entityManager.flush(); // to get Id before commit
-		ObjectMapper mapper = new ObjectMapper();
 		try {
-			String json = mapper.writeValueAsString(m.toTransfer());
+			Message m = new Message();
+			Enterprise enterprise = parking.getEnterprise();
+			m.setRecipient(enterprise);
+			m.setSender(user);
+			m.setDateSent(LocalDateTime.now());
+			/*m.setText("Se ha realizado una reserva en " + parking.getName() + " desde " + reserve.getStartDate() + " a "
+			+ reserve.getEndDate() + " de " + reserve.getStartTime() + " a " + reserve.getEndTime());*/
+			ObjectMapper mapper = new ObjectMapper();
+			System.out.println("----------------------------");
+			m.setText(mapper.writeValueAsString(reserve.toTransfer()));
+			System.out.println(m.getText());
+			m.setType(Type.ACTUALIZAR);
+			entityManager.persist(m);
+			entityManager.flush(); // to get Id before commit
+				String json = mapper.writeValueAsString(m.toTransfer());
 			messagingTemplate.convertAndSend("/enterprise/" + enterprise.getId() + "/queue/updates", json);
 		} catch (JsonProcessingException e) {
 			log.error("Error al enviar la notificación de reserva", e);
@@ -769,6 +774,8 @@ public class UserController {
 		m.setSender(sender);
 		m.setDateSent(LocalDateTime.now());
 		m.setText(text);
+		m.setType(Type.MOSTRAR);
+		
 		entityManager.persist(m);
 		entityManager.flush(); // to get Id before commit
 

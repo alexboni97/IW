@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import es.ucm.fdi.iw.LocalData;
 import es.ucm.fdi.iw.model.User;
+import es.ucm.fdi.iw.model.Message.Type;
 import es.ucm.fdi.iw.model.Enterprise;
 import es.ucm.fdi.iw.model.Message;
 import es.ucm.fdi.iw.model.Parker;
@@ -130,6 +132,12 @@ public class EnterpriseController {
                 .createNamedQuery("Spot.findByParking", Spot.class)
                 .setParameter("parking", parking)
                 .getResultList();
+
+        List<Spot.Transfer> spotTransfers = new ArrayList<>();
+        for (Spot spot : spots) {
+            spotTransfers.add(spot.toTransfer());
+        }
+        model.addAttribute("spotTransfers", spotTransfers);
         model.addAttribute("spots", spots);
         return "enterprise-plazas";
     }
@@ -222,6 +230,8 @@ public class EnterpriseController {
             message.setRecipient(null); // null para enviar a todos los administradores
             message.setDateSent(LocalDateTime.now());
             message.setText(notificationText);
+            message.setType(Type.MOSTRAR);
+            
             entityManager.persist(message);
 
             // Convertir el mensaje a JSON y enviarlo
