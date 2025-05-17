@@ -126,7 +126,10 @@ La aplicación cuenta con varias vistas que dependiendo de si el usuario es part
 <a name="item3"></a>
 ## 📌 Uso
 
-1. Iniciar sesión.
+1. Iniciar sesión con uno de los usuarios existentes.
+> Usuario: "a". Contraseña: "aa" (para Usuario Admin)  
+> Usuario: "b" Contraseña:"aa" (para Usuario Parker)  
+> Usuario: "e" Contraseña: "aa"   (para Usuario Empresa)  
 2. Buscar un aparcamiento disponible en el mapa interactivo.
 3. Reservar una plaza del parking para unas fechas concretas.
 4. Ver reservas y gestionarlas.
