@@ -51,12 +51,38 @@
         </form>
 
         <div class="row mb-3">
-          <button class="btn btn-outline-dark w-100" type="submit">Cargar Saldo</button>
+            <div class="col">
+              <button class="btn btn-outline-dark w-100" type="button" data-bs-toggle="modal" data-bs-target="#modalSaldo">Cargar Saldo</button>
+            </div>
         </div>
-
       </div>
     </div>
   </div>
+
+<!-- Modal Cargar Saldo -->
+<div class="modal fade" id="modalSaldo" tabindex="-1" aria-labelledby="modalSaldoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalSaldoLabel">Cargar saldo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formCargarSaldo" method="post" th:action="@{'/user/' + ${u.id} + '/cargar-saldo'}">
+          <div class="mb-3">
+            <label for="monto" class="form-label">Monto a cargar</label>
+            <input type="number" class="form-control" id="monto" name="monto" min="1" required>
+          </div>
+          <div class="text-end">
+            <button type="submit" class="btn btn-primary">Confirmar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
   <!-- <main class="flex-shrink-0">
     <div id="books" class="border border-2 border-primary rounded">

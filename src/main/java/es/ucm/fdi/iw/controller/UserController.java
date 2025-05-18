@@ -148,10 +148,10 @@ public class UserController {
 		if (isParker(session)) {
 			List<Parking> parkings = entityManager.createNamedQuery("Parking.findByEnabled", Parking.class)
 					.setParameter("enabled", true).getResultList();
-					
+
 			LocalDate today = LocalDate.now();
 			LocalTime timeNow = LocalTime.now();
-					
+
 			log.info("generando transfers de parkings");
 			List<Transfer> transferParkings = new ArrayList<>();
 
@@ -340,8 +340,12 @@ public class UserController {
 			m.setRecipient(enterprise);
 			m.setSender(user);
 			m.setDateSent(LocalDateTime.now());
-			/*m.setText("Se ha realizado una reserva en " + parking.getName() + " desde " + reserve.getStartDate() + " a "
-			+ reserve.getEndDate() + " de " + reserve.getStartTime() + " a " + reserve.getEndTime());*/
+			/*
+			 * m.setText("Se ha realizado una reserva en " + parking.getName() + " desde " +
+			 * reserve.getStartDate() + " a "
+			 * + reserve.getEndDate() + " de " + reserve.getStartTime() + " a " +
+			 * reserve.getEndTime());
+			 */
 			ObjectMapper mapper = new ObjectMapper();
 			System.out.println("----------------------------");
 			m.setText(mapper.writeValueAsString(reserve.toTransfer()));
@@ -349,7 +353,7 @@ public class UserController {
 			m.setType(Type.ACTUALIZAR);
 			entityManager.persist(m);
 			entityManager.flush(); // to get Id before commit
-				String json = mapper.writeValueAsString(m.toTransfer());
+			String json = mapper.writeValueAsString(m.toTransfer());
 			messagingTemplate.convertAndSend("/enterprise/" + enterprise.getId() + "/queue/updates", json);
 		} catch (JsonProcessingException e) {
 			log.error("Error al enviar la notificación de reserva", e);
@@ -515,7 +519,8 @@ public class UserController {
 		m.setRecipient(enterprise);
 		m.setSender(user);
 		m.setDateSent(LocalDateTime.now());
-		m.setText("El usuario " + user.getUsername() + "ha cancelado una reserva en " + reserve.getSpot().getParking().getName() + " desde "
+		m.setText("El usuario " + user.getUsername() + "ha cancelado una reserva en "
+				+ reserve.getSpot().getParking().getName() + " desde "
 				+ reserve.getStartDate() + " a " + reserve.getEndDate() + " de " + reserve.getStartTime() + " a "
 				+ reserve.getEndTime());
 		entityManager.persist(m);
@@ -775,7 +780,7 @@ public class UserController {
 		m.setDateSent(LocalDateTime.now());
 		m.setText(text);
 		m.setType(Type.MOSTRAR);
-		
+
 		entityManager.persist(m);
 		entityManager.flush(); // to get Id before commit
 
@@ -797,4 +802,22 @@ public class UserController {
 		messagingTemplate.convertAndSend("/user/" + u.getUsername() + "/queue/updates", json);
 		return "{\"result\": \"message sent.\"}";
 	}
+
+	@PostMapping("/{id}/cargar-saldo")
+	@Transactional
+	public String cargarSaldo(@PathVariable long id, HttpSession session, Model model,
+			@RequestParam("monto") double monto) {
+
+		User user = entityManager.find(User.class, id);
+
+		if (monto > 0) {
+			User sessionUser = (User) model.getAttribute("u");
+			sessionUser.setWallet(sessionUser.getWallet() + monto);
+
+			user.setWallet(user.getWallet() + monto);
+		}
+
+		return "redirect:/user/" + user.getId();
+	}
+
 }
