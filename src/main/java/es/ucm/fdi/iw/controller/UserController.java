@@ -240,37 +240,6 @@ public class UserController {
 	}
 
 	/**
-	 * Redirige a la página de reserva con los parámetros seleccionados.
-	 *
-	 * @param id                 ID del parking.
-	 * @param selectedSlot       Plaza seleccionada.
-	 * @param vehicleId          ID del vehículo seleccionado (opcional).
-	 * @param startDate          Fecha de inicio de la reserva (opcional).
-	 * @param endDate            Fecha de fin de la reserva (opcional).
-	 * @param startTime          Hora de inicio de la reserva (opcional).
-	 * @param endTime            Hora de fin de la reserva (opcional).
-	 * @param redirectAttributes Atributos para la redirección.
-	 * @return Redirección a la ruta de reserva.
-	 */
-	@GetMapping("/confirm-select-parking/{id}")
-	public String confirmSelectParking(@PathVariable long id,
-			@RequestParam Integer selectedSlot,
-			@RequestParam(required = false) Long vehicleId,
-			@RequestParam @Nullable String startDate, @RequestParam @Nullable String endDate,
-			@RequestParam @Nullable String startTime, @RequestParam @Nullable String endTime,
-			RedirectAttributes redirectAttributes) {
-		redirectAttributes.addAttribute("selectedSlot", selectedSlot);
-		redirectAttributes.addAttribute("startDate", startDate);
-		redirectAttributes.addAttribute("endDate", endDate);
-		redirectAttributes.addAttribute("startTime", startTime);
-		redirectAttributes.addAttribute("endTime", endTime);
-		redirectAttributes.addAttribute("id", id);
-		redirectAttributes.addAttribute("vehicleId", vehicleId);
-
-		return "redirect:/user/reserve/" + id;
-	}
-
-	/**
 	 * Muestra la página para seleccionar una plaza de parking.
 	 *
 	 * @param id           ID del parking.

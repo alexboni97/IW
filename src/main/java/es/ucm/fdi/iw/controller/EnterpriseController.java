@@ -93,7 +93,7 @@ public class EnterpriseController {
 	 * @param model    Modelo para la vista.
 	 * @return Carga la vista de los parkings de la empresa.
 	 */
-    @GetMapping("/enterprise-parkings")
+    @GetMapping("/parkings")
     public String enterpriseParkings(Model model) {
         User user = (User) model.getAttribute("u");
 
@@ -113,7 +113,7 @@ public class EnterpriseController {
      * @param model Modelo para la vista.
      * @return Carga la vista de las solicitudes de parking de la empresa.
      */
-    @GetMapping("/enterprise-requests")
+    @GetMapping("/requests")
     public String enterpriseRequests(Model model) {
         User user = (User) model.getAttribute("u");
 
@@ -141,8 +141,8 @@ public class EnterpriseController {
      * @param model     Modelo para la vista.
      * @return Carga la vista de las plazas del parking.
      */
-    @GetMapping("/enterprise-plazas")
-    public String enterprisePlazas(@RequestParam Long parkingId, Model model) {
+    @GetMapping("/parking/{parkingId}/plazas")
+    public String enterprisePlazas(@PathVariable Long parkingId, Model model) {
         Parking parking = entityManager.find(Parking.class, parkingId);
         if (parking == null) {
             return "redirect:/error";
@@ -319,7 +319,7 @@ public class EnterpriseController {
             model.addAttribute("error", "Hubo un error al procesar la solicitud: " + e.getMessage());
         }
 
-        return "redirect:/enterprise/enterprise-requests";
+        return "redirect:/enterprise/requests";
     }
 
     /**
