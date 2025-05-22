@@ -153,6 +153,8 @@ A continuación, se muestra la estructura de la base de datos utilizada en el pr
 
 <img src="bd.png" alt="Estructura de la Base de Datos" width="800"/>
 
+Utilizamos el archivo StartupConfig.java para generar una base de datos de ejemplo.
+
 ### Notificaciones
 ![WebSockets](https://img.shields.io/badge/websockets-%23009688.svg?style=for-the-badge&logo=websocket&logoColor=white)
 #### 🔹 **/enterprise/{id}/queue/updates:**

@@ -114,35 +114,6 @@ public class UserController {
 	}
 
 	/**
-	 * Muestra la página de búsqueda de parkings disponibles.
-	 *
-	 * @param model   Modelo para la vista.
-	 * @param session Sesión HTTP del usuario.
-	 * @return Nombre de la vista "search" o "login" si no está autenticado como
-	 *         Parker.
-	 */
-	@GetMapping("/buscar-parking")
-	public String buscarParking(Model model, HttpSession session) {
-		if (isParker(session)) {
-			List<Parking> parkings = entityManager.createNamedQuery("Parking.findByEnabled", Parking.class)
-					.setParameter("enabled", true).getResultList();
-
-			List<Parking.Transfer> transferParkings = new ArrayList<>();
-
-			for (Parking p : parkings) {
-				transferParkings.add(p.toTransfer());
-			}
-
-			model.addAttribute("parkings", transferParkings);
-			model.addAttribute("radius", 3000);
-
-			return "search";
-		} else {
-			return "login";
-		}
-	}
-
-	/**
 	 * Muestra un mapa con parkings disponibles según fechas, horas y ubicación.
 	 *
 	 * @param startDate Fecha de inicio de la reserva.
@@ -410,6 +381,7 @@ public class UserController {
 			v.setParker(parker);
 			vehicles.add(v);
 			parker.setVehicles(vehicles);
+			entityManager.persist(v);
 			return reserve(model, session, id, selectedSlot, vehicleId, startDate, endDate, startTime, endTime);
 		} else
 			return "login";
@@ -431,14 +403,9 @@ public class UserController {
 			m.setRecipient(enterprise);
 			m.setSender(user);
 			m.setDateSent(LocalDateTime.now());
-			/*
-			 * m.setText("Se ha realizado una reserva en " + parking.getName() + " desde " +
-			 * reserve.getStartDate() + " a "
-			 * + reserve.getEndDate() + " de " + reserve.getStartTime() + " a " +
-			 * reserve.getEndTime());
-			 */
+			
 			ObjectMapper mapper = new ObjectMapper();
-			System.out.println("----------------------------");
+			// Ejemplo de pasar un JSON como cuerpo del mensaje
 			m.setText(mapper.writeValueAsString(reserve.toTransfer()));
 			System.out.println(m.getText());
 			m.setType(Type.ACTUALIZAR);
@@ -544,6 +511,7 @@ public class UserController {
 			user.setWallet(wallet);
 			User userBD = entityManager.find(User.class, user.getId());
 			userBD.setWallet(wallet);
+			// avisamos a la empresa
 			notificarReserva(target, reserve, spot.getParking());
 			model.addAttribute("success", "Reserva realizada con éxito");
 		} catch (Exception e) {
@@ -613,6 +581,7 @@ public class UserController {
 	public String cancelReserve(@PathVariable long id, Model model) {
 		Reserve reserve = entityManager.find(Reserve.class, id);
 		if (reserve != null && reserve.getState() == Reserve.State.CONFIRMED) {
+			// Actualizamos el saldo tanto en la base de datos como en la sesión
 			User user = reserve.getVehicle().getParker();
 			User sessionUser = (User) model.getAttribute("u");
 

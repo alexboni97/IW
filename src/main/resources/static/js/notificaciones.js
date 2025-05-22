@@ -77,6 +77,7 @@ if (ws.receive) {
         }
         else { // ACTUALIZAR
             console.log(m.text);
+            //Ejemplo de cómo convertir a JSON
             let reservaJSON = JSON.parse(m.text);
             let spotId = reservaJSON.spotId;
             console.log(spotId);
