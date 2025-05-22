@@ -113,6 +113,14 @@ public class UserController {
 		return parker != null;
 	}
 
+	/**
+	 * Muestra la página de búsqueda de parkings disponibles.
+	 *
+	 * @param model   Modelo para la vista.
+	 * @param session Sesión HTTP del usuario.
+	 * @return Nombre de la vista "search" o "login" si no está autenticado como
+	 *         Parker.
+	 */
 	@GetMapping("/buscar-parking")
 	public String buscarParking(Model model, HttpSession session) {
 		if (isParker(session)) {
@@ -134,7 +142,21 @@ public class UserController {
 		}
 	}
 
-	// El return es por la vista que devuelve.
+	/**
+	 * Muestra un mapa con parkings disponibles según fechas, horas y ubicación.
+	 *
+	 * @param startDate Fecha de inicio de la reserva.
+	 * @param endDate   Fecha de fin de la reserva.
+	 * @param startTime Hora de inicio de la reserva .
+	 * @param endTime   Hora de fin de la reserva.
+	 * @param latitude  Latitud para filtrar parkings.
+	 * @param longitude Longitud para filtrar parkings.
+	 * @param radius    Radio de búsqueda en metros .
+	 * @param session   Sesión HTTP del usuario.
+	 * @param model     Modelo para la vista.
+	 * @return Nombre de la vista "map" o "login" si no está autenticado como
+	 *         Parker.
+	 */
 	@GetMapping("/map")
 	public String map(
 			@RequestParam @Nullable LocalDate startDate, @RequestParam @Nullable LocalDate endDate,
@@ -198,6 +220,20 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * Muestra la página para reservar una plaza en un parking específico.
+	 *
+	 * @param model        Modelo para la vista.
+	 * @param session      Sesión HTTP del usuario.
+	 * @param id           ID del parking.
+	 * @param selectedSlot Plaza seleccionada (opcional).
+	 * @param vehicleId    ID del vehículo seleccionado (opcional).
+	 * @param startDate    Fecha de inicio de la reserva (opcional).
+	 * @param endDate      Fecha de fin de la reserva (opcional).
+	 * @param startTime    Hora de inicio de la reserva (opcional).
+	 * @param endTime      Hora de fin de la reserva (opcional).
+	 * @return Nombre de la vista "reserve" o "error" si el parking no es válido.
+	 */
 	@GetMapping("/reserve/{id}")
 	public String reserve(Model model,
 			HttpSession session,
@@ -232,6 +268,19 @@ public class UserController {
 		return "reserve";
 	}
 
+	/**
+	 * Redirige a la página de reserva con los parámetros seleccionados.
+	 *
+	 * @param id                 ID del parking.
+	 * @param selectedSlot       Plaza seleccionada.
+	 * @param vehicleId          ID del vehículo seleccionado (opcional).
+	 * @param startDate          Fecha de inicio de la reserva (opcional).
+	 * @param endDate            Fecha de fin de la reserva (opcional).
+	 * @param startTime          Hora de inicio de la reserva (opcional).
+	 * @param endTime            Hora de fin de la reserva (opcional).
+	 * @param redirectAttributes Atributos para la redirección.
+	 * @return Redirección a la ruta de reserva.
+	 */
 	@GetMapping("/confirm-select-parking/{id}")
 	public String confirmSelectParking(@PathVariable long id,
 			@RequestParam Integer selectedSlot,
@@ -250,6 +299,19 @@ public class UserController {
 		return "redirect:/user/reserve/" + id;
 	}
 
+	/**
+	 * Muestra la página para seleccionar una plaza de parking.
+	 *
+	 * @param id           ID del parking.
+	 * @param selectedSlot Plaza seleccionada.
+	 * @param vehicleId    ID del vehículo seleccionado.
+	 * @param startDate    Fecha de inicio de la reserva.
+	 * @param endDate      Fecha de fin de la reserva.
+	 * @param startTime    Hora de inicio de la reserva.
+	 * @param endTime      Hora de fin de la reserva.
+	 * @param model        Modelo para la vista.
+	 * @return Nombre de la vista "select-parking.html".
+	 */
 	@GetMapping("/select-parking/{id}")
 	public String selectParkingView(@PathVariable long id,
 			@RequestParam(required = false) Integer selectedSlot,
@@ -294,6 +356,26 @@ public class UserController {
 		return "select-parking";
 	}
 
+	/**
+	 * Añade un vehículo al usuario y redirige a la página de reserva.
+	 *
+	 * @param model              Modelo para la vista.
+	 * @param session            Sesión HTTP del usuario.
+	 * @param parkingId          ID del parking (opcional).
+	 * @param selectedSlot       Plaza seleccionada (opcional).
+	 * @param vehicleId          ID del vehículo seleccionado (opcional).
+	 * @param startDate          Fecha de inicio de la reserva (opcional).
+	 * @param endDate            Fecha de fin de la reserva (opcional).
+	 * @param startTime          Hora de inicio de la reserva (opcional).
+	 * @param endTime            Hora de fin de la reserva (opcional).
+	 * @param brand              Marca del vehículo.
+	 * @param modelo             Modelo del vehículo.
+	 * @param plate              Matrícula del vehículo.
+	 * @param size               Tamaño del vehículo.
+	 * @param redirectAttributes Atributos para la redirección.
+	 * @return Nombre de la vista "reserve" o "login" si no está autenticado como
+	 *         Parker.
+	 */
 	@GetMapping("/add-vehicle")
 	public String addVehicle(
 			Model model,
@@ -333,6 +415,15 @@ public class UserController {
 			return "login";
 	}
 
+	/**
+	 * Notifica a la empresa sobre una nueva reserva mediante un mensaje.
+	 *
+	 * @param user    Usuario que realiza la reserva.
+	 * @param reserve Reserva realizada.
+	 * @param parking Parking asociado a la reserva.
+	 * @throws JsonProcessingException Si ocurre un error al serializar el mensaje a
+	 *                                 JSON.
+	 */
 	private void notificarReserva(User user, Reserve reserve, Parking parking) {
 		try {
 			Message m = new Message();
@@ -360,6 +451,22 @@ public class UserController {
 		}
 	}
 
+	/**
+	 * Procesa la creación de una reserva y actualiza la cartera del usuario.
+	 *
+	 * @param startDate           Fecha de inicio de la reserva.
+	 * @param endDate             Fecha de fin de la reserva.
+	 * @param startTime           Hora de inicio de la reserva.
+	 * @param endTime             Hora de fin de la reserva.
+	 * @param vehicleId           ID del vehículo seleccionado.
+	 * @param parkingId           ID del parking.
+	 * @param totalPrice          Precio total de la reserva.
+	 * @param selectedParkingSpot ID de la plaza seleccionada.
+	 * @param model               Modelo para la vista.
+	 * @param redirectAttributes  Atributos para la redirección.
+	 * @return Nombre de la vista "my-reserves" o redirección a "reserve" o "error"
+	 *         en caso de error.
+	 */
 	@PostMapping("/confirm-reserve")
 	@Transactional
 	public String postReserve(
@@ -447,11 +554,23 @@ public class UserController {
 		return myReserves(model);
 	}
 
+	/**
+	 * Muestra la página para modificar una reserva.
+	 *
+	 * @param model Modelo para la vista.
+	 * @return Nombre de la vista "modify-reserve".
+	 */
 	@GetMapping("/modify-reserve")
 	public String modifyReserve(Model model) {
 		return "modify-reserve";
 	}
 
+	/**
+	 * Muestra las reservas del usuario autenticado.
+	 *
+	 * @param model Modelo para la vista.
+	 * @return Nombre de la vista "my-reserves" o "error" si no es un Parker.
+	 */
 	@GetMapping("/my-reserves")
 	public String myReserves(Model model) {
 
@@ -481,6 +600,14 @@ public class UserController {
 		return "my-reserves";
 	}
 
+	/**
+	 * Cancela una reserva y actualiza las carteras del usuario y la empresa.
+	 *
+	 * @param id    ID de la reserva a cancelar.
+	 * @param model Modelo para la vista.
+	 * @return Nombre de la vista "my-reserves" o "error" si la reserva no es
+	 *         válida.
+	 */
 	@PostMapping("/cancel-reserve/{id}")
 	@Transactional
 	public String cancelReserve(@PathVariable long id, Model model) {
@@ -514,6 +641,15 @@ public class UserController {
 		return myReserves(model);
 	}
 
+	/**
+	 * Notifica a la empresa sobre la cancelación de una reserva.
+	 *
+	 * @param user       Usuario que cancela la reserva.
+	 * @param reserve    Reserva cancelada.
+	 * @param enterprise Empresa asociada al parking.
+	 * @throws JsonProcessingException Si ocurre un error al serializar el mensaje a
+	 *                                 JSON.
+	 */
 	private void notificarCancelacionReserva(User user, Reserve reserve, Enterprise enterprise) {
 		Message m = new Message();
 		m.setRecipient(enterprise);
@@ -572,7 +708,12 @@ public class UserController {
 	}
 
 	/**
-	 * Landing page for a user profile
+	 * Muestra la página de perfil de un usuario.
+	 *
+	 * @param id      ID del usuario.
+	 * @param model   Modelo para la vista.
+	 * @param session Sesión HTTP del usuario.
+	 * @return Nombre de la vista "user".
 	 */
 	@GetMapping("{id}")
 	public String index(@PathVariable long id, Model model, HttpSession session) {
@@ -583,7 +724,18 @@ public class UserController {
 	}
 
 	/**
-	 * Alter or create a user
+	 * Crea o modifica un usuario.
+	 *
+	 * @param response Respuesta HTTP.
+	 * @param id       ID del usuario a modificar (-1 para crear uno nuevo).
+	 * @param edited   Objeto con los datos editados del usuario.
+	 * @param pass2    Confirmación de la contraseña (opcional).
+	 * @param model    Modelo para la vista.
+	 * @param session  Sesión HTTP del usuario.
+	 * @return Nombre de la vista "user".
+	 * @throws IOException           Si ocurre un error de entrada/salida.
+	 * @throws NoEsTuPerfilException Si el usuario no tiene permisos para modificar
+	 *                               el perfil.
 	 */
 	@PostMapping("/{id}")
 	@Transactional
@@ -650,11 +802,11 @@ public class UserController {
 	}
 
 	/**
-	 * Downloads a profile pic for a user id
-	 * 
-	 * @param id
-	 * @return
-	 * @throws IOException
+	 * Descarga la imagen de perfil de un usuario.
+	 *
+	 * @param id ID del usuario.
+	 * @return Cuerpo de respuesta con el flujo de la imagen.
+	 * @throws IOException Si ocurre un error de entrada/salida.
 	 */
 	@GetMapping("{id}/pic")
 	public StreamingResponseBody getPic(@PathVariable long id) throws IOException {
@@ -664,11 +816,16 @@ public class UserController {
 	}
 
 	/**
-	 * Uploads a profile pic for a user id
-	 * 
-	 * @param id
-	 * @return
-	 * @throws IOException
+	 * Sube una nueva imagen de perfil para un usuario.
+	 *
+	 * @param photo    Archivo de la imagen.
+	 * @param id       ID del usuario.
+	 * @param response Respuesta HTTP.
+	 * @param session  Sesión HTTP del usuario.
+	 * @param model    Modelo para la vista.
+	 * @return Respuesta JSON con el estado de la subida.
+	 * @throws IOException           Si ocurre un error de entrada/salida.
+	 * @throws NoEsTuPerfilException Si el usuario no tiene permisos.
 	 */
 	@PostMapping("{id}/pic")
 	@ResponseBody
@@ -702,6 +859,14 @@ public class UserController {
 		return "{\"status\":\"photo uploaded correctly\"}";
 	}
 
+	/**
+	 * Actualiza la imagen de perfil de un usuario.
+	 *
+	 * @param id   ID del usuario.
+	 * @param file Archivo de la imagen.
+	 * @return Mapa con la URL de la nueva imagen.
+	 * @throws RuntimeException Si ocurre un error al guardar la imagen.
+	 */
 	@PostMapping("/user/{id}/pic")
 	@ResponseBody
 	public Map<String, String> updateProfilePic(@PathVariable long id, @RequestParam("file") MultipartFile file) {
@@ -718,6 +883,14 @@ public class UserController {
 		return Map.of("newPicUrl", newPicUrl);
 	}
 
+	/**
+	 * Muestra una página de error genérica.
+	 *
+	 * @param model   Modelo para la vista.
+	 * @param session Sesión HTTP del usuario.
+	 * @param request Petición HTTP.
+	 * @return Nombre de la vista "error".
+	 */
 	@GetMapping("error")
 	public String error(Model model, HttpSession session, HttpServletRequest request) {
 		model.addAttribute("sess", session);
@@ -726,7 +899,10 @@ public class UserController {
 	}
 
 	/**
-	 * Returns JSON with all received messages
+	 * Recupera todos los mensajes recibidos por el usuario en formato JSON.
+	 *
+	 * @param session Sesión HTTP del usuario.
+	 * @return Lista de mensajes en formato Transfer.
 	 */
 	@GetMapping(path = "received", produces = "application/json")
 	@Transactional // para no recibir resultados inconsistentes
@@ -740,8 +916,11 @@ public class UserController {
 	}
 
 	/**
-	 * Returns JSON with count of unread messages
-	 */
+     * Devuelve el número de mensajes no leídos en formato JSON.
+     *
+     * @param session Sesión HTTP del usuario.
+     * @return JSON con el número de mensajes no leídos.
+     */
 	@GetMapping(path = "unread", produces = "application/json")
 	@ResponseBody
 	public String checkUnread(HttpSession session) {
@@ -754,12 +933,15 @@ public class UserController {
 	}
 
 	/**
-	 * Posts a message to a user.
-	 * 
-	 * @param id of target user (source user is from ID)
-	 * @param o  JSON-ized message, similar to {"message": "text goes here"}
-	 * @throws JsonProcessingException
-	 */
+     * Envía un mensaje a un usuario.
+     *
+     * @param id ID del usuario destinatario.
+     * @param o Nodo JSON con el contenido del mensaje.
+     * @param model Modelo para la vista.
+     * @param session Sesión HTTP del usuario.
+     * @return Respuesta JSON con el estado del envío.
+     * @throws JsonProcessingException Si ocurre un error al serializar el mensaje.
+     */
 	@PostMapping("/{id}/msg")
 	@ResponseBody
 	@Transactional
@@ -803,6 +985,15 @@ public class UserController {
 		return "{\"result\": \"message sent.\"}";
 	}
 
+	/**
+     * Añade saldo a la cartera del usuario.
+     *
+     * @param id ID del usuario.
+     * @param session Sesión HTTP del usuario.
+     * @param model Modelo para la vista.
+     * @param monto Cantidad a añadir.
+     * @return Redirección al perfil del usuario.
+     */
 	@PostMapping("/{id}/cargar-saldo")
 	@Transactional
 	public String cargarSaldo(@PathVariable long id, HttpSession session, Model model,
