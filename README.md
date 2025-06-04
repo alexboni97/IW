@@ -12,8 +12,9 @@ ParkIT es una aplicación web (principalmente para dispositivos móviles) que ay
 - [Despliegue](#item5)
 - [Material externo](#item6)
 - [Contribución](#item7)
-- [Contribuidores](#item8)
-- [Licencia](#item9)
+- [Licencia](#item8)
+- [Contribuidores Post-Examen](#item9)
+- [Elaboracion de Mejoras Post-Examen](#item10)
 
 <a name="item1"></a>
 ## 🖥️ Diseño de la Aplicación
@@ -189,23 +190,45 @@ En esta sección hemos incluído enlaces a material externo sobre el que nos hem
 2. Crea una rama nueva (`git checkout -b feature-nueva`).
 3. Realiza tus cambios y haz un commit (`git commit -m 'Agrega nueva funcionalidad'`).
 4. Envía un pull request.
+
+
 <a name="item8"></a>
-## 👥 Contribuidores
-
-Agradecemos a todas las personas que han contribuido a este proyecto:
-- [Javier Aceituno Monja](https://github.com/jaceituno16)
-- [Alex Guillermo Bonilla Taco](https://github.com/alexboni97)
-- [Juan Pablo Fernández de la Torre](https://github.com/juanpf04)
-- [Paula López Solla](https://github.com/Paula211)
-- [Adrián Rodríguez Margallo](https://github.com/adrizz8)
-- [Sergio Sánchez Carrasco](https://github.com/WalterDeRacagua) 
-
-<a name="item9"></a>
 ## 📜 Licencia
 
 Este proyecto está bajo la licencia [Apache License](LICENSE).
 
+<a name="item9"></a>
+## 👥 Contribuidores Post-Examen
 
+- [Alex Guillermo Bonilla Taco](https://github.com/alexboni97)
 
+<a name="item10"></a>
+## 📜 Elaboracion de Mejoras Post-Examen
 
+### funcionalidad
 
+* puedo solicitar eliminar parkings que no son míos. Deberíais comprobar que una empresa sólo puede modificar/pedir eliminar los suyos. ✅ Realizado.
+
+* puedo cambiar la foto de cualquier usuario sin más que enviar un post a `/user/{id}/pic`. Esto hace muy fácil enfadar a usuarios a los que no conozco. ✅ Realizado.
+
+### diseño
+
+* mejor no tener código muerto (git lo puede revivir si fuere menester). Eliminad `poblarBBDD` -- o metedlo en algún test de unidad, si realmente lo queréis seguir compilando de vez en cuando (así al menos no aparece en producción) ✅ Realizado.
+
+* puedo dar dinero a terceros vía `cargarSaldo`. Dar dinero *a* otros no se suele considerar problema de seguridad, pero lo suyo sería no usar el parámetro `id`, sacarlo de la sesión, y simplificar así el código un poco. ✅ Realizado.
+
+### Mejoras Propias
+
+*✅ Cualquier Usuario puede registrarse como parker o enterprise.
+
+*✅ El usuario puede eliminar la reserva desde la vista de todas sus reservas correctamente.
+
+*✅ Notificaciones por websockets a enterprise cuando el usuario parker cancela o confirma una reserva. La notificacion aparece solo cuando la empresa esta dentro de la pagina de sus las plazas del parking que ha sido reservado. Ej. si la empresa esta en [Vista de plazas de empresa](http://localhost:8080/enterprise/parking/1025/plazas) recibe una nueva reserva. Tambien cambios en la visualización del listado de reservas de cada plaza.
+
+*✅ Vista para cada reserva confirmada desde el enterprise accediendo desde la vista de las plazas de un parking de empresa y clicando en una reserva.
+
+*✅ Visualización correcta de la foto de perfil de la empresa, ya no esta rota.
+
+*✅ El usuario ahora tiene una vista a modificar en el que aparecen los datos de la reserva actual y un formulario para cambiarlos. Falta el metodo POST del backend para realizar correctamente la modificación
+
+*✅ Chat con websockets entre el parker y el enterprise. Acceso al chat del parker desde la [Vista de modificar una reserva](http://localhost:8080/user/reserve/1175/modify). Acceso al chat desde la [Vista de los datos completos de la reserva](http://localhost:8080/enterprise/reserve/1175). Funciona correctamente desde el lado del parker, es capaz de enviar y que le llegen correctamente al chat de la empresa
